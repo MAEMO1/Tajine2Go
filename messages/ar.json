@@ -1,0 +1,147 @@
+{
+  "common": {
+    "siteName": "Tajine2Go",
+    "tagline": "مأكولات مغاربية جاهزة في غنت",
+    "currency": "EUR",
+    "loading": "جاري التحميل...",
+    "error": "حدث خطأ ما",
+    "retry": "إعادة المحاولة",
+    "back": "رجوع",
+    "close": "إغلاق",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "confirm": "تأكيد",
+    "yes": "نعم",
+    "no": "لا",
+    "or": "أو"
+  },
+  "nav": {
+    "menu": "القائمة",
+    "order": "اطلب",
+    "catering": "تموين",
+    "about": "من نحن",
+    "faq": "الأسئلة الشائعة",
+    "contact": "اتصل بنا"
+  },
+  "home": {
+    "heroTitle": "نكهات مغاربية أصيلة",
+    "heroSubtitle": "طاجين طازج والمزيد كل أسبوع، مباشرة من مطبخنا في غنت.",
+    "orderNow": "اطلب الآن",
+    "viewMenu": "عرض القائمة",
+    "cateringCta": "تموين لمناسبتك",
+    "closed": "نحن مغلقون حالياً. اطلع على قائمتنا ليوم الطلب التالي."
+  },
+  "menu": {
+    "title": "القائمة",
+    "noItems": "لا توجد أطباق متاحة حالياً.",
+    "soldOut": "نفد",
+    "portionsLeft": "{count, plural, one {حصة واحدة متبقية} other {# حصص متبقية}}",
+    "addToCart": "إضافة",
+    "allergens": "مسببات الحساسية",
+    "categories": {
+      "main": "الأطباق الرئيسية",
+      "side": "الأطباق الجانبية",
+      "dessert": "الحلويات",
+      "drink": "المشروبات"
+    }
+  },
+  "cart": {
+    "title": "سلة التسوق",
+    "empty": "سلة التسوق فارغة",
+    "subtotal": "المجموع الفرعي",
+    "deliveryFee": "رسوم التوصيل",
+    "total": "المجموع",
+    "checkout": "الدفع",
+    "remove": "إزالة",
+    "itemCount": "{count, plural, one {عنصر واحد} other {# عناصر}}"
+  },
+  "checkout": {
+    "title": "تقديم الطلب",
+    "personalInfo": "المعلومات الشخصية",
+    "firstName": "الاسم الأول",
+    "lastName": "اسم العائلة",
+    "email": "البريد الإلكتروني",
+    "phone": "رقم الهاتف",
+    "fulfillment": "استلام أو توصيل",
+    "pickup": "استلام",
+    "delivery": "توصيل",
+    "pickupSlot": "وقت الاستلام",
+    "deliveryAddress": "عنوان التوصيل",
+    "street": "الشارع والرقم",
+    "postalCode": "الرمز البريدي",
+    "city": "المدينة",
+    "paymentMethod": "طريقة الدفع",
+    "online": "الدفع عبر الإنترنت",
+    "cash": "الدفع نقداً",
+    "notes": "ملاحظات",
+    "notesPlaceholder": "مثال: حساسية، طلبات خاصة...",
+    "invoice": "طلب فاتورة",
+    "invoiceInfo": "بيانات الفاتورة",
+    "companyName": "اسم الشركة",
+    "vatNumber": "رقم ضريبة القيمة المضافة",
+    "placeOrder": "تقديم الطلب",
+    "processing": "جاري معالجة الطلب...",
+    "orderSummary": "الملخص",
+    "minimumOrder": "لم يتم الوصول إلى الحد الأدنى للطلب (الحد الأدنى {amount})",
+    "closedMessage": "الطلبات مغلقة حالياً.",
+    "invalidPostalCode": "التوصيل غير متاح لهذا الرمز البريدي.",
+    "stockError": "طبق واحد أو أكثر لم يعد متاحاً بالكمية المطلوبة."
+  },
+  "order": {
+    "title": "حالة الطلب",
+    "orderNumber": "رقم الطلب",
+    "status": "الحالة",
+    "fulfillment": "النوع",
+    "pickupSlot": "وقت الاستلام",
+    "total": "المجموع",
+    "statuses": {
+      "pending": "قيد الانتظار",
+      "confirmed": "مؤكد",
+      "preparing": "قيد التحضير",
+      "ready": "جاهز",
+      "out_for_delivery": "في الطريق",
+      "completed": "مكتمل",
+      "cancelled": "ملغى"
+    },
+    "notFound": "لم يتم العثور على الطلب."
+  },
+  "catering": {
+    "title": "تموين",
+    "subtitle": "دعنا نهتم بمناسبتك بأطباق مغاربية أصيلة.",
+    "eventType": "نوع المناسبة",
+    "eventTypes": {
+      "wedding": "زفاف",
+      "aqiqa": "عقيقة",
+      "corporate": "مناسبة شركات",
+      "funeral": "عزاء",
+      "iftar": "إفطار",
+      "other": "أخرى"
+    },
+    "eventDate": "تاريخ المناسبة",
+    "guestCount": "عدد الضيوف",
+    "dietaryNeeds": "احتياجات غذائية",
+    "message": "رسالتك",
+    "submit": "إرسال الطلب",
+    "success": "تم إرسال طلبك! سنتواصل معك في أقرب وقت ممكن.",
+    "error": "حدث خطأ أثناء الإرسال. يرجى المحاولة مرة أخرى."
+  },
+  "about": {
+    "title": "من نحن"
+  },
+  "faq": {
+    "title": "الأسئلة الشائعة"
+  },
+  "contact": {
+    "title": "اتصل بنا"
+  },
+  "footer": {
+    "rights": "جميع الحقوق محفوظة.",
+    "privacy": "سياسة الخصوصية",
+    "terms": "الشروط والأحكام"
+  },
+  "cookies": {
+    "message": "نستخدم ملفات تعريف الارتباط لتحسين تجربتك.",
+    "accept": "قبول",
+    "decline": "رفض"
+  }
+}

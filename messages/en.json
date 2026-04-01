@@ -1,0 +1,147 @@
+{
+  "common": {
+    "siteName": "Tajine2Go",
+    "tagline": "Maghrebi takeaway in Ghent",
+    "currency": "EUR",
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "retry": "Try again",
+    "back": "Back",
+    "close": "Close",
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "yes": "Yes",
+    "no": "No",
+    "or": "or"
+  },
+  "nav": {
+    "menu": "Menu",
+    "order": "Order",
+    "catering": "Catering",
+    "about": "About us",
+    "faq": "FAQ",
+    "contact": "Contact"
+  },
+  "home": {
+    "heroTitle": "Authentic Maghrebi flavours",
+    "heroSubtitle": "Fresh tajines and more every week, straight from our kitchen in Ghent.",
+    "orderNow": "Order now",
+    "viewMenu": "View menu",
+    "cateringCta": "Catering for your event",
+    "closed": "We are currently closed. Check our menu for the next order day."
+  },
+  "menu": {
+    "title": "Menu",
+    "noItems": "No dishes available at the moment.",
+    "soldOut": "Sold out",
+    "portionsLeft": "{count, plural, one {# portion left} other {# portions left}}",
+    "addToCart": "Add",
+    "allergens": "Allergens",
+    "categories": {
+      "main": "Main dishes",
+      "side": "Side dishes",
+      "dessert": "Desserts",
+      "drink": "Drinks"
+    }
+  },
+  "cart": {
+    "title": "Cart",
+    "empty": "Your cart is empty",
+    "subtotal": "Subtotal",
+    "deliveryFee": "Delivery fee",
+    "total": "Total",
+    "checkout": "Checkout",
+    "remove": "Remove",
+    "itemCount": "{count, plural, one {# item} other {# items}}"
+  },
+  "checkout": {
+    "title": "Place order",
+    "personalInfo": "Personal information",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "email": "Email address",
+    "phone": "Phone number",
+    "fulfillment": "Pickup or delivery",
+    "pickup": "Pickup",
+    "delivery": "Delivery",
+    "pickupSlot": "Pickup time",
+    "deliveryAddress": "Delivery address",
+    "street": "Street and number",
+    "postalCode": "Postal code",
+    "city": "City",
+    "paymentMethod": "Payment method",
+    "online": "Pay online",
+    "cash": "Pay cash",
+    "notes": "Notes",
+    "notesPlaceholder": "E.g. allergies, special requests...",
+    "invoice": "Request invoice",
+    "invoiceInfo": "Invoice details",
+    "companyName": "Company name",
+    "vatNumber": "VAT number",
+    "placeOrder": "Place order",
+    "processing": "Processing order...",
+    "orderSummary": "Summary",
+    "minimumOrder": "Minimum amount not reached (min. {amount})",
+    "closedMessage": "Orders are currently closed.",
+    "invalidPostalCode": "Delivery is not available for this postal code.",
+    "stockError": "One or more dishes are no longer available in the requested quantity."
+  },
+  "order": {
+    "title": "Order status",
+    "orderNumber": "Order number",
+    "status": "Status",
+    "fulfillment": "Type",
+    "pickupSlot": "Pickup time",
+    "total": "Total",
+    "statuses": {
+      "pending": "Pending",
+      "confirmed": "Confirmed",
+      "preparing": "Preparing",
+      "ready": "Ready",
+      "out_for_delivery": "Out for delivery",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    },
+    "notFound": "Order not found."
+  },
+  "catering": {
+    "title": "Catering",
+    "subtitle": "Let us take care of your event with authentic Maghrebi dishes.",
+    "eventType": "Event type",
+    "eventTypes": {
+      "wedding": "Wedding",
+      "aqiqa": "Aqiqa",
+      "corporate": "Corporate event",
+      "funeral": "Funeral",
+      "iftar": "Iftar",
+      "other": "Other"
+    },
+    "eventDate": "Event date",
+    "guestCount": "Number of guests",
+    "dietaryNeeds": "Dietary needs",
+    "message": "Your message",
+    "submit": "Send request",
+    "success": "Your request has been sent! We will contact you as soon as possible.",
+    "error": "Something went wrong while sending. Please try again."
+  },
+  "about": {
+    "title": "About us"
+  },
+  "faq": {
+    "title": "Frequently asked questions"
+  },
+  "contact": {
+    "title": "Contact"
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "privacy": "Privacy policy",
+    "terms": "Terms and conditions"
+  },
+  "cookies": {
+    "message": "We use cookies to improve your experience.",
+    "accept": "Accept",
+    "decline": "Decline"
+  }
+}

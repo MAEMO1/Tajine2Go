@@ -1,0 +1,147 @@
+{
+  "common": {
+    "siteName": "Tajine2Go",
+    "tagline": "Cuisine maghrébine à emporter à Gand",
+    "currency": "EUR",
+    "loading": "Chargement...",
+    "error": "Une erreur est survenue",
+    "retry": "Réessayer",
+    "back": "Retour",
+    "close": "Fermer",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "confirm": "Confirmer",
+    "yes": "Oui",
+    "no": "Non",
+    "or": "ou"
+  },
+  "nav": {
+    "menu": "Menu",
+    "order": "Commander",
+    "catering": "Traiteur",
+    "about": "À propos",
+    "faq": "FAQ",
+    "contact": "Contact"
+  },
+  "home": {
+    "heroTitle": "Saveurs maghrébines authentiques",
+    "heroSubtitle": "Chaque semaine des tajines frais et plus, directement de notre cuisine à Gand.",
+    "orderNow": "Commander",
+    "viewMenu": "Voir le menu",
+    "cateringCta": "Traiteur pour votre événement",
+    "closed": "Nous sommes actuellement fermés. Consultez notre menu pour le prochain jour de commande."
+  },
+  "menu": {
+    "title": "Menu",
+    "noItems": "Aucun plat disponible pour le moment.",
+    "soldOut": "Épuisé",
+    "portionsLeft": "{count, plural, one {# portion restante} other {# portions restantes}}",
+    "addToCart": "Ajouter",
+    "allergens": "Allergènes",
+    "categories": {
+      "main": "Plats principaux",
+      "side": "Accompagnements",
+      "dessert": "Desserts",
+      "drink": "Boissons"
+    }
+  },
+  "cart": {
+    "title": "Panier",
+    "empty": "Votre panier est vide",
+    "subtotal": "Sous-total",
+    "deliveryFee": "Frais de livraison",
+    "total": "Total",
+    "checkout": "Passer la commande",
+    "remove": "Supprimer",
+    "itemCount": "{count, plural, one {# article} other {# articles}}"
+  },
+  "checkout": {
+    "title": "Passer commande",
+    "personalInfo": "Informations personnelles",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "email": "Adresse e-mail",
+    "phone": "Numéro de téléphone",
+    "fulfillment": "Retrait ou livraison",
+    "pickup": "Retrait",
+    "delivery": "Livraison",
+    "pickupSlot": "Créneau de retrait",
+    "deliveryAddress": "Adresse de livraison",
+    "street": "Rue et numéro",
+    "postalCode": "Code postal",
+    "city": "Ville",
+    "paymentMethod": "Mode de paiement",
+    "online": "Paiement en ligne",
+    "cash": "Paiement en espèces",
+    "notes": "Remarques",
+    "notesPlaceholder": "Ex. allergies, souhaits spéciaux...",
+    "invoice": "Demander une facture",
+    "invoiceInfo": "Informations de facturation",
+    "companyName": "Nom de l'entreprise",
+    "vatNumber": "Numéro de TVA",
+    "placeOrder": "Passer la commande",
+    "processing": "Traitement de la commande...",
+    "orderSummary": "Récapitulatif",
+    "minimumOrder": "Montant minimum non atteint (min. {amount})",
+    "closedMessage": "Les commandes sont actuellement fermées.",
+    "invalidPostalCode": "La livraison n'est pas disponible pour ce code postal.",
+    "stockError": "Un ou plusieurs plats ne sont plus disponibles dans la quantité souhaitée."
+  },
+  "order": {
+    "title": "Statut de la commande",
+    "orderNumber": "Numéro de commande",
+    "status": "Statut",
+    "fulfillment": "Type",
+    "pickupSlot": "Créneau de retrait",
+    "total": "Total",
+    "statuses": {
+      "pending": "En attente",
+      "confirmed": "Confirmé",
+      "preparing": "En préparation",
+      "ready": "Prêt",
+      "out_for_delivery": "En livraison",
+      "completed": "Terminé",
+      "cancelled": "Annulé"
+    },
+    "notFound": "Commande non trouvée."
+  },
+  "catering": {
+    "title": "Traiteur",
+    "subtitle": "Laissez-nous prendre en charge votre événement avec des plats maghrébins authentiques.",
+    "eventType": "Type d'événement",
+    "eventTypes": {
+      "wedding": "Mariage",
+      "aqiqa": "Aqiqa",
+      "corporate": "Événement d'entreprise",
+      "funeral": "Funérailles",
+      "iftar": "Iftar",
+      "other": "Autre"
+    },
+    "eventDate": "Date de l'événement",
+    "guestCount": "Nombre d'invités",
+    "dietaryNeeds": "Besoins alimentaires",
+    "message": "Votre message",
+    "submit": "Envoyer la demande",
+    "success": "Votre demande a été envoyée ! Nous vous contacterons dès que possible.",
+    "error": "Une erreur est survenue lors de l'envoi. Veuillez réessayer."
+  },
+  "about": {
+    "title": "À propos"
+  },
+  "faq": {
+    "title": "Questions fréquentes"
+  },
+  "contact": {
+    "title": "Contact"
+  },
+  "footer": {
+    "rights": "Tous droits réservés.",
+    "privacy": "Politique de confidentialité",
+    "terms": "Conditions générales"
+  },
+  "cookies": {
+    "message": "Nous utilisons des cookies pour améliorer votre expérience.",
+    "accept": "Accepter",
+    "decline": "Refuser"
+  }
+}

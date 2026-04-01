@@ -1,0 +1,147 @@
+{
+  "common": {
+    "siteName": "Tajine2Go",
+    "tagline": "Maghrebijnse takeaway in Gent",
+    "currency": "EUR",
+    "loading": "Laden...",
+    "error": "Er is iets misgegaan",
+    "retry": "Opnieuw proberen",
+    "back": "Terug",
+    "close": "Sluiten",
+    "save": "Opslaan",
+    "cancel": "Annuleren",
+    "confirm": "Bevestigen",
+    "yes": "Ja",
+    "no": "Nee",
+    "or": "of"
+  },
+  "nav": {
+    "menu": "Menu",
+    "order": "Bestellen",
+    "catering": "Catering",
+    "about": "Over ons",
+    "faq": "FAQ",
+    "contact": "Contact"
+  },
+  "home": {
+    "heroTitle": "Authentieke Maghrebijnse smaken",
+    "heroSubtitle": "Elke week verse tajines en meer, rechtstreeks uit onze keuken in Gent.",
+    "orderNow": "Bestel nu",
+    "viewMenu": "Bekijk menu",
+    "cateringCta": "Catering voor uw evenement",
+    "closed": "We zijn momenteel gesloten. Bekijk ons menu voor de volgende besteldag."
+  },
+  "menu": {
+    "title": "Menu",
+    "noItems": "Momenteel geen gerechten beschikbaar.",
+    "soldOut": "Uitverkocht",
+    "portionsLeft": "{count, plural, one {# portie over} other {# porties over}}",
+    "addToCart": "Toevoegen",
+    "allergens": "Allergenen",
+    "categories": {
+      "main": "Hoofdgerechten",
+      "side": "Bijgerechten",
+      "dessert": "Desserts",
+      "drink": "Dranken"
+    }
+  },
+  "cart": {
+    "title": "Winkelwagen",
+    "empty": "Je winkelwagen is leeg",
+    "subtotal": "Subtotaal",
+    "deliveryFee": "Leveringskosten",
+    "total": "Totaal",
+    "checkout": "Afrekenen",
+    "remove": "Verwijderen",
+    "itemCount": "{count, plural, one {# item} other {# items}}"
+  },
+  "checkout": {
+    "title": "Bestelling plaatsen",
+    "personalInfo": "Persoonlijke gegevens",
+    "firstName": "Voornaam",
+    "lastName": "Achternaam",
+    "email": "E-mailadres",
+    "phone": "Telefoonnummer",
+    "fulfillment": "Afhalen of leveren",
+    "pickup": "Afhalen",
+    "delivery": "Levering",
+    "pickupSlot": "Afhaaltijdstip",
+    "deliveryAddress": "Leveradres",
+    "street": "Straat en huisnummer",
+    "postalCode": "Postcode",
+    "city": "Stad",
+    "paymentMethod": "Betaalmethode",
+    "online": "Online betalen",
+    "cash": "Cash betalen",
+    "notes": "Opmerkingen",
+    "notesPlaceholder": "Bijv. allergieën, speciale wensen...",
+    "invoice": "Factuur aanvragen",
+    "invoiceInfo": "Factuurgegevens",
+    "companyName": "Bedrijfsnaam",
+    "vatNumber": "BTW-nummer",
+    "placeOrder": "Bestelling plaatsen",
+    "processing": "Bestelling verwerken...",
+    "orderSummary": "Overzicht",
+    "minimumOrder": "Minimumbedrag niet bereikt (min. {amount})",
+    "closedMessage": "Bestellingen zijn momenteel gesloten.",
+    "invalidPostalCode": "Levering is niet beschikbaar voor deze postcode.",
+    "stockError": "Een of meer gerechten zijn niet meer beschikbaar in de gewenste hoeveelheid."
+  },
+  "order": {
+    "title": "Bestellingsstatus",
+    "orderNumber": "Bestelnummer",
+    "status": "Status",
+    "fulfillment": "Type",
+    "pickupSlot": "Afhaaltijdstip",
+    "total": "Totaal",
+    "statuses": {
+      "pending": "In afwachting",
+      "confirmed": "Bevestigd",
+      "preparing": "In bereiding",
+      "ready": "Klaar",
+      "out_for_delivery": "Onderweg",
+      "completed": "Afgerond",
+      "cancelled": "Geannuleerd"
+    },
+    "notFound": "Bestelling niet gevonden."
+  },
+  "catering": {
+    "title": "Catering",
+    "subtitle": "Laat ons uw evenement verzorgen met authentieke Maghrebijnse gerechten.",
+    "eventType": "Type evenement",
+    "eventTypes": {
+      "wedding": "Bruiloft",
+      "aqiqa": "Aqiqa",
+      "corporate": "Bedrijfsevenement",
+      "funeral": "Rouwplechtigheid",
+      "iftar": "Iftar",
+      "other": "Anders"
+    },
+    "eventDate": "Datum evenement",
+    "guestCount": "Aantal gasten",
+    "dietaryNeeds": "Dieetwensen",
+    "message": "Uw bericht",
+    "submit": "Aanvraag versturen",
+    "success": "Uw aanvraag is verstuurd! We nemen zo snel mogelijk contact met u op.",
+    "error": "Er is iets misgegaan bij het versturen. Probeer het opnieuw."
+  },
+  "about": {
+    "title": "Over ons"
+  },
+  "faq": {
+    "title": "Veelgestelde vragen"
+  },
+  "contact": {
+    "title": "Contact"
+  },
+  "footer": {
+    "rights": "Alle rechten voorbehouden.",
+    "privacy": "Privacybeleid",
+    "terms": "Algemene voorwaarden"
+  },
+  "cookies": {
+    "message": "Wij gebruiken cookies om uw ervaring te verbeteren.",
+    "accept": "Accepteren",
+    "decline": "Weigeren"
+  }
+}
