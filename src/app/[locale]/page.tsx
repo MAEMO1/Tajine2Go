@@ -1,5 +1,5 @@
 import { useTranslations } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 
 type Props = {
@@ -108,6 +108,15 @@ function HomeContent() {
       </section>
     </div>
   );
+}
+
+export async function generateMetadata({ params }: Props) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "common" });
+  return {
+    title: t("siteName"),
+    description: t("tagline"),
+  };
 }
 
 function FeatureCard({ icon, title, text }: { icon: string; title: string; text: string }) {

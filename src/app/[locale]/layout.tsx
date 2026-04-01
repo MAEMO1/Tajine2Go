@@ -4,6 +4,8 @@ import { NextIntlClientProvider, useMessages } from "next-intl";
 import { routing, type Locale } from "@/i18n/routing";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
+import { CookieConsent } from "@/components/cookie-consent";
+import { PlausibleScript } from "@/components/plausible";
 
 type Props = {
   children: React.ReactNode;
@@ -31,6 +33,8 @@ export default async function LocaleLayout({ children, params }: Props) {
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
+        <CookieConsent />
+        <PlausibleScript />
       </NextIntlClientProvider>
     </div>
   );
