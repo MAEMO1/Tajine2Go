@@ -14,7 +14,7 @@ export default function AdminLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div lang="nl" dir="ltr" className="flex min-h-full flex-col bg-brand-cream">
+    <div lang="nl" dir="ltr" className="flex min-h-full bg-brand-cream">
       {children}
     </div>
   );
