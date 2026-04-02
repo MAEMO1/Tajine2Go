@@ -21,25 +21,12 @@ export function CartDrawer() {
 
   return (
     <>
-      {/* Floating cart button (mobile) */}
+      {/* Desktop sticky cart indicator (mobile uses StickyBar) */}
       {!isOpen && count > 0 && (
         <button
           type="button"
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 z-40 flex items-center gap-2 rounded-full bg-brand-orange px-5 py-3 font-semibold text-white shadow-lg transition-colors hover:bg-brand-orange-hover md:hidden"
-        >
-          <CartIcon />
-          <span>{t("itemCount", { count })}</span>
-          <span>{formatPrice(subtotalCents())}</span>
-        </button>
-      )}
-
-      {/* Desktop sticky cart indicator */}
-      {!isOpen && count > 0 && (
-        <button
-          type="button"
-          onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 z-40 hidden items-center gap-2 rounded-full bg-brand-orange px-5 py-3 font-semibold text-white shadow-lg transition-colors hover:bg-brand-orange-hover md:flex"
+          className="fixed bottom-6 z-40 hidden items-center gap-2 rounded-full bg-brand-orange px-5 py-3 font-semibold text-white shadow-lg transition-all duration-200 hover:scale-[1.02] hover:bg-brand-orange-hover active:scale-[0.98] md:flex ltr:right-6 rtl:left-6"
         >
           <CartIcon />
           <span>{t("itemCount", { count })}</span>

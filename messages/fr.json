@@ -29,6 +29,16 @@
     "orderNow": "Commander",
     "viewMenu": "Voir le menu",
     "cateringCta": "Traiteur pour votre événement",
+    "cateringCtaText": "Des mariages aux événements d'entreprise — nous nous en occupons avec des plats maghrébins authentiques.",
+    "uspFresh": "Fraîchement préparé",
+    "uspFreshText": "Chaque semaine préparé avec des recettes traditionnelles et les meilleurs ingrédients.",
+    "uspDelivery": "Retrait ou livraison",
+    "uspDeliveryText": "Retirez votre commande ou faites-la livrer à Gand.",
+    "uspCatering": "Traiteur",
+    "uspCateringText": "Des mariages aux événements d'entreprise — nous nous en occupons.",
+    "storyTitle": "Notre histoire",
+    "storyText": "Tajine2Go apporte les saveurs authentiques du Maghreb à Gand. Préparé avec amour, dans le respect de la tradition, et avec les meilleurs ingrédients frais. Chaque semaine.",
+    "storyLink": "En savoir plus",
     "closed": "Nous sommes actuellement fermés. Consultez notre menu pour le prochain jour de commande."
   },
   "menu": {
@@ -137,7 +147,12 @@
   "footer": {
     "rights": "Tous droits réservés.",
     "privacy": "Politique de confidentialité",
-    "terms": "Conditions générales"
+    "terms": "Conditions générales",
+    "tagline": "Saveurs maghrébines authentiques, fraîches chaque semaine à Gand.",
+    "quickLinks": "Liens rapides",
+    "contactInfo": "Contact",
+    "openingHours": "Chaque samedi 12h00 – 19h00",
+    "madeWith": "Fait avec amour à Gand"
   },
   "cookies": {
     "message": "Nous utilisons des cookies pour améliorer votre expérience.",

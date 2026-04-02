@@ -3,11 +3,16 @@
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { LanguageSwitcher } from "./language-switcher";
+import { useCartStore } from "@/stores/cart";
 import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 
 export function Header() {
   const t = useTranslations("nav");
+  const tCommon = useTranslations("common");
   const [mobileOpen, setMobileOpen] = useState(false);
+  const itemCount = useCartStore((s) => s.itemCount);
+  const count = itemCount();
 
   const navLinks = [
     { href: "/menu" as const, label: t("menu") },
@@ -19,57 +24,131 @@ export function Header() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 border-b border-brand-warm2 bg-brand-cream/95 backdrop-blur-sm">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
-        {/* Logo */}
-        <Link href="/" className="font-heading text-2xl text-brand-orange">
-          Tajine2Go
-        </Link>
-
-        {/* Desktop nav */}
-        <nav className="hidden items-center gap-6 md:flex">
-          {navLinks.map((link) => (
-            <NavLink key={link.href} href={link.href} label={link.label} />
-          ))}
+    <>
+      {/* Layer 1 — Utility bar */}
+      <div className="bg-brand-brown text-brand-brown-s">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-1.5">
+          <span className="text-xs">
+            {tCommon("tagline")}
+          </span>
           <LanguageSwitcher />
-        </nav>
-
-        {/* Mobile hamburger */}
-        <button
-          type="button"
-          className="md:hidden"
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Menu"
-        >
-          <svg className="h-6 w-6 text-brand-brown" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            {mobileOpen ? (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            ) : (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            )}
-          </svg>
-        </button>
+        </div>
       </div>
 
-      {/* Mobile menu */}
-      {mobileOpen && (
-        <nav className="border-t border-brand-warm2 px-4 pb-4 md:hidden">
-          {navLinks.map((link) => (
+      {/* Layer 2 — Main navigation */}
+      <header className="sticky top-0 z-50 bg-brand-orange shadow-md">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
+          {/* Logo */}
+          <Link
+            href="/"
+            className="font-heading text-2xl uppercase tracking-[0.08em] text-white"
+          >
+            Tajine2Go
+          </Link>
+
+          {/* Desktop nav */}
+          <nav className="hidden items-center gap-1 lg:flex">
+            {navLinks.map((link) => (
+              <NavLink key={link.href} href={link.href} label={link.label} />
+            ))}
+          </nav>
+
+          {/* Right side: cart + mobile hamburger */}
+          <div className="flex items-center gap-3">
+            {/* Cart icon with badge */}
             <Link
-              key={link.href}
-              href={link.href}
-              className="block py-2 text-brand-brown-m hover:text-brand-orange"
-              onClick={() => setMobileOpen(false)}
+              href="/bestellen"
+              className="relative flex items-center text-white"
+              aria-label={t("order")}
             >
-              {link.label}
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z"
+                />
+              </svg>
+              {count > 0 && (
+                <span className="absolute -end-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-white text-xs font-bold text-brand-orange">
+                  {count}
+                </span>
+              )}
             </Link>
-          ))}
-          <div className="pt-2">
-            <LanguageSwitcher />
+
+            {/* Mobile hamburger */}
+            <button
+              type="button"
+              className="text-white lg:hidden"
+              onClick={() => setMobileOpen(!mobileOpen)}
+              aria-label="Menu"
+            >
+              <svg className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                {mobileOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
+            </button>
           </div>
-        </nav>
-      )}
-    </header>
+        </div>
+      </header>
+
+      {/* Mobile menu overlay */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-40 bg-black/40 lg:hidden"
+            onClick={() => setMobileOpen(false)}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* Mobile nav panel */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.nav
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ type: "spring", damping: 25, stiffness: 250 }}
+            className="fixed inset-y-0 z-50 flex w-72 flex-col bg-brand-orange ltr:right-0 rtl:left-0 lg:hidden"
+          >
+            <div className="flex items-center justify-between px-6 py-4">
+              <span className="font-heading text-xl uppercase tracking-[0.08em] text-white">
+                Menu
+              </span>
+              <button
+                type="button"
+                onClick={() => setMobileOpen(false)}
+                className="text-white/80 hover:text-white"
+              >
+                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <div className="flex flex-1 flex-col gap-1 px-4">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="rounded-lg px-3 py-3 font-heading text-lg uppercase tracking-[0.08em] text-white/90 transition-colors hover:bg-white/10 hover:text-white"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+          </motion.nav>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
 
@@ -80,13 +159,16 @@ function NavLink({ href, label }: { href: string; label: string }) {
   return (
     <Link
       href={href}
-      className={`text-sm font-medium transition-colors ${
-        isActive
-          ? "text-brand-orange"
-          : "text-brand-brown-m hover:text-brand-orange"
+      className={`group relative px-3 py-2 font-heading text-sm uppercase tracking-[0.08em] transition-colors ${
+        isActive ? "text-white" : "text-white/80 hover:text-white"
       }`}
     >
       {label}
+      <span
+        className={`absolute inset-x-3 -bottom-0.5 h-0.5 rounded-full bg-white transition-transform origin-center ${
+          isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+        }`}
+      />
     </Link>
   );
 }

@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { DishRow } from "@/components/dish-row";
 import { CartDrawer } from "@/components/cart-drawer";
+import { ScrollReveal } from "@/components/scroll-reveal";
 import type { MenuResponse, MenuDish } from "@/types/database";
 
 type Props = {
@@ -33,7 +34,9 @@ export function MenuContent({ menu }: Props) {
 
   return (
     <div className="mx-auto w-full max-w-3xl px-4 py-8">
-      <h1 className="font-heading text-4xl text-brand-brown">{t("title")}</h1>
+      <h1 className="font-heading text-4xl uppercase tracking-[0.08em] text-brand-brown">
+        {t("title")}
+      </h1>
       <p className="mt-2 text-brand-brown-m capitalize">{formattedDate}</p>
 
       {!menu.is_active && (
@@ -49,12 +52,14 @@ export function MenuContent({ menu }: Props) {
       <div className="mt-8 space-y-10">
         {sortedCategories.map(([category, dishes]) => (
           <section key={category}>
-            <h2 className="mb-4 font-heading text-2xl text-brand-bronze">
+            <h2 className="mb-4 font-heading text-2xl uppercase tracking-[0.08em] text-brand-bronze">
               {t(`categories.${category}` as Parameters<typeof t>[0])}
             </h2>
             <div className="space-y-3">
-              {dishes.map((dish) => (
-                <DishRow key={dish.id} dish={dish} isActive={menu.is_active} />
+              {dishes.map((dish, index) => (
+                <ScrollReveal key={dish.id} delay={index * 0.08}>
+                  <DishRow dish={dish} isActive={menu.is_active} />
+                </ScrollReveal>
               ))}
             </div>
           </section>
