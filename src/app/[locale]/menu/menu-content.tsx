@@ -2,7 +2,6 @@
 
 import { useTranslations } from "next-intl";
 import { DishRow } from "@/components/dish-row";
-import { CartDrawer } from "@/components/cart-drawer";
 import { ScrollReveal } from "@/components/scroll-reveal";
 import type { MenuResponse, MenuDish } from "@/types/database";
 
@@ -65,8 +64,6 @@ export function MenuContent({ menu }: Props) {
           </section>
         ))}
       </div>
-
-      <CartDrawer />
     </div>
   );
 }

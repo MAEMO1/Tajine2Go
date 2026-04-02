@@ -1,6 +1,6 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { LanguageSwitcher } from "./language-switcher";
 import { useCartStore } from "@/stores/cart";
@@ -10,18 +10,33 @@ import { AnimatePresence, motion } from "framer-motion";
 export function Header() {
   const t = useTranslations("nav");
   const tCommon = useTranslations("common");
+  const locale = useLocale();
+  const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const itemCount = useCartStore((s) => s.itemCount);
   const count = itemCount();
 
+  const isHomepage = pathname === "/";
+
   const navLinks = [
-    { href: "/menu" as const, label: t("menu") },
-    { href: "/bestellen" as const, label: t("order") },
-    { href: "/catering" as const, label: t("catering") },
-    { href: "/over-ons" as const, label: t("about") },
-    { href: "/faq" as const, label: t("faq") },
-    { href: "/contact" as const, label: t("contact") },
+    { href: "/menu" as const, label: t("menu"), scrollTarget: "#menu" },
+    { href: "/catering" as const, label: t("catering"), scrollTarget: null },
+    { href: "/over-ons" as const, label: t("about"), scrollTarget: null },
+    { href: "/faq" as const, label: t("faq"), scrollTarget: null },
+    { href: "/contact" as const, label: t("contact"), scrollTarget: null },
   ];
+
+  function handleScrollOrNavigate(scrollTarget: string | null, href: string) {
+    if (scrollTarget && isHomepage) {
+      const el = document.querySelector(scrollTarget);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+        setMobileOpen(false);
+        return true;
+      }
+    }
+    return false;
+  }
 
   return (
     <>
@@ -49,13 +64,20 @@ export function Header() {
           {/* Desktop nav */}
           <nav className="hidden items-center gap-1 lg:flex">
             {navLinks.map((link) => (
-              <NavLink key={link.href} href={link.href} label={link.label} />
+              <SmartNavLink
+                key={link.href}
+                href={link.href}
+                label={link.label}
+                scrollTarget={link.scrollTarget}
+                isHomepage={isHomepage}
+                locale={locale}
+                onScroll={handleScrollOrNavigate}
+              />
             ))}
           </nav>
 
           {/* Right side: cart + mobile hamburger */}
           <div className="flex items-center gap-3">
-            {/* Cart icon with badge */}
             <Link
               href="/bestellen"
               className="relative flex items-center text-white"
@@ -76,7 +98,6 @@ export function Header() {
               )}
             </Link>
 
-            {/* Mobile hamburger */}
             <button
               type="button"
               className="text-white lg:hidden"
@@ -95,7 +116,7 @@ export function Header() {
         </div>
       </header>
 
-      {/* Mobile menu overlay */}
+      {/* Mobile overlay */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
@@ -134,16 +155,30 @@ export function Header() {
               </button>
             </div>
             <div className="flex flex-1 flex-col gap-1 px-4">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="rounded-lg px-3 py-3 font-heading text-lg uppercase tracking-[0.08em] text-white/90 transition-colors hover:bg-white/10 hover:text-white"
-                  onClick={() => setMobileOpen(false)}
-                >
-                  {link.label}
-                </Link>
-              ))}
+              {navLinks.map((link) => {
+                if (link.scrollTarget && isHomepage) {
+                  return (
+                    <button
+                      key={link.href}
+                      type="button"
+                      onClick={() => handleScrollOrNavigate(link.scrollTarget, link.href)}
+                      className="rounded-lg px-3 py-3 text-start font-heading text-lg uppercase tracking-[0.08em] text-white/90 transition-colors hover:bg-white/10 hover:text-white"
+                    >
+                      {link.label}
+                    </button>
+                  );
+                }
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="rounded-lg px-3 py-3 font-heading text-lg uppercase tracking-[0.08em] text-white/90 transition-colors hover:bg-white/10 hover:text-white"
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    {link.label}
+                  </Link>
+                );
+              })}
             </div>
           </motion.nav>
         )}
@@ -152,10 +187,54 @@ export function Header() {
   );
 }
 
-function NavLink({ href, label }: { href: string; label: string }) {
+/* ── Smart NavLink: scroll on homepage, navigate elsewhere ── */
+
+function SmartNavLink({
+  href,
+  label,
+  scrollTarget,
+  isHomepage,
+  locale,
+  onScroll,
+}: {
+  href: string;
+  label: string;
+  scrollTarget: string | null;
+  isHomepage: boolean;
+  locale: string;
+  onScroll: (target: string | null, href: string) => boolean;
+}) {
   const pathname = usePathname();
   const isActive = pathname === href;
 
+  // On homepage with scroll target: use button for smooth scroll
+  if (scrollTarget && isHomepage) {
+    return (
+      <button
+        type="button"
+        onClick={() => onScroll(scrollTarget, href)}
+        className="group relative px-3 py-2 font-heading text-sm uppercase tracking-[0.08em] text-white/80 transition-colors hover:text-white"
+      >
+        {label}
+        <span className="absolute inset-x-3 -bottom-0.5 h-0.5 origin-center scale-x-0 rounded-full bg-white transition-transform group-hover:scale-x-100" />
+      </button>
+    );
+  }
+
+  // On other pages with scroll target: navigate to homepage with hash
+  if (scrollTarget && !isHomepage) {
+    return (
+      <a
+        href={`/${locale}${scrollTarget}`}
+        className="group relative px-3 py-2 font-heading text-sm uppercase tracking-[0.08em] text-white/80 transition-colors hover:text-white"
+      >
+        {label}
+        <span className="absolute inset-x-3 -bottom-0.5 h-0.5 origin-center scale-x-0 rounded-full bg-white transition-transform group-hover:scale-x-100" />
+      </a>
+    );
+  }
+
+  // Regular link
   return (
     <Link
       href={href}
@@ -165,7 +244,7 @@ function NavLink({ href, label }: { href: string; label: string }) {
     >
       {label}
       <span
-        className={`absolute inset-x-3 -bottom-0.5 h-0.5 rounded-full bg-white transition-transform origin-center ${
+        className={`absolute inset-x-3 -bottom-0.5 h-0.5 origin-center rounded-full bg-white transition-transform ${
           isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
         }`}
       />

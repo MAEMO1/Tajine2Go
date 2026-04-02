@@ -7,6 +7,7 @@ import { Footer } from "@/components/footer";
 import { CookieConsent } from "@/components/cookie-consent";
 import { PlausibleScript } from "@/components/plausible";
 import { StickyBar } from "@/components/sticky-bar";
+import { CartDrawer } from "@/components/cart-drawer";
 
 type Props = {
   children: React.ReactNode;
@@ -34,6 +35,7 @@ export default async function LocaleLayout({ children, params }: Props) {
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
+        <CartDrawer />
         <StickyBar />
         <CookieConsent />
         <PlausibleScript />
