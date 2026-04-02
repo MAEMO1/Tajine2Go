@@ -6,6 +6,7 @@ import { LanguageSwitcher } from "./language-switcher";
 import { useCartStore } from "@/stores/cart";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import Image from "next/image";
 
 export function Header() {
   const t = useTranslations("nav");
@@ -56,9 +57,18 @@ export function Header() {
           {/* Logo */}
           <Link
             href="/"
-            className="font-heading text-2xl uppercase tracking-[0.08em] text-white"
+            className="flex items-center gap-2"
           >
-            Tajine2Go
+            <Image
+              src="/logo.png"
+              alt="Tajine2Go"
+              width={48}
+              height={48}
+              className="h-10 w-auto md:h-12"
+            />
+            <span className="font-heading text-xl uppercase tracking-[0.08em] text-white md:text-2xl">
+              Tajine2Go
+            </span>
           </Link>
 
           {/* Desktop nav */}

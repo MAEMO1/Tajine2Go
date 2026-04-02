@@ -10,6 +10,7 @@ export function HeroVideo() {
         className="h-full w-full object-cover"
       >
         <source src="/hero-animation.webm" type="video/webm" />
+        <source src="/hero-animation.mp4" type="video/mp4" />
       </video>
       <div className="absolute inset-0 bg-gradient-to-t from-brand-brown/70 via-brand-brown/30 to-transparent" />
     </div>
