@@ -35,7 +35,7 @@ export function Header() {
     { href: "/contact" as const, label: t("contact"), scrollTarget: null },
   ];
 
-  function handleScrollOrNavigate(scrollTarget: string | null, _href: string) {
+  function handleScrollOrNavigate(scrollTarget: string | null) {
     if (scrollTarget && isHomepage) {
       const el = document.querySelector(scrollTarget);
       if (el) {
@@ -185,7 +185,7 @@ export function Header() {
                       key={link.href}
                       {...motionProps}
                       type="button"
-                      onClick={() => handleScrollOrNavigate(link.scrollTarget, link.href)}
+                      onClick={() => handleScrollOrNavigate(link.scrollTarget)}
                       className="rounded-lg px-4 py-3 text-start font-heading text-lg uppercase tracking-[0.12em] text-brand-brown-m transition-colors hover:bg-brand-warm hover:text-brand-brown"
                     >
                       {link.label}
@@ -235,7 +235,7 @@ function SmartNavLink({
   scrollTarget: string | null;
   isHomepage: boolean;
   locale: string;
-  onScroll: (target: string | null, href: string) => boolean;
+  onScroll: (target: string | null) => boolean;
 }) {
   const pathname = usePathname();
   const isActive = pathname === href;
@@ -250,7 +250,7 @@ function SmartNavLink({
     return (
       <button
         type="button"
-        onClick={() => onScroll(scrollTarget, href)}
+        onClick={() => onScroll(scrollTarget)}
         className={`${baseClass} ${inactiveClass}`}
       >
         {label}

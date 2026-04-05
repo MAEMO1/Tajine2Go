@@ -21,7 +21,6 @@ export function HeroCanvas() {
     /* ── Color palette ── */
     const CREAM = "#FFF8EE";
     const WALL = "#E4D4BC";
-    const WALL_DARK = "#D8C8AC";
     const LINE_DARK = "#3A2010";
     const LINE_MED = "#6B4828";
     const LINE_LIGHT = "#9A7A58";
@@ -33,61 +32,159 @@ export function HeroCanvas() {
     const TILE_BG = "#EDE0CC";
     const TILE_LIGHT = "#F0E8D8";
 
+    /* ── Gebs (carved plaster) colors — monochrome relief ── */
+    const GEBS_BG = "#F0E8D8";       // warm plaster base
+    const GEBS_GROOVE = "#B8A488";    // carved groove (main lines)
+    const GEBS_SHADOW = "#A08868";    // shadow side of groove (depth)
+    const GEBS_HIGHLIGHT = "#FBF6EE"; // light side of groove (raised edge)
+    const GEBS_DEEP = "#9A8468";      // deeper carved detail
+    const GEBS_FINE = "#C8B898";      // fine detail lines
+
     function clear() {
       cx.clearRect(0, 0, W, H);
       cx.fillStyle = CREAM;
       cx.fillRect(0, 0, W, H);
     }
 
-    /* ── Geometric Moroccan Arabesque ── */
+    /* ── Carved plaster stroke with shadow depth ── */
 
-    function draw8Star(x: number, y: number, r: number, color: string) {
-      // 8-pointed star: two overlapping squares rotated 22.5°
-      const outerPts: [number, number][] = [];
-      const innerR = r * 0.42;
+    function gebsStroke(path: Path2D, width: number, depth: number) {
+      // Shadow (bottom-right offset — simulates light from top-left)
+      cx.save();
+      cx.strokeStyle = GEBS_SHADOW;
+      cx.lineWidth = width;
+      cx.translate(depth, depth);
+      cx.stroke(path);
+      cx.restore();
+
+      // Highlight (top-left offset)
+      cx.save();
+      cx.strokeStyle = GEBS_HIGHLIGHT;
+      cx.lineWidth = width * 0.6;
+      cx.translate(-depth * 0.5, -depth * 0.5);
+      cx.stroke(path);
+      cx.restore();
+
+      // Main groove
+      cx.strokeStyle = GEBS_GROOVE;
+      cx.lineWidth = width;
+      cx.stroke(path);
+    }
+
+    /* ── Palmette (stylized leaf/flower — core gebs motif) ── */
+
+    function drawPalmette(x: number, y: number, size: number, angle: number) {
+      cx.save();
+      cx.translate(x, y);
+      cx.rotate(angle);
+
+      const s = size;
+      const path = new Path2D();
+
+      // Central stem
+      path.moveTo(0, 0);
+      path.lineTo(0, -s);
+
+      // Left leaf
+      path.moveTo(0, -s * 0.3);
+      path.quadraticCurveTo(-s * 0.5, -s * 0.6, -s * 0.15, -s * 0.85);
+
+      // Right leaf
+      path.moveTo(0, -s * 0.3);
+      path.quadraticCurveTo(s * 0.5, -s * 0.6, s * 0.15, -s * 0.85);
+
+      // Crown/tip (trefoil)
+      path.moveTo(-s * 0.15, -s * 0.85);
+      path.quadraticCurveTo(-s * 0.25, -s * 1.1, 0, -s * 1.05);
+      path.quadraticCurveTo(s * 0.25, -s * 1.1, s * 0.15, -s * 0.85);
+
+      // Outer side leaves
+      path.moveTo(0, -s * 0.15);
+      path.quadraticCurveTo(-s * 0.65, -s * 0.35, -s * 0.3, -s * 0.7);
+      path.moveTo(0, -s * 0.15);
+      path.quadraticCurveTo(s * 0.65, -s * 0.35, s * 0.3, -s * 0.7);
+
+      gebsStroke(path, 0.8, 0.7);
+      cx.restore();
+    }
+
+    /* ── Spiral vine tendril ── */
+
+    function drawVine(x: number, y: number, radius: number, turns: number, dir: number) {
+      const path = new Path2D();
+      for (let t = 0; t < turns * Math.PI * 2; t += 0.12) {
+        const r = radius * (1 - t / (turns * Math.PI * 2));
+        const px = x + Math.cos(t * dir) * r;
+        const py = y + Math.sin(t * dir) * r;
+        if (t === 0) path.moveTo(px, py);
+        else path.lineTo(px, py);
+      }
+      gebsStroke(path, 0.6, 0.5);
+    }
+
+    /* ── 8-point star outline (geometric framework for gebs) ── */
+
+    function drawStarFrame(x: number, y: number, r: number) {
+      const path = new Path2D();
       for (let i = 0; i < 16; i++) {
         const angle = (i / 16) * Math.PI * 2 - Math.PI / 2;
-        const rad = i % 2 === 0 ? r : innerR;
-        outerPts.push([x + Math.cos(angle) * rad, y + Math.sin(angle) * rad]);
+        const rad = i % 2 === 0 ? r : r * 0.42;
+        const px = x + Math.cos(angle) * rad;
+        const py = y + Math.sin(angle) * rad;
+        if (i === 0) path.moveTo(px, py);
+        else path.lineTo(px, py);
       }
-      rc.polygon(outerPts, {
-        fill: color,
-        fillStyle: "solid",
-        stroke: color,
-        strokeWidth: 0.3,
-        roughness: 0.12,
-      });
-      // Center rosette
-      rc.circle(x, y, r * 0.22, {
-        fill: TILE_LIGHT,
-        fillStyle: "solid",
-        stroke: "none",
-        strokeWidth: 0,
-        roughness: 0.1,
-      });
+      path.closePath();
+      gebsStroke(path, 1.0, 0.8);
+
+      // Inner circle
+      const inner = new Path2D();
+      inner.arc(x, y, r * 0.25, 0, Math.PI * 2);
+      gebsStroke(inner, 0.7, 0.5);
+
+      // Second inner circle
+      const inner2 = new Path2D();
+      inner2.arc(x, y, r * 0.12, 0, Math.PI * 2);
+      gebsStroke(inner2, 0.4, 0.3);
     }
 
-    function drawDiamond(x: number, y: number, w: number, h: number, color: string) {
-      rc.polygon(
-        [[x, y - h / 2], [x + w / 2, y], [x, y + h / 2], [x - w / 2, y]],
-        { fill: color, fillStyle: "solid", stroke: color, strokeWidth: 0.2, roughness: 0.15 }
-      );
+    /* ── Interlaced band (running border) ── */
+
+    function drawInterlaceBand(x: number, y: number, w: number, bandH: number) {
+      const wavelength = bandH * 1.6;
+      const amplitude = bandH * 0.3;
+      const n = Math.ceil(w / wavelength);
+
+      // Two intertwining bands
+      for (let band = 0; band < 2; band++) {
+        const path = new Path2D();
+        const offset = band * wavelength * 0.5;
+        for (let i = 0; i <= n; i++) {
+          const bx = x + i * wavelength + offset;
+          if (bx > x + w + wavelength) break;
+          if (i === 0) {
+            path.moveTo(bx, y + bandH / 2 - amplitude);
+          }
+          path.quadraticCurveTo(
+            bx + wavelength * 0.25, y + bandH / 2 + amplitude,
+            bx + wavelength * 0.5, y + bandH / 2 - amplitude
+          );
+        }
+        gebsStroke(path, 0.7, 0.5);
+      }
+
+      // Top and bottom border lines
+      const topLine = new Path2D();
+      topLine.moveTo(x, y + 1);
+      topLine.lineTo(x + w, y + 1);
+      const botLine = new Path2D();
+      botLine.moveTo(x, y + bandH - 1);
+      botLine.lineTo(x + w, y + bandH - 1);
+      gebsStroke(topLine, 0.5, 0.4);
+      gebsStroke(botLine, 0.5, 0.4);
     }
 
-    function drawHexConnector(x: number, y: number, s: number, color: string) {
-      const pts: [number, number][] = [];
-      for (let i = 0; i < 6; i++) {
-        const a = (i / 6) * Math.PI * 2;
-        pts.push([x + Math.cos(a) * s, y + Math.sin(a) * s]);
-      }
-      rc.polygon(pts, {
-        fill: color,
-        fillStyle: "solid",
-        stroke: color,
-        strokeWidth: 0.2,
-        roughness: 0.15,
-      });
-    }
+    /* ── Main gebs arabesque fill ── */
 
     function fillArabesque(bx: number, by: number, bw: number, bh: number) {
       cx.save();
@@ -95,90 +192,132 @@ export function HeroCanvas() {
       cx.rect(bx, by, bw, bh);
       cx.clip();
 
-      // Background
-      cx.fillStyle = WALL_DARK;
+      // Plaster base
+      cx.fillStyle = GEBS_BG;
       cx.fillRect(bx, by, bw, bh);
 
-      // Grid parameters for 8-point star lattice
-      const spacing = 32;
-      const starR = spacing * 0.38;
-      const starColors = [BLUE, GREEN, GOLD, RED];
-      const connectorColors = [GREEN, BLUE, RED, GOLD];
-
-      let colorIdx = 0;
-
-      // Layer 1: Primary 8-point star grid
-      for (let row = 0; ; row++) {
-        const yy = by + row * spacing;
-        if (yy > by + bh + spacing) break;
-        for (let col = 0; ; col++) {
-          const xx = bx + col * spacing + (row % 2 === 1 ? spacing / 2 : 0);
-          if (xx > bx + bw + spacing) break;
-
-          const starColor = starColors[(row + col) % starColors.length];
-          draw8Star(xx, yy, starR, starColor);
-          colorIdx++;
-        }
-      }
-
-      // Layer 2: Diamond connectors between stars
-      for (let row = 0; ; row++) {
-        const yy = by + row * spacing + spacing / 2;
-        if (yy > by + bh + spacing) break;
-        for (let col = 0; ; col++) {
-          const offset = row % 2 === 0 ? spacing / 2 : 0;
-          const xx = bx + col * spacing + offset;
-          if (xx > bx + bw + spacing) break;
-
-          const dc = connectorColors[(row + col + 1) % connectorColors.length];
-          drawDiamond(xx, yy, spacing * 0.26, spacing * 0.26, dc);
-        }
-      }
-
-      // Layer 3: Small hexagonal fill in remaining gaps
-      for (let row = 0; ; row++) {
-        const yy = by + spacing * 0.25 + row * spacing;
-        if (yy > by + bh + spacing) break;
-        for (let col = 0; ; col++) {
-          const offset = row % 2 === 1 ? spacing * 0.75 : spacing * 0.25;
-          const xx = bx + col * spacing + offset;
-          if (xx > bx + bw + spacing) break;
-
-          drawHexConnector(xx, yy, spacing * 0.08, TILE_LIGHT);
-        }
-      }
-
-      // Layer 4: Fine interlocking lines (girih network)
-      cx.strokeStyle = LINE_MED;
-      cx.lineWidth = 0.4;
-      cx.globalAlpha = 0.35;
-      for (let row = 0; ; row++) {
-        const yy = by + row * spacing;
-        if (yy > by + bh + spacing) break;
-        for (let col = 0; ; col++) {
-          const xx = bx + col * spacing + (row % 2 === 1 ? spacing / 2 : 0);
-          if (xx > bx + bw + spacing) break;
-
-          // Draw connecting lines to neighbors (girih grid)
-          for (let a = 0; a < 8; a++) {
-            const angle = (a / 8) * Math.PI * 2;
-            const endX = xx + Math.cos(angle) * spacing * 0.48;
-            const endY = yy + Math.sin(angle) * spacing * 0.48;
-            cx.beginPath();
-            cx.moveTo(xx + Math.cos(angle) * starR * 0.9, yy + Math.sin(angle) * starR * 0.9);
-            cx.lineTo(endX, endY);
-            cx.stroke();
+      // Subtle plaster texture (fine grain)
+      cx.globalAlpha = 0.08;
+      cx.fillStyle = GEBS_DEEP;
+      for (let ty = by; ty < by + bh; ty += 2) {
+        for (let tx = bx; tx < bx + bw; tx += 2) {
+          if (Math.random() > 0.6) {
+            cx.fillRect(tx, ty, 1, 1);
           }
         }
       }
       cx.globalAlpha = 1;
 
-      // Frame border
-      cx.strokeStyle = LINE_DARK;
-      cx.lineWidth = 1.8;
-      cx.strokeRect(bx, by, bw, bh);
-      cx.lineWidth = 0.5;
-      cx.strokeRect(bx + 4, by + 4, bw - 8, bh - 8);
+      const spacing = 42;
+      const starR = spacing * 0.4;
+
+      // Layer 1: Geometric star framework
+      for (let row = 0; ; row++) {
+        const yy = by + spacing * 0.5 + row * spacing;
+        if (yy > by + bh + spacing) break;
+        for (let col = 0; ; col++) {
+          const xx = bx + spacing * 0.5 + col * spacing + (row % 2 === 1 ? spacing / 2 : 0);
+          if (xx > bx + bw + spacing) break;
+          drawStarFrame(xx, yy, starR);
+        }
+      }
+
+      // Layer 2: Connecting diamond outlines between stars
+      cx.globalAlpha = 0.85;
+      for (let row = 0; ; row++) {
+        const yy = by + spacing + row * spacing;
+        if (yy > by + bh + spacing) break;
+        for (let col = 0; ; col++) {
+          const offset = row % 2 === 0 ? spacing * 0.75 : spacing * 0.25;
+          const xx = bx + offset + col * spacing;
+          if (xx > bx + bw + spacing) break;
+
+          const ds = spacing * 0.18;
+          const dPath = new Path2D();
+          dPath.moveTo(xx, yy - ds);
+          dPath.lineTo(xx + ds, yy);
+          dPath.lineTo(xx, yy + ds);
+          dPath.lineTo(xx - ds, yy);
+          dPath.closePath();
+          gebsStroke(dPath, 0.6, 0.5);
+        }
+      }
+      cx.globalAlpha = 1;
+
+      // Layer 3: Palmettes inside star compartments
+      for (let row = 0; ; row++) {
+        const yy = by + spacing * 0.5 + row * spacing;
+        if (yy > by + bh + spacing) break;
+        for (let col = 0; ; col++) {
+          const xx = bx + spacing * 0.5 + col * spacing + (row % 2 === 1 ? spacing / 2 : 0);
+          if (xx > bx + bw + spacing) break;
+
+          // 4 palmettes radiating outward from star center
+          for (let p = 0; p < 4; p++) {
+            const a = (p / 4) * Math.PI * 2;
+            const px = xx + Math.cos(a) * starR * 1.3;
+            const py = yy + Math.sin(a) * starR * 1.3;
+            drawPalmette(px, py, spacing * 0.18, a + Math.PI);
+          }
+        }
+      }
+
+      // Layer 4: Vine spirals in the gaps
+      for (let row = 0; ; row++) {
+        const yy = by + spacing + row * spacing;
+        if (yy > by + bh + spacing) break;
+        for (let col = 0; ; col++) {
+          const xx = bx + col * spacing + (row % 2 === 0 ? 0 : spacing / 2);
+          if (xx > bx + bw + spacing) break;
+
+          const dir = ((row + col) % 2 === 0) ? 1 : -1;
+          drawVine(xx, yy, spacing * 0.12, 1.2, dir);
+        }
+      }
+
+      // Layer 5: Fine connecting arcs between motifs
+      cx.globalAlpha = 0.5;
+      for (let row = 0; ; row++) {
+        const yy = by + spacing * 0.5 + row * spacing;
+        if (yy > by + bh + spacing) break;
+        for (let col = 0; ; col++) {
+          const xx = bx + spacing * 0.5 + col * spacing + (row % 2 === 1 ? spacing / 2 : 0);
+          if (xx > bx + bw + spacing) break;
+
+          // Small arcs connecting to neighbors
+          for (let a = 0; a < 8; a++) {
+            const angle = (a / 8) * Math.PI * 2;
+            const arc = new Path2D();
+            const sx = xx + Math.cos(angle) * starR * 0.9;
+            const sy = yy + Math.sin(angle) * starR * 0.9;
+            const ex = xx + Math.cos(angle) * spacing * 0.42;
+            const ey = yy + Math.sin(angle) * spacing * 0.42;
+            const cpx = (sx + ex) / 2 + Math.cos(angle + Math.PI / 2) * spacing * 0.06;
+            const cpy = (sy + ey) / 2 + Math.sin(angle + Math.PI / 2) * spacing * 0.06;
+            arc.moveTo(sx, sy);
+            arc.quadraticCurveTo(cpx, cpy, ex, ey);
+
+            cx.strokeStyle = GEBS_FINE;
+            cx.lineWidth = 0.4;
+            cx.stroke(arc);
+          }
+        }
+      }
+      cx.globalAlpha = 1;
+
+      // Interlaced border band at bottom
+      drawInterlaceBand(bx + 4, by + bh - 14, bw - 8, 12);
+
+      // Interlaced border band at top
+      drawInterlaceBand(bx + 4, by + 2, bw - 8, 12);
+
+      // Frame border (outer carved edge)
+      const frame = new Path2D();
+      frame.rect(bx, by, bw, bh);
+      gebsStroke(frame, 1.8, 1.0);
+      const innerFrame = new Path2D();
+      innerFrame.rect(bx + 3, by + 3, bw - 6, bh - 6);
+      gebsStroke(innerFrame, 0.5, 0.4);
 
       cx.restore();
     }
@@ -280,7 +419,7 @@ export function HeroCanvas() {
         rc.line(0, WB, W, WB, { stroke: LINE_DARK, strokeWidth: 2.2, roughness: 1 });
         rc.rectangle(WL, WT, WR - WL, WB - WT, { fill: WALL, fillStyle: "solid", stroke: LINE_DARK, strokeWidth: 2.5, roughness: 1.2 });
       },
-      // Layer 1: Geometric Moroccan arabesque
+      // Layer 1: Carved plaster arabesque (gebs)
       () => {
         fillArabesque(WL + 2, WT + 2, WR - WL - 4, WMID - WT - 4);
         muqarnas(WL + 4, WMID - 20, WR - WL - 8);
@@ -323,25 +462,20 @@ export function HeroCanvas() {
         const tx = 230, ty = 440;
         rc.ellipse(tx, ty, 85, 22, { fill: "#A08030", fillStyle: "solid", stroke: LINE_DARK, strokeWidth: 1.3, roughness: 0.7 });
         rc.ellipse(tx, ty - 2, 78, 18, { stroke: LINE_MED, strokeWidth: 0.5, roughness: 0.4, fill: "none" });
-        // Legs
         [[-24, 0], [24, 0], [0, 5]].forEach(([ox, oy]) => {
           rc.path(`M${tx + ox} ${ty + 10 + oy} Q${tx + ox + (ox || 3)} ${ty + 24 + oy} ${tx + ox + (ox > 0 ? 6 : ox < 0 ? -6 : 0)} ${ty + 42 + oy}`, { stroke: LINE_MED, strokeWidth: 2, roughness: 0.4, fill: "none" });
           rc.circle(tx + ox + (ox > 0 ? 6 : ox < 0 ? -6 : 0), ty + 44 + oy, 3, { fill: LINE_MED, fillStyle: "solid", stroke: LINE_DARK, strokeWidth: 0.5, roughness: 0.3 });
         });
-        // Tajine body
         rc.ellipse(tx - 12, ty - 8, 44, 11, { fill: "#C88525", fillStyle: "solid", stroke: LINE_DARK, strokeWidth: 1.3, roughness: 0.7 });
         rc.polygon([[tx - 12, ty - 28], [tx - 32, ty - 12], [tx + 8, ty - 12]], { fill: "#DCA038", fillStyle: "solid", stroke: LINE_DARK, strokeWidth: 1.3, roughness: 0.9 });
         rc.ellipse(tx - 12, ty - 29, 9, 6, { fill: "#B07020", fillStyle: "solid", stroke: LINE_DARK, strokeWidth: 1, roughness: 0.5 });
-        // Zigzag pattern on tajine
         for (let i = 0; i < 7; i++) {
           const zx = tx - 28 + i * 5;
           const u = i % 2 === 0;
           rc.line(zx, u ? ty - 18 : ty - 14, zx + 5, u ? ty - 14 : ty - 18, { stroke: LINE_DARK, strokeWidth: 0.4, roughness: 0.3 });
         }
-        // Steam
         rc.path(`M${tx - 16} ${ty - 34} C${tx - 18} ${ty - 44} ${tx - 14} ${ty - 52} ${tx - 17} ${ty - 62}`, { stroke: LINE_DARK, strokeWidth: 0.9, roughness: 1.2, fill: "none" });
         rc.path(`M${tx - 8} ${ty - 33} C${tx - 6} ${ty - 42} ${tx - 10} ${ty - 50} ${tx - 7} ${ty - 60}`, { stroke: LINE_DARK, strokeWidth: 0.7, roughness: 1.2, fill: "none" });
-        // Tea glass
         rc.ellipse(tx + 22, ty - 10, 18, 12, { fill: "#B09048", fillStyle: "solid", stroke: LINE_DARK, strokeWidth: 0.9, roughness: 0.6 });
         rc.ellipse(tx + 22, ty - 15, 10, 5, { fill: "#B09048", fillStyle: "solid", stroke: LINE_DARK, strokeWidth: 0.7, roughness: 0.4 });
         rc.rectangle(tx + 35, ty - 12, 5, 8, { fill: "#B0D0A8", fillStyle: "solid", stroke: LINE_DARK, strokeWidth: 0.6, roughness: 0.4 });
@@ -384,7 +518,6 @@ export function HeroCanvas() {
       },
     ];
 
-    // Draw progressively, layer by layer
     clear();
     let li = 0;
     function anim() {
