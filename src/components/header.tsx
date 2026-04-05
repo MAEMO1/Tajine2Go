@@ -55,10 +55,7 @@ export function Header() {
       <header className="sticky top-0 z-50 bg-brand-orange shadow-md">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
           {/* Logo */}
-          <Link
-            href="/"
-            className="flex items-center gap-2"
-          >
+          <Link href="/">
             <Image
               src="/logo.png"
               alt="Tajine2Go"
@@ -66,9 +63,6 @@ export function Header() {
               height={48}
               className="h-10 w-auto md:h-12"
             />
-            <span className="font-heading text-xl uppercase tracking-[0.08em] text-white md:text-2xl">
-              Tajine2Go
-            </span>
           </Link>
 
           {/* Desktop nav */}
