@@ -49,7 +49,6 @@ export function HeroCanvas() {
     /* ── Carved plaster stroke with shadow depth ── */
 
     function gebsStroke(path: Path2D, width: number, depth: number) {
-      // Shadow (bottom-right offset — simulates light from top-left)
       cx.save();
       cx.strokeStyle = GEBS_SHADOW;
       cx.lineWidth = width;
@@ -57,123 +56,208 @@ export function HeroCanvas() {
       cx.stroke(path);
       cx.restore();
 
-      // Highlight (top-left offset)
       cx.save();
       cx.strokeStyle = GEBS_HIGHLIGHT;
-      cx.lineWidth = width * 0.6;
-      cx.translate(-depth * 0.5, -depth * 0.5);
+      cx.lineWidth = width * 0.5;
+      cx.translate(-depth * 0.4, -depth * 0.4);
       cx.stroke(path);
       cx.restore();
 
-      // Main groove
       cx.strokeStyle = GEBS_GROOVE;
       cx.lineWidth = width;
       cx.stroke(path);
     }
 
-    /* ── Palmette (stylized leaf/flower — core gebs motif) ── */
+    /* ── Islimi half-palmette — the core Moroccan arabesque motif ──
+       A stylised palm leaf that springs sideways from a vine stem.
+       Built from two curved lobes + a central vein + a curling tip. */
 
-    function drawPalmette(x: number, y: number, size: number, angle: number) {
+    function drawHalfPalmette(x: number, y: number, s: number, angle: number, flip: boolean) {
+      cx.save();
+      cx.translate(x, y);
+      cx.rotate(angle);
+      if (flip) cx.scale(-1, 1);
+
+      const p = new Path2D();
+
+      // Outer lobe (big curved leaf)
+      p.moveTo(0, 0);
+      p.bezierCurveTo(s * 0.15, -s * 0.5, s * 0.65, -s * 0.7, s * 0.35, -s * 0.95);
+
+      // Inner lobe (smaller, tighter)
+      p.moveTo(0, 0);
+      p.bezierCurveTo(s * 0.05, -s * 0.35, s * 0.35, -s * 0.55, s * 0.2, -s * 0.8);
+
+      // Central vein
+      p.moveTo(0, 0);
+      p.quadraticCurveTo(s * 0.12, -s * 0.5, s * 0.28, -s * 0.88);
+
+      // Curling tip (the leaf tip curls outward)
+      p.moveTo(s * 0.35, -s * 0.95);
+      p.quadraticCurveTo(s * 0.55, -s * 1.0, s * 0.5, -s * 0.8);
+
+      gebsStroke(p, 0.7, 0.6);
+      cx.restore();
+    }
+
+    /* ── Full palmette — symmetrical, used at vine terminations ── */
+
+    function drawFullPalmette(x: number, y: number, s: number, angle: number) {
       cx.save();
       cx.translate(x, y);
       cx.rotate(angle);
 
-      const s = size;
-      const path = new Path2D();
+      const p = new Path2D();
 
-      // Central stem
-      path.moveTo(0, 0);
-      path.lineTo(0, -s);
+      // Left outer lobe
+      p.moveTo(0, 0);
+      p.bezierCurveTo(-s * 0.1, -s * 0.4, -s * 0.55, -s * 0.6, -s * 0.3, -s * 0.9);
 
-      // Left leaf
-      path.moveTo(0, -s * 0.3);
-      path.quadraticCurveTo(-s * 0.5, -s * 0.6, -s * 0.15, -s * 0.85);
+      // Left inner lobe
+      p.moveTo(0, -s * 0.1);
+      p.bezierCurveTo(-s * 0.05, -s * 0.35, -s * 0.3, -s * 0.5, -s * 0.15, -s * 0.75);
 
-      // Right leaf
-      path.moveTo(0, -s * 0.3);
-      path.quadraticCurveTo(s * 0.5, -s * 0.6, s * 0.15, -s * 0.85);
+      // Right outer lobe
+      p.moveTo(0, 0);
+      p.bezierCurveTo(s * 0.1, -s * 0.4, s * 0.55, -s * 0.6, s * 0.3, -s * 0.9);
 
-      // Crown/tip (trefoil)
-      path.moveTo(-s * 0.15, -s * 0.85);
-      path.quadraticCurveTo(-s * 0.25, -s * 1.1, 0, -s * 1.05);
-      path.quadraticCurveTo(s * 0.25, -s * 1.1, s * 0.15, -s * 0.85);
+      // Right inner lobe
+      p.moveTo(0, -s * 0.1);
+      p.bezierCurveTo(s * 0.05, -s * 0.35, s * 0.3, -s * 0.5, s * 0.15, -s * 0.75);
 
-      // Outer side leaves
-      path.moveTo(0, -s * 0.15);
-      path.quadraticCurveTo(-s * 0.65, -s * 0.35, -s * 0.3, -s * 0.7);
-      path.moveTo(0, -s * 0.15);
-      path.quadraticCurveTo(s * 0.65, -s * 0.35, s * 0.3, -s * 0.7);
+      // Crown tip (pointed, slightly open)
+      p.moveTo(-s * 0.3, -s * 0.9);
+      p.quadraticCurveTo(-s * 0.15, -s * 1.15, 0, -s * 1.1);
+      p.quadraticCurveTo(s * 0.15, -s * 1.15, s * 0.3, -s * 0.9);
 
-      gebsStroke(path, 0.8, 0.7);
+      // Central vein
+      p.moveTo(0, 0);
+      p.lineTo(0, -s * 1.05);
+
+      gebsStroke(p, 0.7, 0.6);
       cx.restore();
     }
 
-    /* ── Spiral vine tendril ── */
+    /* ── Lotus bud — teardrop shape along vine ── */
 
-    function drawVine(x: number, y: number, radius: number, turns: number, dir: number) {
-      const path = new Path2D();
-      for (let t = 0; t < turns * Math.PI * 2; t += 0.12) {
-        const r = radius * (1 - t / (turns * Math.PI * 2));
-        const px = x + Math.cos(t * dir) * r;
-        const py = y + Math.sin(t * dir) * r;
-        if (t === 0) path.moveTo(px, py);
-        else path.lineTo(px, py);
-      }
-      gebsStroke(path, 0.6, 0.5);
+    function drawLotusBud(x: number, y: number, s: number, angle: number) {
+      cx.save();
+      cx.translate(x, y);
+      cx.rotate(angle);
+
+      const p = new Path2D();
+      p.moveTo(0, 0);
+      p.bezierCurveTo(-s * 0.3, -s * 0.3, -s * 0.2, -s * 0.7, 0, -s * 0.85);
+      p.bezierCurveTo(s * 0.2, -s * 0.7, s * 0.3, -s * 0.3, 0, 0);
+
+      // Internal sepal lines
+      p.moveTo(0, -s * 0.15);
+      p.quadraticCurveTo(-s * 0.1, -s * 0.45, 0, -s * 0.75);
+      p.moveTo(-s * 0.08, -s * 0.2);
+      p.quadraticCurveTo(-s * 0.18, -s * 0.4, -s * 0.05, -s * 0.65);
+      p.moveTo(s * 0.08, -s * 0.2);
+      p.quadraticCurveTo(s * 0.18, -s * 0.4, s * 0.05, -s * 0.65);
+
+      gebsStroke(p, 0.6, 0.5);
+      cx.restore();
     }
 
-    /* ── 8-point star outline (geometric framework for gebs) ── */
+    /* ── Undulating S-curve vine (islimi stem) ──
+       The main structural element: a sinuous vine from which
+       half-palmettes and lotus buds spring at each curve. */
 
-    function drawStarFrame(x: number, y: number, r: number) {
-      const path = new Path2D();
-      for (let i = 0; i < 16; i++) {
-        const angle = (i / 16) * Math.PI * 2 - Math.PI / 2;
-        const rad = i % 2 === 0 ? r : r * 0.42;
-        const px = x + Math.cos(angle) * rad;
-        const py = y + Math.sin(angle) * rad;
-        if (i === 0) path.moveTo(px, py);
-        else path.lineTo(px, py);
+    function drawIslimi(
+      startX: number, startY: number,
+      length: number, amplitude: number,
+      wavelength: number, angle: number,
+      leafSize: number
+    ) {
+      cx.save();
+      cx.translate(startX, startY);
+      cx.rotate(angle);
+
+      // Draw the main undulating vine stem
+      const stemPath = new Path2D();
+      const steps = Math.ceil(length / 2);
+      const points: { x: number; y: number; a: number }[] = [];
+
+      for (let i = 0; i <= steps; i++) {
+        const t = i / steps;
+        const px = t * length;
+        const py = Math.sin(t * Math.PI * 2 * (length / wavelength)) * amplitude;
+        if (i === 0) stemPath.moveTo(px, py);
+        else stemPath.lineTo(px, py);
+
+        points.push({
+          x: px, y: py,
+          a: Math.atan2(
+            Math.cos(t * Math.PI * 2 * (length / wavelength)) * amplitude * Math.PI * 2 / wavelength,
+            1
+          )
+        });
       }
-      path.closePath();
-      gebsStroke(path, 1.0, 0.8);
+      gebsStroke(stemPath, 0.9, 0.7);
 
-      // Inner circle
-      const inner = new Path2D();
-      inner.arc(x, y, r * 0.25, 0, Math.PI * 2);
-      gebsStroke(inner, 0.7, 0.5);
+      // Sprout half-palmettes at each inflection point
+      const palmInterval = Math.floor(steps / (length / (wavelength * 0.5)));
+      for (let i = palmInterval; i < steps - palmInterval; i += palmInterval) {
+        const pt = points[i];
+        const tangent = pt.a;
+        const side = Math.sin(i * Math.PI * 2 / (palmInterval * 2)) > 0;
 
-      // Second inner circle
-      const inner2 = new Path2D();
-      inner2.arc(x, y, r * 0.12, 0, Math.PI * 2);
-      gebsStroke(inner2, 0.4, 0.3);
+        // Half-palmette springs perpendicular to stem
+        const perpAngle = tangent + (side ? -Math.PI / 2 : Math.PI / 2);
+        drawHalfPalmette(pt.x, pt.y, leafSize, perpAngle, !side);
+
+        // Curling tendril on opposite side
+        const tendrilPath = new Path2D();
+        const tDir = side ? 1 : -1;
+        const tAngle = tangent + tDir * Math.PI / 2;
+        const tr = leafSize * 0.4;
+        tendrilPath.moveTo(pt.x, pt.y);
+        for (let tt = 0; tt < Math.PI * 1.5; tt += 0.15) {
+          const rr = tr * (1 - tt / (Math.PI * 2.5));
+          tendrilPath.lineTo(
+            pt.x + Math.cos(tAngle + tt * tDir) * rr,
+            pt.y + Math.sin(tAngle + tt * tDir) * rr
+          );
+        }
+        gebsStroke(tendrilPath, 0.45, 0.35);
+      }
+
+      // Lotus buds at peaks and troughs
+      const budInterval = Math.floor(steps * wavelength / (length * 2));
+      for (let i = budInterval; i < steps; i += budInterval * 2) {
+        if (i >= points.length) break;
+        const pt = points[i];
+        const perpAngle = pt.a + (pt.y > 0 ? Math.PI / 2 : -Math.PI / 2);
+        drawLotusBud(pt.x, pt.y, leafSize * 0.55, perpAngle);
+      }
+
+      cx.restore();
     }
 
-    /* ── Interlaced band (running border) ── */
+    /* ── Interlaced ribbon border band ── */
 
     function drawInterlaceBand(x: number, y: number, w: number, bandH: number) {
-      const wavelength = bandH * 1.6;
-      const amplitude = bandH * 0.3;
-      const n = Math.ceil(w / wavelength);
+      const wl = bandH * 1.8;
+      const amp = bandH * 0.28;
+      const n = Math.ceil(w / wl) + 1;
 
-      // Two intertwining bands
       for (let band = 0; band < 2; band++) {
         const path = new Path2D();
-        const offset = band * wavelength * 0.5;
+        const off = band * wl * 0.5;
         for (let i = 0; i <= n; i++) {
-          const bx = x + i * wavelength + offset;
-          if (bx > x + w + wavelength) break;
-          if (i === 0) {
-            path.moveTo(bx, y + bandH / 2 - amplitude);
-          }
+          const bx2 = x + i * wl + off;
+          if (i === 0) path.moveTo(bx2, y + bandH / 2 - amp);
           path.quadraticCurveTo(
-            bx + wavelength * 0.25, y + bandH / 2 + amplitude,
-            bx + wavelength * 0.5, y + bandH / 2 - amplitude
+            bx2 + wl * 0.25, y + bandH / 2 + amp,
+            bx2 + wl * 0.5, y + bandH / 2 - amp
           );
         }
         gebsStroke(path, 0.7, 0.5);
       }
 
-      // Top and bottom border lines
       const topLine = new Path2D();
       topLine.moveTo(x, y + 1);
       topLine.lineTo(x + w, y + 1);
@@ -196,122 +280,70 @@ export function HeroCanvas() {
       cx.fillStyle = GEBS_BG;
       cx.fillRect(bx, by, bw, bh);
 
-      // Subtle plaster texture (fine grain)
-      cx.globalAlpha = 0.08;
+      // Subtle plaster grain texture
+      cx.globalAlpha = 0.06;
       cx.fillStyle = GEBS_DEEP;
       for (let ty = by; ty < by + bh; ty += 2) {
         for (let tx = bx; tx < bx + bw; tx += 2) {
-          if (Math.random() > 0.6) {
-            cx.fillRect(tx, ty, 1, 1);
-          }
+          if (Math.random() > 0.65) cx.fillRect(tx, ty, 1, 1);
         }
       }
       cx.globalAlpha = 1;
 
-      const spacing = 42;
-      const starR = spacing * 0.4;
+      // Top interlaced border
+      drawInterlaceBand(bx + 4, by + 2, bw - 8, 10);
 
-      // Layer 1: Geometric star framework
+      // Bottom interlaced border
+      drawInterlaceBand(bx + 4, by + bh - 12, bw - 8, 10);
+
+      /* ── Islimi vine scrolls — the heart of the arabesque ──
+         Multiple horizontal rows of undulating vines, staggered.
+         Half-palmettes and lotus buds sprout from each curve. */
+
+      const rowH = 38;
+      const leafS = 9;
+      const padding = 14; // space for border bands
+
       for (let row = 0; ; row++) {
-        const yy = by + spacing * 0.5 + row * spacing;
-        if (yy > by + bh + spacing) break;
-        for (let col = 0; ; col++) {
-          const xx = bx + spacing * 0.5 + col * spacing + (row % 2 === 1 ? spacing / 2 : 0);
-          if (xx > bx + bw + spacing) break;
-          drawStarFrame(xx, yy, starR);
+        const ry = by + padding + row * rowH;
+        if (ry > by + bh - padding - rowH * 0.5) break;
+
+        // Alternate direction per row for visual variety
+        const dir = row % 2 === 0 ? 0 : Math.PI;
+        const xOff = row % 2 === 0 ? 0 : rowH * 0.4;
+
+        drawIslimi(
+          bx + 6 + xOff, ry + rowH * 0.5,
+          bw - 12, rowH * 0.32,
+          rowH * 1.2, dir,
+          leafS
+        );
+      }
+
+      /* ── Full palmettes at regular intervals (rosettes) ── */
+      const rosSpacing = 72;
+      for (let ry = by + padding + 20; ry < by + bh - padding - 10; ry += rosSpacing) {
+        for (let rx = bx + rosSpacing / 2; rx < bx + bw; rx += rosSpacing) {
+          drawFullPalmette(rx, ry, leafS * 0.9, -Math.PI / 2);
         }
       }
 
-      // Layer 2: Connecting diamond outlines between stars
-      cx.globalAlpha = 0.85;
+      /* ── Additional half-palmettes filling gaps between vine rows ── */
       for (let row = 0; ; row++) {
-        const yy = by + spacing + row * spacing;
-        if (yy > by + bh + spacing) break;
-        for (let col = 0; ; col++) {
-          const offset = row % 2 === 0 ? spacing * 0.75 : spacing * 0.25;
-          const xx = bx + offset + col * spacing;
-          if (xx > bx + bw + spacing) break;
-
-          const ds = spacing * 0.18;
-          const dPath = new Path2D();
-          dPath.moveTo(xx, yy - ds);
-          dPath.lineTo(xx + ds, yy);
-          dPath.lineTo(xx, yy + ds);
-          dPath.lineTo(xx - ds, yy);
-          dPath.closePath();
-          gebsStroke(dPath, 0.6, 0.5);
-        }
-      }
-      cx.globalAlpha = 1;
-
-      // Layer 3: Palmettes inside star compartments
-      for (let row = 0; ; row++) {
-        const yy = by + spacing * 0.5 + row * spacing;
-        if (yy > by + bh + spacing) break;
-        for (let col = 0; ; col++) {
-          const xx = bx + spacing * 0.5 + col * spacing + (row % 2 === 1 ? spacing / 2 : 0);
-          if (xx > bx + bw + spacing) break;
-
-          // 4 palmettes radiating outward from star center
-          for (let p = 0; p < 4; p++) {
-            const a = (p / 4) * Math.PI * 2;
-            const px = xx + Math.cos(a) * starR * 1.3;
-            const py = yy + Math.sin(a) * starR * 1.3;
-            drawPalmette(px, py, spacing * 0.18, a + Math.PI);
-          }
+        const ry = by + padding + rowH * 0.5 + row * rowH;
+        if (ry > by + bh - padding - 10) break;
+        for (let rx = bx + 30; rx < bx + bw - 20; rx += 50) {
+          const side = (row + Math.floor(rx / 50)) % 2 === 0;
+          drawHalfPalmette(
+            rx, ry,
+            leafS * 0.65,
+            side ? -Math.PI * 0.4 : Math.PI * 0.4,
+            side
+          );
         }
       }
 
-      // Layer 4: Vine spirals in the gaps
-      for (let row = 0; ; row++) {
-        const yy = by + spacing + row * spacing;
-        if (yy > by + bh + spacing) break;
-        for (let col = 0; ; col++) {
-          const xx = bx + col * spacing + (row % 2 === 0 ? 0 : spacing / 2);
-          if (xx > bx + bw + spacing) break;
-
-          const dir = ((row + col) % 2 === 0) ? 1 : -1;
-          drawVine(xx, yy, spacing * 0.12, 1.2, dir);
-        }
-      }
-
-      // Layer 5: Fine connecting arcs between motifs
-      cx.globalAlpha = 0.5;
-      for (let row = 0; ; row++) {
-        const yy = by + spacing * 0.5 + row * spacing;
-        if (yy > by + bh + spacing) break;
-        for (let col = 0; ; col++) {
-          const xx = bx + spacing * 0.5 + col * spacing + (row % 2 === 1 ? spacing / 2 : 0);
-          if (xx > bx + bw + spacing) break;
-
-          // Small arcs connecting to neighbors
-          for (let a = 0; a < 8; a++) {
-            const angle = (a / 8) * Math.PI * 2;
-            const arc = new Path2D();
-            const sx = xx + Math.cos(angle) * starR * 0.9;
-            const sy = yy + Math.sin(angle) * starR * 0.9;
-            const ex = xx + Math.cos(angle) * spacing * 0.42;
-            const ey = yy + Math.sin(angle) * spacing * 0.42;
-            const cpx = (sx + ex) / 2 + Math.cos(angle + Math.PI / 2) * spacing * 0.06;
-            const cpy = (sy + ey) / 2 + Math.sin(angle + Math.PI / 2) * spacing * 0.06;
-            arc.moveTo(sx, sy);
-            arc.quadraticCurveTo(cpx, cpy, ex, ey);
-
-            cx.strokeStyle = GEBS_FINE;
-            cx.lineWidth = 0.4;
-            cx.stroke(arc);
-          }
-        }
-      }
-      cx.globalAlpha = 1;
-
-      // Interlaced border band at bottom
-      drawInterlaceBand(bx + 4, by + bh - 14, bw - 8, 12);
-
-      // Interlaced border band at top
-      drawInterlaceBand(bx + 4, by + 2, bw - 8, 12);
-
-      // Frame border (outer carved edge)
+      // Frame border
       const frame = new Path2D();
       frame.rect(bx, by, bw, bh);
       gebsStroke(frame, 1.8, 1.0);
