@@ -6,19 +6,11 @@ export function InfoStrip() {
   const t = useTranslations("home");
 
   return (
-    <section className="border-b border-brand-warm2 bg-brand-cream px-4 py-10 md:py-14">
-      <div className="mx-auto max-w-4xl text-center">
-        <h2 className="font-heading text-3xl uppercase tracking-[0.08em] text-brand-brown md:text-4xl">
-          {t("infoStripTitle")}
-        </h2>
-        <p className="mx-auto mt-4 max-w-xl text-brand-brown-m">
-          {t("heroSubtitle")}
-        </p>
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm md:gap-10">
-          <InfoItem icon={<ClockIcon />} label={t("infoHours")} />
-          <InfoItem icon={<PinIcon />} label={t("infoAddress")} />
-          <InfoItem icon={<CardIcon />} label={t("infoPayment")} />
-        </div>
+    <section className="border-y border-brand-warm2 bg-brand-warm px-4 py-6">
+      <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-center gap-6 text-sm md:gap-10">
+        <InfoItem icon={<ClockIcon />} label={t("infoHours")} />
+        <InfoItem icon={<PinIcon />} label={t("infoAddress")} />
+        <InfoItem icon={<CardIcon />} label={t("infoPayment")} />
       </div>
     </section>
   );

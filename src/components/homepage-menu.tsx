@@ -18,7 +18,6 @@ export function HomepageMenu({ menu }: Props) {
   const [activeCategory, setActiveCategory] = useState<string>("");
   const categoryRefs = useRef<Map<string, HTMLElement>>(new Map());
 
-  // Group dishes by category
   const categories = new Map<string, MenuDish[]>();
   for (const dish of menu.dishes) {
     const existing = categories.get(dish.category) ?? [];
@@ -30,7 +29,6 @@ export function HomepageMenu({ menu }: Props) {
     (a, b) => CATEGORY_ORDER.indexOf(a[0]) - CATEGORY_ORDER.indexOf(b[0]),
   );
 
-  // Track active category via IntersectionObserver
   const observerCallback = useCallback((entries: IntersectionObserverEntry[]) => {
     for (const entry of entries) {
       if (entry.isIntersecting) {
@@ -52,7 +50,7 @@ export function HomepageMenu({ menu }: Props) {
   function scrollToCategory(category: string) {
     const el = categoryRefs.current.get(category);
     if (el) {
-      const yOffset = -120;
+      const yOffset = -130;
       const y = el.getBoundingClientRect().top + window.scrollY + yOffset;
       window.scrollTo({ top: y, behavior: "smooth" });
     }
@@ -68,7 +66,7 @@ export function HomepageMenu({ menu }: Props) {
     return (
       <section id="menu" className="px-4 py-16">
         <div className="mx-auto max-w-3xl">
-          <div className="rounded-lg bg-brand-warm2 p-6 text-center text-brand-brown-m">
+          <div className="rounded-2xl bg-brand-warm p-8 text-center text-brand-brown-m">
             {tHome("closed")}
           </div>
         </div>
@@ -77,26 +75,26 @@ export function HomepageMenu({ menu }: Props) {
   }
 
   return (
-    <section id="menu" className="pb-20">
-      {/* Sticky menu bar */}
-      <div className="sticky top-[52px] z-40 border-b-2 border-brand-brown bg-brand-cream">
-        <div className="mx-auto flex max-w-4xl flex-col items-start justify-between gap-2 px-4 py-3 sm:flex-row sm:items-center">
+    <section id="menu" className="pb-24">
+      {/* Sticky category bar */}
+      <div className="sticky top-[77px] z-40 border-b border-brand-warm2/60 bg-brand-cream/92 backdrop-blur-md">
+        <div className="mx-auto flex max-w-4xl flex-col items-start justify-between gap-2 px-4 py-3 sm:flex-row sm:items-center md:px-6">
           <div>
-            <h2 className="font-heading text-2xl uppercase tracking-[0.08em] text-brand-brown sm:text-3xl">
+            <h2 className="font-heading text-2xl uppercase tracking-[0.12em] text-brand-brown sm:text-3xl">
               {tHome("menuTitle")} <span className="text-brand-orange">{t("title")}</span>
             </h2>
             <p className="text-sm capitalize text-brand-brown-s">{formattedDate}</p>
           </div>
-          <div className="flex flex-wrap gap-1.5">
+          <div className="flex flex-wrap gap-1">
             {sortedCategories.map(([category]) => (
               <button
                 key={category}
                 type="button"
                 onClick={() => scrollToCategory(category)}
-                className={`rounded-full border px-3.5 py-1 font-heading text-sm uppercase tracking-[0.08em] transition-all duration-200 ${
+                className={`rounded-full px-4 py-1.5 font-heading text-sm uppercase tracking-[0.12em] transition-all duration-250 ${
                   activeCategory === category
-                    ? "border-brand-orange bg-brand-orange text-white"
-                    : "border-brand-brown-s/30 text-brand-brown-s hover:border-brand-orange hover:text-brand-orange"
+                    ? "bg-brand-orange text-white shadow-[0_2px_8px_rgba(217,123,26,0.2)]"
+                    : "text-brand-brown-s hover:bg-brand-warm hover:text-brand-brown"
                 }`}
               >
                 {t(`categories.${category}` as Parameters<typeof t>[0])}
@@ -107,12 +105,12 @@ export function HomepageMenu({ menu }: Props) {
       </div>
 
       {/* Dishes */}
-      <div className="mx-auto max-w-3xl px-4 pt-8">
+      <div className="mx-auto max-w-3xl px-4 pt-10 md:px-6">
         {menu.dishes.length === 0 && (
           <p className="text-center text-brand-brown-s">{t("noItems")}</p>
         )}
 
-        <div className="space-y-10">
+        <div className="space-y-12">
           {sortedCategories.map(([category, dishes]) => (
             <div
               key={category}
@@ -121,12 +119,17 @@ export function HomepageMenu({ menu }: Props) {
                 if (el) categoryRefs.current.set(category, el);
               }}
             >
-              <h3 className="mb-4 font-heading text-xl uppercase tracking-[0.08em] text-brand-bronze">
-                {t(`categories.${category}` as Parameters<typeof t>[0])}
-              </h3>
-              <div className="space-y-3">
+              {/* Category header with decorative line */}
+              <div className="mb-3 flex items-center gap-3">
+                <h3 className="whitespace-nowrap font-heading text-xl uppercase tracking-[0.15em] text-brand-bronze">
+                  {t(`categories.${category}` as Parameters<typeof t>[0])}
+                </h3>
+                <div className="h-px flex-1 bg-gradient-to-r from-brand-warm2 to-transparent" />
+              </div>
+
+              <div>
                 {dishes.map((dish, index) => (
-                  <ScrollReveal key={dish.id} delay={index * 0.06}>
+                  <ScrollReveal key={dish.id} delay={index * 0.05}>
                     <DishRow dish={dish} isActive={menu.is_active} />
                   </ScrollReveal>
                 ))}

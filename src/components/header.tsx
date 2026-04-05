@@ -4,20 +4,28 @@ import { useTranslations, useLocale } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { LanguageSwitcher } from "./language-switcher";
 import { useCartStore } from "@/stores/cart";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 
 export function Header() {
   const t = useTranslations("nav");
-  const tCommon = useTranslations("common");
   const locale = useLocale();
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const itemCount = useCartStore((s) => s.itemCount);
   const count = itemCount();
 
   const isHomepage = pathname === "/";
+
+  useEffect(() => {
+    function onScroll() {
+      setScrolled(window.scrollY > 20);
+    }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const navLinks = [
     { href: "/menu" as const, label: t("menu"), scrollTarget: "#menu" },
@@ -27,7 +35,7 @@ export function Header() {
     { href: "/contact" as const, label: t("contact"), scrollTarget: null },
   ];
 
-  function handleScrollOrNavigate(scrollTarget: string | null, href: string) {
+  function handleScrollOrNavigate(scrollTarget: string | null, _href: string) {
     if (scrollTarget && isHomepage) {
       const el = document.querySelector(scrollTarget);
       if (el) {
@@ -41,32 +49,28 @@ export function Header() {
 
   return (
     <>
-      {/* Layer 1 — Utility bar */}
-      <div className="bg-brand-brown text-brand-brown-s">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-1.5">
-          <span className="text-xs">
-            {tCommon("tagline")}
-          </span>
-          <LanguageSwitcher />
-        </div>
-      </div>
-
-      {/* Layer 2 — Main navigation */}
-      <header className="sticky top-0 z-50 bg-brand-orange shadow-md">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
+      <header
+        className={`sticky top-0 z-50 transition-all duration-300 ${
+          scrolled
+            ? "border-b border-brand-warm2/80 bg-brand-cream/90 shadow-[0_1px_20px_rgba(45,27,10,0.06)] backdrop-blur-md"
+            : "bg-brand-cream"
+        }`}
+      >
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2.5 md:px-6">
           {/* Logo */}
-          <Link href="/">
+          <Link href="/" className="transition-transform duration-200 hover:scale-[1.02]">
             <Image
               src="/logo.png"
               alt="Tajine2Go"
-              width={48}
-              height={48}
-              className="h-10 w-auto md:h-12"
+              width={72}
+              height={72}
+              className="h-14 w-auto md:h-[72px]"
+              priority
             />
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden items-center gap-1 lg:flex">
+          <nav className="hidden items-center gap-0.5 lg:flex">
             {navLinks.map((link) => (
               <SmartNavLink
                 key={link.href}
@@ -80,39 +84,44 @@ export function Header() {
             ))}
           </nav>
 
-          {/* Right side: cart + mobile hamburger */}
-          <div className="flex items-center gap-3">
+          {/* Right side */}
+          <div className="flex items-center gap-2">
+            <LanguageSwitcher />
+
             <Link
               href="/bestellen"
-              className="relative flex items-center text-white"
+              className="group relative flex items-center rounded-full p-2 text-brand-brown-m transition-all duration-200 hover:bg-brand-warm hover:text-brand-orange"
               aria-label={t("order")}
             >
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="h-[22px] w-[22px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeWidth={2}
                   d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z"
                 />
               </svg>
               {count > 0 && (
-                <span className="absolute -end-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-white text-xs font-bold text-brand-orange">
+                <motion.span
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  className="absolute -end-0.5 -top-0.5 flex h-[18px] w-[18px] items-center justify-center rounded-full bg-brand-orange text-[10px] font-bold text-white"
+                >
                   {count}
-                </span>
+                </motion.span>
               )}
             </Link>
 
             <button
               type="button"
-              className="text-white lg:hidden"
+              className="rounded-full p-2 text-brand-brown-m transition-colors hover:bg-brand-warm hover:text-brand-brown lg:hidden"
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-label="Menu"
             >
-              <svg className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
                 {mobileOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                 ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
                 )}
               </svg>
             </button>
@@ -127,8 +136,8 @@ export function Header() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-40 bg-black/40 lg:hidden"
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-40 bg-brand-brown/30 backdrop-blur-[2px] lg:hidden"
             onClick={() => setMobileOpen(false)}
           />
         )}
@@ -141,48 +150,68 @@ export function Header() {
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
-            transition={{ type: "spring", damping: 25, stiffness: 250 }}
-            className="fixed inset-y-0 z-50 flex w-72 flex-col bg-brand-orange ltr:right-0 rtl:left-0 lg:hidden"
+            transition={{ type: "spring", damping: 28, stiffness: 280 }}
+            className="fixed inset-y-0 z-50 flex w-[280px] flex-col border-brand-warm2 bg-brand-cream shadow-[-8px_0_30px_rgba(45,27,10,0.08)] ltr:right-0 ltr:border-l rtl:left-0 rtl:border-r lg:hidden"
           >
-            <div className="flex items-center justify-between px-6 py-4">
-              <span className="font-heading text-xl uppercase tracking-[0.08em] text-white">
+            <div className="flex items-center justify-between px-6 py-5">
+              <span className="font-heading text-xl uppercase tracking-[0.15em] text-brand-brown">
                 Menu
               </span>
               <button
                 type="button"
                 onClick={() => setMobileOpen(false)}
-                className="text-white/80 hover:text-white"
+                className="rounded-full p-1.5 text-brand-brown-s transition-colors hover:bg-brand-warm hover:text-brand-brown"
               >
-                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
             </div>
-            <div className="flex flex-1 flex-col gap-1 px-4">
-              {navLinks.map((link) => {
+
+            {/* Decorative line */}
+            <div className="mx-6 h-px bg-gradient-to-r from-transparent via-brand-warm2 to-transparent" />
+
+            <div className="flex flex-1 flex-col gap-0.5 px-4 py-4">
+              {navLinks.map((link, i) => {
+                const motionProps = {
+                  initial: { opacity: 0, x: 20 } as const,
+                  animate: { opacity: 1, x: 0 } as const,
+                  transition: { delay: 0.05 + i * 0.04 },
+                };
+
                 if (link.scrollTarget && isHomepage) {
                   return (
-                    <button
+                    <motion.button
                       key={link.href}
+                      {...motionProps}
                       type="button"
                       onClick={() => handleScrollOrNavigate(link.scrollTarget, link.href)}
-                      className="rounded-lg px-3 py-3 text-start font-heading text-lg uppercase tracking-[0.08em] text-white/90 transition-colors hover:bg-white/10 hover:text-white"
+                      className="rounded-lg px-4 py-3 text-start font-heading text-lg uppercase tracking-[0.12em] text-brand-brown-m transition-colors hover:bg-brand-warm hover:text-brand-brown"
                     >
                       {link.label}
-                    </button>
+                    </motion.button>
                   );
                 }
                 return (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className="rounded-lg px-3 py-3 font-heading text-lg uppercase tracking-[0.08em] text-white/90 transition-colors hover:bg-white/10 hover:text-white"
-                    onClick={() => setMobileOpen(false)}
-                  >
-                    {link.label}
-                  </Link>
+                  <motion.div key={link.href} {...motionProps}>
+                    <Link
+                      href={link.href}
+                      className="block rounded-lg px-4 py-3 font-heading text-lg uppercase tracking-[0.12em] text-brand-brown-m transition-colors hover:bg-brand-warm hover:text-brand-brown"
+                      onClick={() => setMobileOpen(false)}
+                    >
+                      {link.label}
+                    </Link>
+                  </motion.div>
                 );
               })}
+            </div>
+
+            {/* Bottom decorative accent */}
+            <div className="px-6 pb-8">
+              <div className="h-px bg-gradient-to-r from-transparent via-brand-warm2 to-transparent" />
+              <p className="mt-4 text-center font-heading text-xs uppercase tracking-[0.2em] text-brand-brown-s/50">
+                Tajine2Go
+              </p>
             </div>
           </motion.nav>
         )}
@@ -191,7 +220,7 @@ export function Header() {
   );
 }
 
-/* ── Smart NavLink: scroll on homepage, navigate elsewhere ── */
+/* -- Smart NavLink -- */
 
 function SmartNavLink({
   href,
@@ -211,47 +240,41 @@ function SmartNavLink({
   const pathname = usePathname();
   const isActive = pathname === href;
 
-  // On homepage with scroll target: use button for smooth scroll
+  const baseClass =
+    "relative rounded-full px-4 py-2 font-heading text-[15px] uppercase tracking-[0.12em] transition-all duration-200";
+  const activeClass = "bg-brand-warm text-brand-brown";
+  const inactiveClass =
+    "text-brand-brown-s hover:bg-brand-warm/60 hover:text-brand-brown";
+
   if (scrollTarget && isHomepage) {
     return (
       <button
         type="button"
         onClick={() => onScroll(scrollTarget, href)}
-        className="group relative px-3 py-2 font-heading text-sm uppercase tracking-[0.08em] text-white/80 transition-colors hover:text-white"
+        className={`${baseClass} ${inactiveClass}`}
       >
         {label}
-        <span className="absolute inset-x-3 -bottom-0.5 h-0.5 origin-center scale-x-0 rounded-full bg-white transition-transform group-hover:scale-x-100" />
       </button>
     );
   }
 
-  // On other pages with scroll target: navigate to homepage with hash
   if (scrollTarget && !isHomepage) {
     return (
       <a
         href={`/${locale}${scrollTarget}`}
-        className="group relative px-3 py-2 font-heading text-sm uppercase tracking-[0.08em] text-white/80 transition-colors hover:text-white"
+        className={`${baseClass} ${inactiveClass}`}
       >
         {label}
-        <span className="absolute inset-x-3 -bottom-0.5 h-0.5 origin-center scale-x-0 rounded-full bg-white transition-transform group-hover:scale-x-100" />
       </a>
     );
   }
 
-  // Regular link
   return (
     <Link
       href={href}
-      className={`group relative px-3 py-2 font-heading text-sm uppercase tracking-[0.08em] transition-colors ${
-        isActive ? "text-white" : "text-white/80 hover:text-white"
-      }`}
+      className={`${baseClass} ${isActive ? activeClass : inactiveClass}`}
     >
       {label}
-      <span
-        className={`absolute inset-x-3 -bottom-0.5 h-0.5 origin-center rounded-full bg-white transition-transform ${
-          isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
-        }`}
-      />
     </Link>
   );
 }

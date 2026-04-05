@@ -21,16 +21,16 @@ export function LanguageSwitcher() {
   }
 
   return (
-    <div className="flex items-center gap-1">
+    <div className="flex items-center gap-0.5 rounded-full bg-brand-warm/60 p-0.5">
       {routing.locales.map((loc) => (
         <button
           key={loc}
           type="button"
           onClick={() => switchLocale(loc)}
-          className={`rounded px-2 py-1 text-xs font-medium transition-colors ${
+          className={`rounded-full px-2.5 py-1 text-xs font-medium transition-all duration-200 ${
             loc === locale
-              ? "bg-brand-orange text-white"
-              : "text-brand-brown-s hover:text-brand-orange"
+              ? "bg-brand-cream text-brand-brown shadow-sm"
+              : "text-brand-brown-s hover:text-brand-brown"
           }`}
         >
           {localeLabels[loc]}

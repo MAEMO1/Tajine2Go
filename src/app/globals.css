@@ -25,11 +25,23 @@ body {
   font-family: var(--font-body);
 }
 
-/* Hero entrance animations (CSS-only, no JS hydration needed) */
+/* Subtle grain overlay for depth — applied to main surfaces */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+/* ── Hero entrance animations ── */
 @keyframes fade-up {
   from {
     opacity: 0;
-    transform: translateY(24px);
+    transform: translateY(32px);
   }
   to {
     opacity: 1;
@@ -42,26 +54,70 @@ body {
   to { opacity: 1; }
 }
 
+@keyframes gentle-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
 @utility animate-fade-up {
-  animation: fade-up 0.7s ease-out both;
+  animation: fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 @utility animate-fade-up-delay-1 {
-  animation: fade-up 0.7s ease-out 0.15s both;
+  animation: fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.12s both;
 }
 
 @utility animate-fade-up-delay-2 {
-  animation: fade-up 0.7s ease-out 0.3s both;
+  animation: fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.24s both;
 }
 
 @utility animate-fade-up-delay-3 {
-  animation: fade-up 0.7s ease-out 0.45s both;
+  animation: fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.36s both;
 }
 
 @utility animate-fade-in {
-  animation: fade-in 0.6s ease-out both;
+  animation: fade-in 0.7s ease-out both;
+}
+
+@utility animate-float {
+  animation: gentle-float 4s ease-in-out infinite;
 }
 
 @utility tracking-brand {
   letter-spacing: 0.08em;
+}
+
+
+/* ── Selection color ── */
+::selection {
+  background-color: #FFE8C8;
+  color: #2D1B0A;
+}
+
+/* ── Smooth scrolling ── */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ── Custom scrollbar ── */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-brand-cream);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-brand-warm2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-brand-brown-s);
 }
