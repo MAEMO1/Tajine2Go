@@ -15,7 +15,7 @@ export default async function OrderDetailPage({ params }: Props) {
 
   const supabase = createAdminClient();
 
-  const [orderRes, itemsRes] = await Promise.all([
+  const [orderRes, itemsRes, invoiceRes] = await Promise.all([
     supabase
       .from("orders")
       .select("*, customers(*)")
@@ -25,13 +25,18 @@ export default async function OrderDetailPage({ params }: Props) {
       .from("order_items")
       .select("*")
       .eq("order_id", id),
+    supabase
+      .from("invoices")
+      .select("*")
+      .eq("order_id", id)
+      .maybeSingle(),
   ]);
 
   if (!orderRes.data) redirect("/admin/orders");
 
   return (
     <AdminShell>
-      <OrderDetail order={orderRes.data} items={itemsRes.data ?? []} />
+      <OrderDetail order={orderRes.data} items={itemsRes.data ?? []} invoice={invoiceRes.data ?? null} />
     </AdminShell>
   );
 }

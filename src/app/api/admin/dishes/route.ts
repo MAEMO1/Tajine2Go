@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { checkAdminAuth } from "@/lib/auth/admin";
+import { revalidatePublicLocaleRoutes } from "@/lib/public-route-revalidation";
 import { createAdminClient } from "@/lib/supabase/admin";
 
 export async function GET() {
@@ -40,6 +41,8 @@ export async function POST(request: NextRequest) {
   if (error) {
     return NextResponse.json({ error: "Failed to create dish" }, { status: 500 });
   }
+
+  revalidatePublicLocaleRoutes("admin dish create");
 
   return NextResponse.json({ dish: data }, { status: 201 });
 }

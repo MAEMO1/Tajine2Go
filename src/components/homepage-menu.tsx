@@ -1,6 +1,6 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useRef, useState, useEffect, useCallback } from "react";
 import { DishRow } from "@/components/dish-row";
 import { ScrollReveal } from "@/components/scroll-reveal";
@@ -8,13 +8,15 @@ import type { MenuResponse, MenuDish } from "@/types/database";
 
 type Props = {
   menu: MenuResponse;
+  closedMessage?: string | null;
 };
 
 const CATEGORY_ORDER = ["main", "side", "dessert", "drink"];
 
-export function HomepageMenu({ menu }: Props) {
+export function HomepageMenu({ menu, closedMessage }: Props) {
   const t = useTranslations("menu");
   const tHome = useTranslations("home");
+  const locale = useLocale();
   const [activeCategory, setActiveCategory] = useState<string>("");
   const categoryRefs = useRef<Map<string, HTMLElement>>(new Map());
 
@@ -56,23 +58,11 @@ export function HomepageMenu({ menu }: Props) {
     }
   }
 
-  const formattedDate = new Date(menu.date).toLocaleDateString("nl-BE", {
+  const formattedDate = new Intl.DateTimeFormat(locale, {
     weekday: "long",
     day: "numeric",
     month: "long",
-  });
-
-  if (!menu.is_active) {
-    return (
-      <section id="menu" className="px-4 py-16">
-        <div className="mx-auto max-w-3xl">
-          <div className="rounded-2xl bg-brand-warm p-8 text-center text-brand-brown-m">
-            {tHome("closed")}
-          </div>
-        </div>
-      </section>
-    );
-  }
+  }).format(new Date(`${menu.date}T12:00:00`));
 
   return (
     <section id="menu" className="pb-24">
@@ -106,6 +96,12 @@ export function HomepageMenu({ menu }: Props) {
 
       {/* Dishes */}
       <div className="mx-auto max-w-3xl px-4 pt-10 md:px-6">
+        {!menu.is_active && (
+          <div className="mb-6 rounded-2xl bg-brand-warm p-6 text-center text-brand-brown-m">
+            {closedMessage ?? tHome("closed")}
+          </div>
+        )}
+
         {menu.dishes.length === 0 && (
           <p className="text-center text-brand-brown-s">{t("noItems")}</p>
         )}

@@ -11,7 +11,7 @@ export default async function CateringPage() {
   const supabase = createAdminClient();
   const { data: requests } = await supabase
     .from("catering_requests")
-    .select("*, customers(first_name, last_name, email, phone)")
+    .select("*, customers(first_name, last_name, email, phone), catering_quotes(*)")
     .order("created_at", { ascending: false });
 
   return (

@@ -29,44 +29,102 @@ export async function POST(request: NextRequest) {
   }
 
   const data = parsed.data;
+  const normalizedEmail = data.email.trim().toLowerCase();
 
   // Verify reCAPTCHA (if key configured)
   const recaptchaSecret = process.env.RECAPTCHA_SECRET_KEY;
   if (recaptchaSecret && recaptchaSecret !== "xxx") {
     try {
+      const recaptchaBody = new URLSearchParams({
+        secret: recaptchaSecret,
+        response: data.recaptcha_token,
+      });
       const recaptchaRes = await fetch(
-        `https://www.google.com/recaptcha/api/siteverify?secret=${recaptchaSecret}&response=${data.recaptcha_token}`,
-        { method: "POST" },
+        "https://www.google.com/recaptcha/api/siteverify",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: recaptchaBody,
+        },
       );
-      const recaptchaData = await recaptchaRes.json();
-      if (!recaptchaData.success || recaptchaData.score < 0.5) {
+
+      if (!recaptchaRes.ok) {
+        return NextResponse.json(
+          { error: "Spamcontrole tijdelijk niet beschikbaar" },
+          { status: 503 },
+        );
+      }
+
+      const recaptchaData = await recaptchaRes.json() as {
+        action?: string;
+        success?: boolean;
+        score?: number;
+      };
+
+      if (
+        !recaptchaData.success ||
+        recaptchaData.action !== "catering_submit" ||
+        (typeof recaptchaData.score === "number" && recaptchaData.score < 0.5)
+      ) {
         return NextResponse.json({ error: "Spam detectie mislukt" }, { status: 400 });
       }
-    } catch {
-      // Continue if reCAPTCHA verification fails
+    } catch (error) {
+      console.error("reCAPTCHA verification failed:", error);
+      return NextResponse.json(
+        { error: "Spamcontrole tijdelijk niet beschikbaar" },
+        { status: 503 },
+      );
     }
   }
 
   const supabase = createAdminClient();
 
   // Rate limit: max 3 per email per day
-  const today = new Date().toISOString().split("T")[0];
-  const { count } = await supabase
-    .from("catering_requests")
-    .select("id", { count: "exact", head: true })
-    .eq("customers.email", data.email)
-    .gte("created_at", `${today}T00:00:00`);
+  const startOfDay = new Date();
+  startOfDay.setUTCHours(0, 0, 0, 0);
 
-  if (count && count >= 3) {
+  const { data: existingCustomer, error: existingCustomerError } = await supabase
+    .from("customers")
+    .select("id, is_blocked")
+    .eq("email", normalizedEmail)
+    .maybeSingle();
+
+  if (existingCustomerError) {
+    return NextResponse.json({ error: "Aanvraag controleren mislukt" }, { status: 500 });
+  }
+
+  if (existingCustomer?.is_blocked) {
+    return NextResponse.json(
+      { error: "Deze aanvraag kan niet worden verwerkt." },
+      { status: 403 },
+    );
+  }
+
+  let requestsToday = 0;
+  if (existingCustomer?.id) {
+    const { count, error: countError } = await supabase
+      .from("catering_requests")
+      .select("id", { count: "exact", head: true })
+      .eq("customer_id", existingCustomer.id)
+      .gte("created_at", startOfDay.toISOString());
+
+    if (countError) {
+      return NextResponse.json({ error: "Aanvraag controleren mislukt" }, { status: 500 });
+    }
+
+    requestsToday = count ?? 0;
+  }
+
+  if (requestsToday >= 3) {
     return NextResponse.json({ error: "Te veel aanvragen vandaag" }, { status: 429 });
   }
 
   // Upsert customer
-  const { data: customer } = await supabase
+  const { data: customer, error: customerError } = await supabase
     .from("customers")
     .upsert(
       {
-        email: data.email.toLowerCase(),
+        email: normalizedEmail,
         first_name: data.first_name,
         last_name: data.last_name,
         phone: data.phone,
@@ -76,9 +134,13 @@ export async function POST(request: NextRequest) {
     .select("id")
     .single();
 
+  if (customerError || !customer) {
+    return NextResponse.json({ error: "Klant opslaan mislukt" }, { status: 500 });
+  }
+
   // Create catering request
   const { error } = await supabase.from("catering_requests").insert({
-    customer_id: customer?.id ?? null,
+    customer_id: customer.id,
     event_type: data.event_type,
     event_date: data.event_date,
     guest_count: data.guest_count,
@@ -93,7 +155,7 @@ export async function POST(request: NextRequest) {
   // Log notification
   await supabase.from("notification_log").insert({
     type: "catering_request",
-    recipient: data.email,
+    recipient: normalizedEmail,
     channel: "email",
     status: "sent",
   });

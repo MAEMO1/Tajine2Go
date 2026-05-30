@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useCartStore } from "@/stores/cart";
 import { formatPrice } from "@/lib/format";
@@ -8,7 +7,9 @@ import { Link } from "@/i18n/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 
 export function CartDrawer() {
-  const [isOpen, setIsOpen] = useState(false);
+  const isOpen = useCartStore((s) => s.isOpen);
+  const openCart = useCartStore((s) => s.openCart);
+  const closeCart = useCartStore((s) => s.closeCart);
   const t = useTranslations("cart");
   const items = useCartStore((s) => s.items);
   const updateQuantity = useCartStore((s) => s.updateQuantity);
@@ -31,7 +32,7 @@ export function CartDrawer() {
             exit={{ scale: 0, opacity: 0 }}
             transition={{ type: "spring", damping: 20, stiffness: 300 }}
             type="button"
-            onClick={() => setIsOpen(true)}
+            onClick={() => openCart()}
             className="fixed bottom-6 z-40 hidden items-center gap-2.5 rounded-full bg-brand-brown px-6 py-3.5 font-heading text-[15px] uppercase tracking-[0.1em] text-brand-cream shadow-[0_4px_24px_rgba(45,27,10,0.2)] transition-all duration-200 hover:bg-brand-brown/90 active:scale-[0.97] md:flex ltr:right-6 rtl:left-6"
           >
             <CartIcon />
@@ -50,7 +51,7 @@ export function CartDrawer() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-50 bg-brand-brown/25 backdrop-blur-[2px]"
-            onClick={() => setIsOpen(false)}
+            onClick={() => closeCart()}
           />
         )}
       </AnimatePresence>
@@ -72,7 +73,7 @@ export function CartDrawer() {
               </h2>
               <button
                 type="button"
-                onClick={() => setIsOpen(false)}
+                onClick={() => closeCart()}
                 className="rounded-full p-1.5 text-brand-brown-s transition-colors hover:bg-brand-warm hover:text-brand-brown"
               >
                 <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -157,7 +158,7 @@ export function CartDrawer() {
                 </div>
                 <Link
                   href="/bestellen"
-                  onClick={() => setIsOpen(false)}
+                  onClick={() => closeCart()}
                   className="mt-4 block w-full rounded-full bg-brand-orange py-3.5 text-center font-heading text-[15px] uppercase tracking-[0.12em] text-white transition-all duration-300 hover:bg-brand-orange-hover hover:shadow-[0_4px_20px_rgba(217,123,26,0.25)]"
                 >
                   {t("checkout")}

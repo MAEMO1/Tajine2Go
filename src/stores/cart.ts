@@ -14,6 +14,9 @@ export type CartItem = {
 
 type CartState = {
   items: CartItem[];
+  isOpen: boolean;
+  openCart: () => void;
+  closeCart: () => void;
   addItem: (item: Omit<CartItem, "quantity">) => void;
   removeItem: (weeklyMenuId: string) => void;
   updateQuantity: (weeklyMenuId: string, quantity: number) => void;
@@ -26,6 +29,9 @@ export const useCartStore = create<CartState>()(
   persist(
     (set, get) => ({
       items: [],
+      isOpen: false,
+      openCart: () => set({ isOpen: true }),
+      closeCart: () => set({ isOpen: false }),
 
       addItem: (item) => {
         set((state) => {
@@ -76,6 +82,7 @@ export const useCartStore = create<CartState>()(
     }),
     {
       name: "tajine2go-cart",
+      partialize: (state) => ({ items: state.items }),
     },
   ),
 );

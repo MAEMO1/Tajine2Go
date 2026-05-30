@@ -3,37 +3,124 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { formatPrice } from "@/lib/format";
-import type { Order, OrderItem, Customer } from "@/types/database";
+import { statusLabels } from "@/lib/order-status";
+import { useToast } from "@/components/admin/toast";
+import { ConfirmDialog } from "@/components/admin/confirm-dialog";
+import type { Customer, Invoice, Order, OrderItem } from "@/types/database";
 
 type Props = {
   order: Order & { customers: Customer | null };
   items: OrderItem[];
+  invoice: Invoice | null;
 };
 
 const statusFlow = ["pending", "confirmed", "preparing", "ready", "out_for_delivery", "completed"];
-const statusLabels: Record<string, string> = {
-  pending: "In afwachting",
-  confirmed: "Bevestigd",
-  preparing: "In bereiding",
-  ready: "Klaar",
-  out_for_delivery: "Onderweg",
-  completed: "Afgerond",
-  cancelled: "Geannuleerd",
-};
 
-export function OrderDetail({ order, items }: Props) {
+export function OrderDetail({ order, items, invoice }: Props) {
   const router = useRouter();
+  const { toast } = useToast();
   const [updating, setUpdating] = useState(false);
+  const [statusError, setStatusError] = useState<string | null>(null);
+  const [refundReason, setRefundReason] = useState("");
+  const [refundAmount, setRefundAmount] = useState("");
+  const [refundLoading, setRefundLoading] = useState(false);
+  const [invoiceLoading, setInvoiceLoading] = useState(false);
+  const [financeError, setFinanceError] = useState<string | null>(null);
+  const [confirmCancel, setConfirmCancel] = useState(false);
+  const [confirmRefund, setConfirmRefund] = useState(false);
   const orderNum = `T2G-${String(order.order_number).padStart(4, "0")}`;
+  const showLatePaymentWarning =
+    order.status === "cancelled" &&
+    order.cancel_reason === "admin_cancelled" &&
+    order.payment_status === "paid";
+  const canRefund = order.payment_method === "online" && order.payment_status === "paid";
+  const hasInvoiceData = Boolean(
+    order.invoice_company_name
+    && order.invoice_vat_number
+    && order.invoice_address_line1
+    && order.invoice_postal_code
+    && order.invoice_city,
+  );
 
   async function updateStatus(newStatus: string) {
     setUpdating(true);
-    await fetch("/api/admin/orders", {
+    setStatusError(null);
+
+    const response = await fetch("/api/admin/orders", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id: order.id, status: newStatus }),
     });
+
     setUpdating(false);
+    if (!response.ok) {
+      const result = await response.json().catch(() => null);
+      setStatusError(result?.error ?? "Statusupdate mislukt");
+      toast(result?.error ?? "Statusupdate mislukt", "error");
+      return;
+    }
+
+    toast(`Status gewijzigd naar ${statusLabels[newStatus] ?? newStatus}`);
+    router.refresh();
+  }
+
+  async function handleRefund() {
+    if (!refundReason.trim()) {
+      setFinanceError("Een refundreden is verplicht.");
+      return;
+    }
+
+    setRefundLoading(true);
+    setFinanceError(null);
+    // toast replaces inline message
+
+    const amountValue = refundAmount.trim();
+    const amountCents = amountValue
+      ? Math.round(Number(amountValue.replace(",", ".")) * 100)
+      : undefined;
+
+    const response = await fetch("/api/admin/refund", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        order_id: order.id,
+        reason: refundReason.trim(),
+        amount_cents: amountCents,
+      }),
+    });
+
+    setRefundLoading(false);
+    if (!response.ok) {
+      const result = await response.json().catch(() => null);
+      setFinanceError(result?.error ?? "Refund mislukt.");
+      toast(result?.error ?? "Refund mislukt.", "error");
+      return;
+    }
+
+    toast("Refund verwerkt.");
+    router.refresh();
+  }
+
+  async function handleInvoiceCreate() {
+    setInvoiceLoading(true);
+    setFinanceError(null);
+    // toast replaces inline message
+
+    const response = await fetch("/api/admin/invoices", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ order_id: order.id }),
+    });
+
+    setInvoiceLoading(false);
+    if (!response.ok) {
+      const result = await response.json().catch(() => null);
+      setFinanceError(result?.error ?? "Factuur aanmaken mislukt.");
+      toast(result?.error ?? "Factuur aanmaken mislukt.", "error");
+      return;
+    }
+
+    toast("Factuur aangemaakt.");
     router.refresh();
   }
 
@@ -65,6 +152,13 @@ export function OrderDetail({ order, items }: Props) {
             <Row label="Datum" value={new Date(order.order_date).toLocaleDateString("nl-BE")} />
           </dl>
 
+          {showLatePaymentWarning && (
+            <div className="mt-4 rounded-lg border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
+              Deze bestelling werd in admin geannuleerd, maar de online betaling is later toch gelukt.
+              Gebruik de refund-flow voor verdere afhandeling; de order blijft bewust geannuleerd.
+            </div>
+          )}
+
           {/* Status actions */}
           <div className="mt-6 flex gap-2">
             {nextStatus && order.status !== "cancelled" && (
@@ -81,13 +175,16 @@ export function OrderDetail({ order, items }: Props) {
               <button
                 type="button"
                 disabled={updating}
-                onClick={() => updateStatus("cancelled")}
+                onClick={() => setConfirmCancel(true)}
                 className="rounded-lg border border-red-300 px-4 py-2 text-sm text-red-600 hover:bg-red-50 disabled:opacity-50"
               >
                 Annuleren
               </button>
             )}
           </div>
+          {statusError && (
+            <p className="mt-4 text-sm text-red-600">{statusError}</p>
+          )}
         </div>
 
         {/* Customer */}
@@ -102,6 +199,100 @@ export function OrderDetail({ order, items }: Props) {
           ) : (
             <p className="mt-4 text-sm text-brand-brown-s">Geen klantgegevens</p>
           )}
+        </div>
+
+        <div className="rounded-xl bg-white p-6 shadow-sm lg:col-span-2">
+          <h2 className="font-heading text-xl text-brand-bronze">Financieel</h2>
+
+          <div className="mt-4 grid gap-6 lg:grid-cols-2">
+            <div className="rounded-xl bg-brand-warm/40 p-4">
+              <h3 className="font-semibold text-brand-brown">Refund</h3>
+              <p className="mt-1 text-sm text-brand-brown-s">
+                {canRefund
+                  ? "Online betaalde bestellingen kunnen hier meteen terugbetaald worden."
+                  : "Refund is alleen beschikbaar voor online betaalde bestellingen met betaalstatus betaald."}
+              </p>
+
+              {order.payment_status === "refunded" && (
+                <p className="mt-3 text-sm text-green-700">
+                  Reeds gerefund: {formatPrice(order.refund_amount_cents ?? 0)}
+                  {order.refund_reason && ` · ${order.refund_reason}`}
+                </p>
+              )}
+
+              {canRefund && (
+                <div className="mt-4 space-y-3">
+                  <div>
+                    <label className="text-sm text-brand-brown-m">Bedrag in euro (leeg = volledig)</label>
+                    <input
+                      type="number"
+                      min="0"
+                      step="0.01"
+                      value={refundAmount}
+                      onChange={(event) => setRefundAmount(event.target.value)}
+                      placeholder={(order.total_cents / 100).toFixed(2)}
+                      className="mt-1 w-full rounded-lg border border-brand-brown-s px-3 py-2 text-sm focus:border-brand-orange focus:outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-sm text-brand-brown-m">Reden</label>
+                    <textarea
+                      value={refundReason}
+                      onChange={(event) => setRefundReason(event.target.value)}
+                      rows={3}
+                      className="mt-1 w-full rounded-lg border border-brand-brown-s px-3 py-2 text-sm focus:border-brand-orange focus:outline-none"
+                    />
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (!refundReason.trim()) {
+                        setFinanceError("Een refundreden is verplicht.");
+                        return;
+                      }
+                      setConfirmRefund(true);
+                    }}
+                    disabled={refundLoading}
+                    className="rounded-lg border border-red-300 px-4 py-2 text-sm text-red-600 hover:bg-red-50 disabled:opacity-50"
+                  >
+                    {refundLoading ? "Refund bezig..." : "Refund uitvoeren"}
+                  </button>
+                </div>
+              )}
+            </div>
+
+            <div className="rounded-xl bg-brand-warm/40 p-4">
+              <h3 className="font-semibold text-brand-brown">Factuur</h3>
+              {invoice ? (
+                <div className="mt-3 space-y-1 text-sm text-brand-brown-m">
+                  <p>Factuurnummer: T2G-INV-{String(invoice.invoice_number).padStart(4, "0")}</p>
+                  <p>Bedrijf: {invoice.company_name}</p>
+                  <p>BTW: {invoice.vat_number}</p>
+                  <p>Totaal: {formatPrice(invoice.total_cents)}</p>
+                </div>
+              ) : (
+                <>
+                  <p className="mt-1 text-sm text-brand-brown-s">
+                    {hasInvoiceData
+                      ? "Deze bestelling bevat factuurgegevens, maar er is nog geen factuurrecord aangemaakt."
+                      : "Er zijn geen volledige factuurgegevens beschikbaar voor deze bestelling."}
+                  </p>
+                  {hasInvoiceData && (
+                    <button
+                      type="button"
+                      onClick={handleInvoiceCreate}
+                      disabled={invoiceLoading}
+                      className="mt-4 rounded-lg bg-brand-orange px-4 py-2 text-sm font-semibold text-white hover:bg-brand-orange-hover disabled:opacity-50"
+                    >
+                      {invoiceLoading ? "Factuur aanmaken..." : "Factuur aanmaken"}
+                    </button>
+                  )}
+                </>
+              )}
+            </div>
+          </div>
+
+          {financeError && <p className="mt-4 text-sm text-red-600">{financeError}</p>}
         </div>
 
         {/* Items */}
@@ -148,6 +339,32 @@ export function OrderDetail({ order, items }: Props) {
           </table>
         </div>
       </div>
+
+      <ConfirmDialog
+        open={confirmCancel}
+        title="Bestelling annuleren"
+        description={`Weet je zeker dat je bestelling ${orderNum} wilt annuleren? Dit kan niet ongedaan worden.`}
+        confirmLabel="Annuleren"
+        variant="danger"
+        onConfirm={() => {
+          setConfirmCancel(false);
+          updateStatus("cancelled");
+        }}
+        onCancel={() => setConfirmCancel(false)}
+      />
+
+      <ConfirmDialog
+        open={confirmRefund}
+        title="Refund uitvoeren"
+        description={`Weet je zeker dat je een refund wilt uitvoeren voor bestelling ${orderNum}?`}
+        confirmLabel="Refund uitvoeren"
+        variant="danger"
+        onConfirm={() => {
+          setConfirmRefund(false);
+          handleRefund();
+        }}
+        onCancel={() => setConfirmRefund(false)}
+      />
     </div>
   );
 }

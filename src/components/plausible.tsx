@@ -1,27 +1,13 @@
 "use client";
 
 import Script from "next/script";
-import { useState, useEffect } from "react";
-
-const COOKIE_KEY = "tajine2go_consent";
+import { useConsentState } from "@/lib/consent-store";
 
 export function PlausibleScript() {
   const domain = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN;
-  const [consented, setConsented] = useState(false);
+  const consent = useConsentState();
 
-  useEffect(() => {
-    if (localStorage.getItem(COOKIE_KEY) === "granted") {
-      setConsented(true);
-    }
-
-    function onGrant() {
-      setConsented(true);
-    }
-    window.addEventListener("consent-granted", onGrant);
-    return () => window.removeEventListener("consent-granted", onGrant);
-  }, []);
-
-  if (!domain || !consented) return null;
+  if (!domain || consent !== "granted") return null;
 
   return (
     <Script

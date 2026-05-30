@@ -33,13 +33,7 @@ export function HeroCanvas() {
     const TILE_LIGHT = "#F0E8D8";
 
     /* ── Gebs (carved plaster) colors — monochrome relief ── */
-    const GEBS_BG = "#F0E8D8";       // warm plaster base
-    const GEBS_GROOVE = "#B8A488";    // carved groove (main lines)
-    const GEBS_SHADOW = "#A08868";    // shadow side of groove (depth)
-    const GEBS_HIGHLIGHT = "#FBF6EE"; // light side of groove (raised edge)
     const GEBS_DEEP = "#9A8468";      // deeper carved detail
-    const GEBS_FINE = "#C8B898";      // fine detail lines
-
     function clear() {
       cx.clearRect(0, 0, W, H);
       cx.fillStyle = CREAM;

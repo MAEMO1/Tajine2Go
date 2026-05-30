@@ -1,7 +1,14 @@
 {
+  "validation": {
+    "required": "Dit veld is verplicht",
+    "email": "Vul een geldig e-mailadres in",
+    "postalCode": "Vul een geldige postcode in",
+    "minItems": "Voeg minstens één gerecht toe",
+    "deliveryAddressRequired": "Leveradres is verplicht bij levering"
+  },
   "common": {
     "siteName": "Tajine2Go",
-    "tagline": "Maghrebijnse takeaway in Gent",
+    "tagline": "Marokkaanse takeaway in Gent",
     "currency": "EUR",
     "loading": "Laden...",
     "error": "Er is iets misgegaan",
@@ -24,28 +31,38 @@
     "contact": "Contact"
   },
   "home": {
-    "heroTitle": "Authentieke Maghrebijnse smaken",
-    "heroSubtitle": "Elke week verse tajines en meer, rechtstreeks uit onze keuken in Gent.",
+    "heroTitle": "Authentieke Marokkaanse smaken, vers geserveerd",
+    "heroTitleA": "Authentieke",
+    "heroTitleAccent": "Marokkaanse",
+    "heroTitleB": "smaken, vers geserveerd.",
+    "heroSubtitle": "Snel, gezond en vol traditionele smaak. Bereid met liefde. Voor jou.",
     "orderNow": "Bestel nu",
     "viewMenu": "Bekijk menu",
     "cateringCta": "Catering voor uw evenement",
-    "cateringCtaText": "Van bruiloften tot bedrijfsevenementen — wij verzorgen het met authentieke Maghrebijnse gerechten.",
-    "uspFresh": "Vers bereid",
+    "cateringCtaText": "Van bruiloften tot bedrijfsevenementen — wij verzorgen het met authentieke Marokkaanse gerechten.",
+    "uspFresh": "Verse ingrediënten",
+    "uspFreshShort": "Dagelijks bereid",
     "uspFreshText": "Elke week bereid met traditionele recepten en de beste ingrediënten.",
+    "uspRecipes": "Traditionele recepten",
+    "uspRecipesShort": "Authentieke smaak",
+    "uspFast": "Snel & makkelijk",
+    "uspFastShort": "Binnen enkele minuten",
     "uspDelivery": "Afhalen of levering",
     "uspDeliveryText": "Haal je bestelling op of laat het thuisbezorgen in Gent.",
     "uspCatering": "Catering",
     "uspCateringText": "Van bruiloften tot bedrijfsevenementen — wij verzorgen het.",
-    "infoStripTitle": "Authentiek Maghrebijns, vers tot bij jou",
+    "infoStripTitle": "Authentiek Marokkaans, vers tot bij jou",
     "infoHours": "Elke zaterdag 12:00 – 19:00",
     "infoAddress": "Gent, België",
+    "nextService": "Volgende service",
+    "orderBy": "bestel voor {time}",
     "infoPayment": "Bancontact · Cash · Online",
     "menuTitle": "Menu van deze",
     "scrollToMenu": "Bekijk het menu",
     "cateringPhone": "Aanvraag indienen",
     "cateringEmail": "Contact opnemen",
     "storyTitle": "Ons verhaal",
-    "storyText": "Tajine2Go brengt de authentieke smaken van de Maghreb naar Gent. Met liefde bereid, met respect voor traditie, en met de beste verse ingrediënten. Elke week opnieuw.",
+    "storyText": "Tajine2Go brengt de authentieke smaken van Marokko naar Gent. Met liefde bereid, met respect voor traditie, en met de beste verse ingrediënten. Elke week opnieuw.",
     "storyLink": "Lees meer over ons",
     "closed": "We zijn momenteel gesloten. Bekijk ons menu voor de volgende besteldag."
   },
@@ -55,6 +72,8 @@
     "soldOut": "Uitverkocht",
     "portionsLeft": "{count, plural, one {# portie over} other {# porties over}}",
     "addToCart": "Toevoegen",
+    "added": "Toegevoegd",
+    "ingredients": "Ingrediënten",
     "allergens": "Allergenen",
     "categories": {
       "main": "Hoofdgerechten",
@@ -101,9 +120,18 @@
     "processing": "Bestelling verwerken...",
     "orderSummary": "Overzicht",
     "minimumOrder": "Minimumbedrag niet bereikt (min. {amount})",
+    "minimumRequirement": "Minimum bestelbedrag: {amount}",
     "closedMessage": "Bestellingen zijn momenteel gesloten.",
     "invalidPostalCode": "Levering is niet beschikbaar voor deze postcode.",
-    "stockError": "Een of meer gerechten zijn niet meer beschikbaar in de gewenste hoeveelheid."
+    "stockError": "Een of meer gerechten zijn niet meer beschikbaar in de gewenste hoeveelheid.",
+    "serviceDate": "Besteldag",
+    "serviceWindow": "Beschikbaar tussen {window}",
+    "deliveryFeeInfo": "Levering: {amount} · gratis vanaf {freeAbove}",
+    "deliveryDisabled": "Levering is momenteel uitgeschakeld.",
+    "pickupSlotRequired": "Selecteer een tijdstip",
+    "pickupSlotOptional": "Geen voorkeur",
+    "paymentMethodUnavailable": "De gekozen betaalmethode is momenteel niet beschikbaar.",
+    "paymentMethodSingle": "Slechts één betaalmethode is momenteel beschikbaar."
   },
   "order": {
     "title": "Bestellingsstatus",
@@ -125,7 +153,7 @@
   },
   "catering": {
     "title": "Catering",
-    "subtitle": "Laat ons uw evenement verzorgen met authentieke Maghrebijnse gerechten.",
+    "subtitle": "Laat ons uw evenement verzorgen met authentieke Marokkaanse gerechten.",
     "eventType": "Type evenement",
     "eventTypes": {
       "wedding": "Bruiloft",
@@ -139,6 +167,8 @@
     "guestCount": "Aantal gasten",
     "dietaryNeeds": "Dieetwensen",
     "message": "Uw bericht",
+    "required": "Verplicht veld",
+    "sending": "Versturen...",
     "submit": "Aanvraag versturen",
     "success": "Uw aanvraag is verstuurd! We nemen zo snel mogelijk contact met u op.",
     "error": "Er is iets misgegaan bij het versturen. Probeer het opnieuw."
@@ -150,15 +180,22 @@
     "title": "Veelgestelde vragen"
   },
   "contact": {
-    "title": "Contact"
+    "title": "Contact",
+    "reachUs": "Bereik ons",
+    "emailLabel": "E-mail",
+    "phoneLabel": "Telefoon",
+    "locationLabel": "Locatie",
+    "hoursLabel": "Openingsuren",
+    "cateringNote": "Catering aanvragen worden doorlopend verwerkt."
   },
   "footer": {
     "rights": "Alle rechten voorbehouden.",
     "privacy": "Privacybeleid",
     "terms": "Algemene voorwaarden",
-    "tagline": "Authentieke Maghrebijnse smaken, elke week vers in Gent.",
+    "tagline": "Authentieke Marokkaanse smaken, elke week vers in Gent.",
     "quickLinks": "Snelle links",
     "contactInfo": "Contact",
+    "openingHoursLabel": "Openingsuren",
     "openingHours": "Elke zaterdag 12:00 – 19:00",
     "madeWith": "Met liefde gemaakt in Gent"
   },

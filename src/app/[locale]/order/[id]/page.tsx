@@ -1,4 +1,5 @@
 import { setRequestLocale } from "next-intl/server";
+import { getPublicOrderStatus } from "@/lib/orders/public-status";
 import { OrderStatusContent } from "./order-status-content";
 
 type Props = {
@@ -11,7 +12,9 @@ export default async function OrderStatusPage({ params, searchParams }: Props) {
   const { token } = await searchParams;
   setRequestLocale(locale);
 
-  return <OrderStatusContent orderId={id} token={token} />;
+  const order = await getPublicOrderStatus(id, token);
+
+  return <OrderStatusContent order={order} />;
 }
 
 export async function generateMetadata() {
