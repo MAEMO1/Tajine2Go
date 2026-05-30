@@ -1,4 +1,11 @@
 {
+  "validation": {
+    "required": "هذا الحقل مطلوب",
+    "email": "أدخل بريدًا إلكترونيًا صالحًا",
+    "postalCode": "أدخل رمزًا بريديًا صالحًا",
+    "minItems": "أضف طبقًا واحدًا على الأقل",
+    "deliveryAddressRequired": "عنوان التوصيل مطلوب للتوصيل"
+  },
   "common": {
     "siteName": "Tajine2Go",
     "tagline": "مأكولات مغاربية جاهزة في غنت",
@@ -24,13 +31,13 @@
     "contact": "اتصل بنا"
   },
   "home": {
-    "heroTitle": "نكهات مغاربية أصيلة",
-    "heroSubtitle": "طاجين طازج والمزيد كل أسبوع، مباشرة من مطبخنا في غنت.",
+    "heroTitle": "نكهات مغربية أصيلة، طازجة كل يوم",
+    "heroSubtitle": "سريع، صحي ومليء بالنكهات التقليدية. مُحضَّر بحب. لك.",
     "orderNow": "اطلب الآن",
     "viewMenu": "عرض القائمة",
     "cateringCta": "تموين لمناسبتك",
     "cateringCtaText": "من حفلات الزفاف إلى فعاليات الشركات — نحن نهتم بكل شيء بأطباق مغاربية أصيلة.",
-    "uspFresh": "طازج التحضير",
+    "uspFresh": "مكونات طازجة",
     "uspFreshText": "يُحضّر كل أسبوع بوصفات تقليدية وأجود المكونات.",
     "uspDelivery": "استلام أو توصيل",
     "uspDeliveryText": "استلم طلبك أو احصل على التوصيل في غنت.",
@@ -39,6 +46,8 @@
     "infoStripTitle": "مأكولات مغاربية أصيلة، طازجة إلى باب منزلك",
     "infoHours": "كل سبت 12:00 – 19:00",
     "infoAddress": "غنت، بلجيكا",
+    "nextService": "الخدمة القادمة",
+    "orderBy": "اطلب قبل {time}",
     "infoPayment": "Bancontact · نقداً · عبر الإنترنت",
     "menuTitle": "قائمة هذا",
     "scrollToMenu": "عرض القائمة",
@@ -47,7 +56,15 @@
     "storyTitle": "قصتنا",
     "storyText": "Tajine2Go يجلب النكهات الأصيلة من المغرب العربي إلى غنت. محضّر بحب، باحترام للتقاليد، وبأفضل المكونات الطازجة. كل أسبوع.",
     "storyLink": "اقرأ المزيد عنا",
-    "closed": "نحن مغلقون حالياً. اطلع على قائمتنا ليوم الطلب التالي."
+    "closed": "نحن مغلقون حالياً. اطلع على قائمتنا ليوم الطلب التالي.",
+    "heroTitleA": "نكهات",
+    "heroTitleAccent": "مغربية",
+    "heroTitleB": "أصيلة، طازجة كل يوم.",
+    "uspFreshShort": "تُحضَّر يومياً",
+    "uspRecipes": "وصفات تقليدية",
+    "uspRecipesShort": "مذاق أصيل",
+    "uspFast": "سريع وسهل",
+    "uspFastShort": "خلال دقائق"
   },
   "menu": {
     "title": "القائمة",
@@ -55,6 +72,8 @@
     "soldOut": "نفد",
     "portionsLeft": "{count, plural, one {حصة واحدة متبقية} other {# حصص متبقية}}",
     "addToCart": "إضافة",
+    "added": "تمت الإضافة",
+    "ingredients": "المكونات",
     "allergens": "مسببات الحساسية",
     "categories": {
       "main": "الأطباق الرئيسية",
@@ -101,9 +120,18 @@
     "processing": "جاري معالجة الطلب...",
     "orderSummary": "الملخص",
     "minimumOrder": "لم يتم الوصول إلى الحد الأدنى للطلب (الحد الأدنى {amount})",
+    "minimumRequirement": "الحد الأدنى للطلب: {amount}",
     "closedMessage": "الطلبات مغلقة حالياً.",
     "invalidPostalCode": "التوصيل غير متاح لهذا الرمز البريدي.",
-    "stockError": "طبق واحد أو أكثر لم يعد متاحاً بالكمية المطلوبة."
+    "stockError": "طبق واحد أو أكثر لم يعد متاحاً بالكمية المطلوبة.",
+    "serviceDate": "يوم الطلب",
+    "serviceWindow": "متاح بين {window}",
+    "deliveryFeeInfo": "التوصيل: {amount} · مجاني ابتداءً من {freeAbove}",
+    "deliveryDisabled": "التوصيل معطل حالياً.",
+    "pickupSlotRequired": "اختر وقت الاستلام",
+    "pickupSlotOptional": "بدون تفضيل",
+    "paymentMethodUnavailable": "طريقة الدفع المختارة غير متاحة حالياً.",
+    "paymentMethodSingle": "تتوفر حالياً طريقة دفع واحدة فقط."
   },
   "order": {
     "title": "حالة الطلب",
@@ -139,6 +167,8 @@
     "guestCount": "عدد الضيوف",
     "dietaryNeeds": "احتياجات غذائية",
     "message": "رسالتك",
+    "required": "حقل مطلوب",
+    "sending": "جارٍ الإرسال...",
     "submit": "إرسال الطلب",
     "success": "تم إرسال طلبك! سنتواصل معك في أقرب وقت ممكن.",
     "error": "حدث خطأ أثناء الإرسال. يرجى المحاولة مرة أخرى."
@@ -150,7 +180,13 @@
     "title": "الأسئلة الشائعة"
   },
   "contact": {
-    "title": "اتصل بنا"
+    "title": "اتصل بنا",
+    "reachUs": "تواصل معنا",
+    "emailLabel": "البريد الإلكتروني",
+    "phoneLabel": "الهاتف",
+    "locationLabel": "الموقع",
+    "hoursLabel": "ساعات العمل",
+    "cateringNote": "تتم معالجة طلبات التموين بشكل مستمر."
   },
   "footer": {
     "rights": "جميع الحقوق محفوظة.",
@@ -159,6 +195,7 @@
     "tagline": "نكهات مغاربية أصيلة، طازجة كل أسبوع في غنت.",
     "quickLinks": "روابط سريعة",
     "contactInfo": "اتصل بنا",
+    "openingHoursLabel": "ساعات العمل",
     "openingHours": "كل سبت 12:00 – 19:00",
     "madeWith": "صُنع بحب في غنت"
   },

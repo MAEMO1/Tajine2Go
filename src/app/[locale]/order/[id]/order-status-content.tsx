@@ -1,54 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { formatPrice } from "@/lib/format";
-
-type OrderData = {
-  order_number: number;
-  status: string;
-  fulfillment: string;
-  pickup_slot: string | null;
-  total_cents: number;
-};
+import type { PublicOrderStatus } from "@/types/database";
 
 type Props = {
-  orderId: string;
-  token: string | undefined;
+  order: PublicOrderStatus | null;
 };
 
-export function OrderStatusContent({ orderId, token }: Props) {
+export function OrderStatusContent({ order }: Props) {
   const t = useTranslations("order");
-  const [order, setOrder] = useState<OrderData | null>(null);
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (!token) {
-      setError(true);
-      setLoading(false);
-      return;
-    }
-
-    fetch(`/api/order/${orderId}?token=${encodeURIComponent(token)}`)
-      .then((res) => {
-        if (!res.ok) throw new Error("Not found");
-        return res.json();
-      })
-      .then((data) => setOrder(data))
-      .catch(() => setError(true))
-      .finally(() => setLoading(false));
-  }, [orderId, token]);
-
-  if (loading) {
-    return (
-      <div className="flex flex-1 items-center justify-center py-16">
-        <p className="text-brand-brown-s">{t("title")}...</p>
-      </div>
-    );
-  }
-
-  if (error || !order) {
+  if (!order) {
     return (
       <div className="flex flex-1 items-center justify-center py-16">
         <p className="text-brand-brown-s">{t("notFound")}</p>

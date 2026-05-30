@@ -1,7 +1,14 @@
 {
+  "validation": {
+    "required": "This field is required",
+    "email": "Enter a valid email address",
+    "postalCode": "Enter a valid postal code",
+    "minItems": "Add at least one dish",
+    "deliveryAddressRequired": "Delivery address is required for delivery"
+  },
   "common": {
     "siteName": "Tajine2Go",
-    "tagline": "Maghrebi takeaway in Ghent",
+    "tagline": "Moroccan takeaway in Ghent",
     "currency": "EUR",
     "loading": "Loading...",
     "error": "Something went wrong",
@@ -24,30 +31,40 @@
     "contact": "Contact"
   },
   "home": {
-    "heroTitle": "Authentic Maghrebi flavours",
-    "heroSubtitle": "Fresh tajines and more every week, straight from our kitchen in Ghent.",
+    "heroTitle": "Authentic Moroccan flavours, freshly served",
+    "heroSubtitle": "Fast, healthy and full of traditional flavour. Made with love. Just for you.",
     "orderNow": "Order now",
     "viewMenu": "View menu",
     "cateringCta": "Catering for your event",
-    "cateringCtaText": "From weddings to corporate events — we take care of it with authentic Maghrebi dishes.",
-    "uspFresh": "Freshly prepared",
+    "cateringCtaText": "From weddings to corporate events — we take care of it with authentic Moroccan dishes.",
+    "uspFresh": "Fresh ingredients",
     "uspFreshText": "Prepared every week with traditional recipes and the finest ingredients.",
     "uspDelivery": "Pickup or delivery",
     "uspDeliveryText": "Pick up your order or have it delivered in Ghent.",
     "uspCatering": "Catering",
     "uspCateringText": "From weddings to corporate events — we take care of it.",
-    "infoStripTitle": "Authentic Maghrebi, fresh to your door",
+    "infoStripTitle": "Authentic Moroccan, fresh to your door",
     "infoHours": "Every Saturday 12:00 – 19:00",
     "infoAddress": "Ghent, Belgium",
+    "nextService": "Next service",
+    "orderBy": "order by {time}",
     "infoPayment": "Bancontact · Cash · Online",
     "menuTitle": "This week's",
     "scrollToMenu": "View the menu",
     "cateringPhone": "Submit request",
     "cateringEmail": "Contact us",
     "storyTitle": "Our story",
-    "storyText": "Tajine2Go brings the authentic flavours of the Maghreb to Ghent. Prepared with love, with respect for tradition, and with the best fresh ingredients. Every week.",
+    "storyText": "Tajine2Go brings the authentic flavours of Morocco to Ghent. Prepared with love, with respect for tradition, and with the best fresh ingredients. Every week.",
     "storyLink": "Read more about us",
-    "closed": "We are currently closed. Check our menu for the next order day."
+    "closed": "We are currently closed. Check our menu for the next order day.",
+    "heroTitleA": "Authentic",
+    "heroTitleAccent": "Moroccan",
+    "heroTitleB": "flavours, freshly served.",
+    "uspFreshShort": "Prepared daily",
+    "uspRecipes": "Traditional recipes",
+    "uspRecipesShort": "Authentic flavour",
+    "uspFast": "Fast & easy",
+    "uspFastShort": "Ready in minutes"
   },
   "menu": {
     "title": "Menu",
@@ -55,6 +72,8 @@
     "soldOut": "Sold out",
     "portionsLeft": "{count, plural, one {# portion left} other {# portions left}}",
     "addToCart": "Add",
+    "added": "Added",
+    "ingredients": "Ingredients",
     "allergens": "Allergens",
     "categories": {
       "main": "Main dishes",
@@ -101,9 +120,18 @@
     "processing": "Processing order...",
     "orderSummary": "Summary",
     "minimumOrder": "Minimum amount not reached (min. {amount})",
+    "minimumRequirement": "Minimum order amount: {amount}",
     "closedMessage": "Orders are currently closed.",
     "invalidPostalCode": "Delivery is not available for this postal code.",
-    "stockError": "One or more dishes are no longer available in the requested quantity."
+    "stockError": "One or more dishes are no longer available in the requested quantity.",
+    "serviceDate": "Order day",
+    "serviceWindow": "Available between {window}",
+    "deliveryFeeInfo": "Delivery: {amount} · free from {freeAbove}",
+    "deliveryDisabled": "Delivery is currently disabled.",
+    "pickupSlotRequired": "Select a pickup time",
+    "pickupSlotOptional": "No preference",
+    "paymentMethodUnavailable": "The selected payment method is currently unavailable.",
+    "paymentMethodSingle": "Only one payment method is currently available."
   },
   "order": {
     "title": "Order status",
@@ -125,7 +153,7 @@
   },
   "catering": {
     "title": "Catering",
-    "subtitle": "Let us take care of your event with authentic Maghrebi dishes.",
+    "subtitle": "Let us take care of your event with authentic Moroccan dishes.",
     "eventType": "Event type",
     "eventTypes": {
       "wedding": "Wedding",
@@ -139,6 +167,8 @@
     "guestCount": "Number of guests",
     "dietaryNeeds": "Dietary needs",
     "message": "Your message",
+    "required": "Required field",
+    "sending": "Sending...",
     "submit": "Send request",
     "success": "Your request has been sent! We will contact you as soon as possible.",
     "error": "Something went wrong while sending. Please try again."
@@ -150,15 +180,22 @@
     "title": "Frequently asked questions"
   },
   "contact": {
-    "title": "Contact"
+    "title": "Contact",
+    "reachUs": "Reach us",
+    "emailLabel": "Email",
+    "phoneLabel": "Phone",
+    "locationLabel": "Location",
+    "hoursLabel": "Opening hours",
+    "cateringNote": "Catering requests are handled continuously."
   },
   "footer": {
     "rights": "All rights reserved.",
     "privacy": "Privacy policy",
     "terms": "Terms and conditions",
-    "tagline": "Authentic Maghrebi flavours, fresh every week in Ghent.",
+    "tagline": "Authentic Moroccan flavours, fresh every week in Ghent.",
     "quickLinks": "Quick links",
     "contactInfo": "Contact",
+    "openingHoursLabel": "Opening hours",
     "openingHours": "Every Saturday 12:00 – 19:00",
     "madeWith": "Made with love in Ghent"
   },

@@ -3,7 +3,11 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { formatPrice } from "@/lib/format";
+import { useToast } from "@/components/admin/toast";
+import { ConfirmDialog } from "@/components/admin/confirm-dialog";
+import { UtensilsCrossed } from "lucide-react";
 import type { Dish } from "@/types/database";
+import { DishImageField } from "./dish-image-field";
 
 type Props = {
   dishes: Dish[];
@@ -33,7 +37,10 @@ export function DishesManager({ dishes }: Props) {
           <DishCard key={dish.id} dish={dish} />
         ))}
         {dishes.length === 0 && (
-          <p className="text-center text-brand-brown-s">Geen gerechten</p>
+          <div className="flex flex-col items-center gap-2 py-12 text-brand-brown-s">
+            <UtensilsCrossed size={32} strokeWidth={1.5} />
+            <p className="text-sm">Geen gerechten</p>
+          </div>
         )}
       </div>
     </div>
@@ -42,12 +49,19 @@ export function DishesManager({ dishes }: Props) {
 
 function DishCard({ dish }: { dish: Dish }) {
   const router = useRouter();
+  const { toast } = useToast();
   const [deleting, setDeleting] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
   async function handleDelete() {
-    if (!confirm(`${dish.name_nl} verwijderen?`)) return;
     setDeleting(true);
-    await fetch(`/api/admin/dishes/${dish.id}`, { method: "DELETE" });
+    const res = await fetch(`/api/admin/dishes/${dish.id}`, { method: "DELETE" });
+    if (res.ok) {
+      toast(`${dish.name_nl} verwijderd.`);
+    } else {
+      toast("Verwijderen mislukt.", "error");
+    }
+    setDeleting(false);
     router.refresh();
   }
 
@@ -57,55 +71,76 @@ function DishCard({ dish }: { dish: Dish }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ is_active: !dish.is_active }),
     });
+    toast(dish.is_active ? "Gerecht gedeactiveerd." : "Gerecht geactiveerd.");
     router.refresh();
   }
 
   return (
-    <div className="flex items-center justify-between rounded-xl bg-white p-4 shadow-sm">
-      <div className="min-w-0 flex-1">
-        <div className="flex items-center gap-3">
-          <h3 className="font-semibold text-brand-brown">{dish.name_nl}</h3>
-          <span className="rounded bg-brand-warm px-2 py-0.5 text-xs text-brand-brown-s">
-            {dish.category}
-          </span>
-          {!dish.is_active && (
-            <span className="rounded bg-red-100 px-2 py-0.5 text-xs text-red-600">Inactief</span>
-          )}
+    <>
+      <div className="flex flex-col gap-3 rounded-xl bg-white p-4 shadow-sm sm:flex-row sm:items-center sm:justify-between">
+        <div className="min-w-0 flex-1">
+          <div className="flex flex-wrap items-center gap-2">
+            <h3 className="font-semibold text-brand-brown">{dish.name_nl}</h3>
+            <span className="rounded bg-brand-warm px-2 py-0.5 text-xs text-brand-brown-s">
+              {dish.category}
+            </span>
+            {!dish.is_active && (
+              <span className="rounded bg-red-100 px-2 py-0.5 text-xs text-red-600">Inactief</span>
+            )}
+          </div>
+          <p className="mt-1 text-sm text-brand-brown-s">
+            {dish.slug} &middot; {formatPrice(dish.price_cents)}
+            {dish.ingredients_nl.length > 0 && ` · ${dish.ingredients_nl.join(", ")}`}
+            {dish.allergens.length > 0 && ` · ${dish.allergens.join(", ")}`}
+          </p>
         </div>
-        <p className="mt-1 text-sm text-brand-brown-s">
-          {dish.slug} &middot; {formatPrice(dish.price_cents)}
-          {dish.allergens.length > 0 && ` · ${dish.allergens.join(", ")}`}
-        </p>
+        <div className="flex gap-2">
+          <button
+            type="button"
+            onClick={toggleActive}
+            className="rounded px-3 py-1 text-xs text-brand-brown-s hover:bg-brand-warm"
+          >
+            {dish.is_active ? "Deactiveer" : "Activeer"}
+          </button>
+          <a
+            href={`/admin/menu/${dish.id}`}
+            className="rounded px-3 py-1 text-xs text-brand-orange hover:bg-brand-warm"
+          >
+            Bewerken
+          </a>
+          <button
+            type="button"
+            onClick={() => setConfirmDelete(true)}
+            disabled={deleting}
+            className="rounded px-3 py-1 text-xs text-red-500 hover:bg-red-50 disabled:opacity-50"
+          >
+            Verwijder
+          </button>
+        </div>
       </div>
-      <div className="flex gap-2">
-        <button
-          type="button"
-          onClick={toggleActive}
-          className="rounded px-3 py-1 text-xs text-brand-brown-s hover:bg-brand-warm"
-        >
-          {dish.is_active ? "Deactiveer" : "Activeer"}
-        </button>
-        <a
-          href={`/admin/menu/${dish.id}`}
-          className="rounded px-3 py-1 text-xs text-brand-orange hover:bg-brand-warm"
-        >
-          Bewerken
-        </a>
-        <button
-          type="button"
-          onClick={handleDelete}
-          disabled={deleting}
-          className="rounded px-3 py-1 text-xs text-red-500 hover:bg-red-50 disabled:opacity-50"
-        >
-          Verwijder
-        </button>
-      </div>
-    </div>
+
+      <ConfirmDialog
+        open={confirmDelete}
+        title="Gerecht verwijderen"
+        description={`Weet je zeker dat je "${dish.name_nl}" wilt verwijderen? Dit kan niet ongedaan worden.`}
+        confirmLabel="Verwijderen"
+        variant="danger"
+        onConfirm={() => {
+          setConfirmDelete(false);
+          handleDelete();
+        }}
+        onCancel={() => setConfirmDelete(false)}
+      />
+    </>
   );
 }
 
 function DishForm({ onSaved }: { onSaved: () => void }) {
   const [saving, setSaving] = useState(false);
+
+  function parseListField(form: FormData, name: string) {
+    return (form.get(name) as string).split(",").map((value) => value.trim()).filter(Boolean);
+  }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -122,9 +157,14 @@ function DishForm({ onSaved }: { onSaved: () => void }) {
       description_fr: form.get("description_fr") || null,
       description_en: form.get("description_en") || null,
       description_ar: form.get("description_ar") || null,
+      ingredients_nl: parseListField(form, "ingredients_nl"),
+      ingredients_fr: parseListField(form, "ingredients_fr"),
+      ingredients_en: parseListField(form, "ingredients_en"),
+      ingredients_ar: parseListField(form, "ingredients_ar"),
       price_cents: parseInt(form.get("price_cents") as string),
+      image_url: form.get("image_url") || null,
       category: form.get("category"),
-      allergens: (form.get("allergens") as string).split(",").map((a) => a.trim()).filter(Boolean),
+      allergens: parseListField(form, "allergens"),
     };
 
     const res = await fetch("/api/admin/dishes", {
@@ -160,6 +200,17 @@ function DishForm({ onSaved }: { onSaved: () => void }) {
         <TextArea name="description_fr" label="Beschrijving FR" />
         <TextArea name="description_en" label="Beschrijving EN" />
         <TextArea name="description_ar" label="Beschrijving AR" />
+      </div>
+
+      <div className="mt-4 grid gap-4 sm:grid-cols-2">
+        <Input name="ingredients_nl" label="Ingrediënten NL (komma-gescheiden)" />
+        <Input name="ingredients_fr" label="Ingrediënten FR (komma-gescheiden)" />
+        <Input name="ingredients_en" label="Ingrediënten EN (komma-gescheiden)" />
+        <Input name="ingredients_ar" label="Ingrediënten AR (komma-gescheiden)" />
+      </div>
+
+      <div className="mt-4">
+        <DishImageField />
       </div>
 
       <button

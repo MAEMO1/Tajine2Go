@@ -4,6 +4,17 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { AdminShell } from "@/components/admin/admin-shell";
 import { DashboardContent } from "./dashboard-content";
 
+type DashboardMetrics = {
+  today_revenue: number;
+  today_count: number;
+  week_revenue: number;
+  avg_order: number;
+  pickup_count: number;
+  delivery_count: number;
+  online_count: number;
+  cash_count: number;
+};
+
 export default async function DashboardPage() {
   const auth = await checkAdminAuth();
   if (!auth.authorized) {
@@ -11,28 +22,8 @@ export default async function DashboardPage() {
   }
 
   const supabase = createAdminClient();
-  const today = new Date().toISOString().split("T")[0];
-  const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().split("T")[0];
-
-  // Today's stats
-  const { data: todayOrders } = await supabase
-    .from("orders")
-    .select("total_cents, fulfillment, payment_method")
-    .eq("order_date", today)
-    .not("status", "eq", "cancelled");
-
-  const todayRevenue = todayOrders?.reduce((sum, o) => sum + o.total_cents, 0) ?? 0;
-  const todayCount = todayOrders?.length ?? 0;
-
-  // Week stats
-  const { data: weekOrders } = await supabase
-    .from("orders")
-    .select("total_cents")
-    .gte("order_date", weekAgo)
-    .not("status", "eq", "cancelled");
-
-  const weekRevenue = weekOrders?.reduce((sum, o) => sum + o.total_cents, 0) ?? 0;
-  const avgOrder = todayCount > 0 ? Math.round(todayRevenue / todayCount) : 0;
+  const { data: metricsRows } = await supabase.rpc("get_dashboard_metrics");
+  const metrics = (metricsRows?.[0] ?? null) as DashboardMetrics | null;
 
   // Daily summary for chart (last 30 days)
   const { data: dailySummary } = await supabase
@@ -46,25 +37,19 @@ export default async function DashboardPage() {
     .select("*")
     .limit(5);
 
-  // Ratios
-  const pickupCount = todayOrders?.filter((o) => o.fulfillment === "pickup").length ?? 0;
-  const deliveryCount = todayOrders?.filter((o) => o.fulfillment === "delivery").length ?? 0;
-  const onlineCount = todayOrders?.filter((o) => o.payment_method === "online").length ?? 0;
-  const cashCount = todayOrders?.filter((o) => o.payment_method === "cash").length ?? 0;
-
   return (
     <AdminShell>
       <DashboardContent
-        todayRevenue={todayRevenue}
-        todayCount={todayCount}
-        weekRevenue={weekRevenue}
-        avgOrder={avgOrder}
+        todayRevenue={metrics?.today_revenue ?? 0}
+        todayCount={metrics?.today_count ?? 0}
+        weekRevenue={metrics?.week_revenue ?? 0}
+        avgOrder={metrics?.avg_order ?? 0}
         dailySummary={dailySummary ?? []}
         topDishes={topDishes ?? []}
-        pickupCount={pickupCount}
-        deliveryCount={deliveryCount}
-        onlineCount={onlineCount}
-        cashCount={cashCount}
+        pickupCount={metrics?.pickup_count ?? 0}
+        deliveryCount={metrics?.delivery_count ?? 0}
+        onlineCount={metrics?.online_count ?? 0}
+        cashCount={metrics?.cash_count ?? 0}
       />
     </AdminShell>
   );

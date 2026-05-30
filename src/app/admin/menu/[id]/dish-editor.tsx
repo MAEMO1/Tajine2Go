@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import type { Dish } from "@/types/database";
+import { DishImageField } from "../dish-image-field";
 
 type Props = {
   dish: Dish;
@@ -12,6 +13,10 @@ export function DishEditor({ dish }: Props) {
   const router = useRouter();
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+
+  function parseListField(form: FormData, name: string) {
+    return (form.get(name) as string).split(",").map((value) => value.trim()).filter(Boolean);
+  }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -29,9 +34,14 @@ export function DishEditor({ dish }: Props) {
       description_fr: form.get("description_fr") || null,
       description_en: form.get("description_en") || null,
       description_ar: form.get("description_ar") || null,
+      ingredients_nl: parseListField(form, "ingredients_nl"),
+      ingredients_fr: parseListField(form, "ingredients_fr"),
+      ingredients_en: parseListField(form, "ingredients_en"),
+      ingredients_ar: parseListField(form, "ingredients_ar"),
       price_cents: parseInt(form.get("price_cents") as string),
+      image_url: form.get("image_url") || null,
       category: form.get("category"),
-      allergens: (form.get("allergens") as string).split(",").map((a) => a.trim()).filter(Boolean),
+      allergens: parseListField(form, "allergens"),
     };
 
     const res = await fetch(`/api/admin/dishes/${dish.id}`, {
@@ -71,6 +81,17 @@ export function DishEditor({ dish }: Props) {
           <TA name="description_fr" label="Beschrijving FR" defaultValue={dish.description_fr ?? ""} />
           <TA name="description_en" label="Beschrijving EN" defaultValue={dish.description_en ?? ""} />
           <TA name="description_ar" label="Beschrijving AR" defaultValue={dish.description_ar ?? ""} />
+        </div>
+
+        <div className="mt-4 grid gap-4 sm:grid-cols-2">
+          <Field name="ingredients_nl" label="Ingrediënten NL" defaultValue={dish.ingredients_nl.join(", ")} />
+          <Field name="ingredients_fr" label="Ingrediënten FR" defaultValue={dish.ingredients_fr.join(", ")} />
+          <Field name="ingredients_en" label="Ingrediënten EN" defaultValue={dish.ingredients_en.join(", ")} />
+          <Field name="ingredients_ar" label="Ingrediënten AR" defaultValue={dish.ingredients_ar.join(", ")} />
+        </div>
+
+        <div className="mt-4">
+          <DishImageField initialValue={dish.image_url} />
         </div>
 
         <div className="mt-6 flex items-center gap-4">

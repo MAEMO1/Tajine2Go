@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useCartStore } from "@/stores/cart";
@@ -14,6 +15,28 @@ type Props = {
 export function DishRow({ dish, isActive }: Props) {
   const t = useTranslations("menu");
   const addItem = useCartStore((s) => s.addItem);
+  const [justAdded, setJustAdded] = useState(false);
+  const resetTimer = useRef<number | null>(null);
+
+  useEffect(
+    () => () => {
+      if (resetTimer.current) window.clearTimeout(resetTimer.current);
+    },
+    [],
+  );
+
+  function handleAdd() {
+    addItem({
+      weekly_menu_id: dish.weekly_menu_id,
+      dish_id: dish.id,
+      name: dish.name,
+      price_cents: dish.price_cents,
+      image_url: dish.image_url,
+    });
+    setJustAdded(true);
+    if (resetTimer.current) window.clearTimeout(resetTimer.current);
+    resetTimer.current = window.setTimeout(() => setJustAdded(false), 1400);
+  }
 
   const canOrder = isActive && !dish.is_soldout;
 
@@ -61,41 +84,49 @@ export function DishRow({ dish, isActive }: Props) {
           )}
         </div>
 
-        <div className="mt-3 flex items-center justify-between">
-          <div className="flex flex-wrap items-center gap-2">
+        <div className="mt-3 flex items-end justify-between gap-4">
+          <div className="min-w-0 flex-1 space-y-1.5">
+            {dish.ingredients.length > 0 && (
+              <p className="text-xs leading-relaxed text-brand-brown-s/80 line-clamp-2">
+                {t("ingredients")}: {dish.ingredients.join(", ")}
+              </p>
+            )}
             {dish.allergens.length > 0 && (
-              <span className="text-xs text-brand-brown-s/70">
+              <p className="text-xs leading-relaxed text-brand-brown-s/70 line-clamp-2">
                 {t("allergens")}: {dish.allergens.join(", ")}
-              </span>
+              </p>
             )}
-            {dish.is_soldout && (
-              <span className="rounded-full bg-red-50 px-2.5 py-0.5 text-xs font-medium text-red-500">
-                {t("soldOut")}
-              </span>
-            )}
-            {!dish.is_soldout && dish.portions_remaining !== null && dish.portions_remaining <= 5 && (
-              <span className="text-xs font-medium text-brand-orange">
-                {t("portionsLeft", { count: dish.portions_remaining })}
-              </span>
-            )}
+            <div className="flex flex-wrap items-center gap-2">
+              {dish.is_soldout && (
+                <span className="rounded-full bg-red-50 px-2.5 py-0.5 text-xs font-medium text-red-500">
+                  {t("soldOut")}
+                </span>
+              )}
+              {!dish.is_soldout && dish.portions_remaining !== null && dish.portions_remaining <= 5 && (
+                <span className="text-xs font-medium text-brand-orange">
+                  {t("portionsLeft", { count: dish.portions_remaining })}
+                </span>
+              )}
+            </div>
           </div>
 
           {canOrder && (
-            <button
-              type="button"
-              onClick={() =>
-                addItem({
-                  weekly_menu_id: dish.weekly_menu_id,
-                  dish_id: dish.id,
-                  name: dish.name,
-                  price_cents: dish.price_cents,
-                  image_url: dish.image_url,
-                })
-              }
-              className="rounded-full bg-brand-orange px-5 py-2 text-sm font-semibold text-white transition-all duration-300 hover:bg-brand-orange-hover hover:shadow-[0_2px_12px_rgba(217,123,26,0.3)] active:scale-95"
-            >
-              {t("addToCart")}
-            </button>
+            <div className="flex flex-col items-end gap-1">
+              <button
+                type="button"
+                onClick={handleAdd}
+                className={`rounded-full px-5 py-2 text-sm font-semibold text-white transition-all duration-300 active:scale-95 ${
+                  justAdded
+                    ? "bg-brand-bronze"
+                    : "bg-brand-orange hover:bg-brand-orange-hover hover:shadow-[0_2px_12px_rgba(217,123,26,0.3)]"
+                }`}
+              >
+                {justAdded ? `✓ ${t("added")}` : t("addToCart")}
+              </button>
+              <span className="sr-only" role="status" aria-live="polite">
+                {justAdded ? `${dish.name} — ${t("added")}` : ""}
+              </span>
+            </div>
           )}
         </div>
       </div>

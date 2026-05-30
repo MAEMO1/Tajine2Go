@@ -1,5 +1,6 @@
 import { getLocale, getTranslations, setRequestLocale } from "next-intl/server";
 import { fetchMenuData } from "@/lib/menu-data";
+import { fetchPublicSiteContent } from "@/lib/site-content";
 import type { Locale } from "@/types/database";
 import { MenuContent } from "./menu-content";
 
@@ -13,8 +14,14 @@ export default async function MenuPage({ params }: Props) {
 
   const currentLocale = (await getLocale()) as Locale;
   const menuData = await fetchMenuData(currentLocale);
+  const content = await fetchPublicSiteContent(currentLocale);
 
-  return <MenuContent menu={menuData} />;
+  return (
+    <MenuContent
+      menu={menuData}
+      closedMessage={content.website_texts.notices.closed_message}
+    />
+  );
 }
 
 export async function generateMetadata({ params }: Props) {

@@ -1,16 +1,19 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { DishRow } from "@/components/dish-row";
 import { ScrollReveal } from "@/components/scroll-reveal";
 import type { MenuResponse, MenuDish } from "@/types/database";
 
 type Props = {
   menu: MenuResponse;
+  closedMessage?: string | null;
 };
 
-export function MenuContent({ menu }: Props) {
+export function MenuContent({ menu, closedMessage }: Props) {
   const t = useTranslations("menu");
+  const tHome = useTranslations("home");
+  const locale = useLocale();
 
   // Group dishes by category
   const categories = new Map<string, MenuDish[]>();
@@ -25,11 +28,11 @@ export function MenuContent({ menu }: Props) {
     (a, b) => categoryOrder.indexOf(a[0]) - categoryOrder.indexOf(b[0]),
   );
 
-  const formattedDate = new Date(menu.date).toLocaleDateString("nl-BE", {
+  const formattedDate = new Intl.DateTimeFormat(locale, {
     weekday: "long",
     day: "numeric",
     month: "long",
-  });
+  }).format(new Date(`${menu.date}T12:00:00`));
 
   return (
     <div className="mx-auto w-full max-w-3xl px-4 py-8">
@@ -40,7 +43,7 @@ export function MenuContent({ menu }: Props) {
 
       {!menu.is_active && (
         <div className="mt-4 rounded-lg bg-brand-warm2 p-4 text-center text-brand-brown-m">
-          {t("noItems")}
+          {closedMessage ?? tHome("closed")}
         </div>
       )}
 

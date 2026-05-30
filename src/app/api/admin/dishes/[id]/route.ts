@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { checkAdminAuth } from "@/lib/auth/admin";
+import { revalidatePublicLocaleRoutes } from "@/lib/public-route-revalidation";
 import { createAdminClient } from "@/lib/supabase/admin";
 
 export async function PATCH(
@@ -24,6 +25,8 @@ export async function PATCH(
     return NextResponse.json({ error: "Failed to update dish" }, { status: 500 });
   }
 
+  revalidatePublicLocaleRoutes("admin dish patch");
+
   return NextResponse.json({ success: true });
 }
 
@@ -47,6 +50,8 @@ export async function DELETE(
   if (error) {
     return NextResponse.json({ error: "Failed to delete dish" }, { status: 500 });
   }
+
+  revalidatePublicLocaleRoutes("admin dish delete");
 
   return NextResponse.json({ success: true });
 }

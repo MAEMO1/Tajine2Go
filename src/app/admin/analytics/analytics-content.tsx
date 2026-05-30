@@ -20,6 +20,10 @@ const eventLabels: Record<string, string> = {
 };
 
 export function AnalyticsContent({ dailySummary, dishRankings, vatSummary, cateringRevenue }: Props) {
+  function downloadExport(type: "orders" | "vat") {
+    window.location.assign(`/api/admin/export?type=${type}`);
+  }
+
   const dailyData = dailySummary
     .map((d) => ({
       date: new Date(d.order_date).toLocaleDateString("nl-BE", { day: "2-digit", month: "2-digit" }),
@@ -43,18 +47,20 @@ export function AnalyticsContent({ dailySummary, dishRankings, vatSummary, cater
       <div className="flex items-center justify-between">
         <h1 className="font-heading text-3xl text-brand-brown">Analytics</h1>
         <div className="flex gap-2">
-          <a
-            href="/api/admin/export?type=orders"
+          <button
+            type="button"
+            onClick={() => downloadExport("orders")}
             className="rounded-lg border border-brand-brown-s px-4 py-2 text-sm text-brand-brown-m hover:bg-brand-warm"
           >
             Export bestellingen (CSV)
-          </a>
-          <a
-            href="/api/admin/export?type=vat"
+          </button>
+          <button
+            type="button"
+            onClick={() => downloadExport("vat")}
             className="rounded-lg border border-brand-brown-s px-4 py-2 text-sm text-brand-brown-m hover:bg-brand-warm"
           >
             Export BTW (CSV)
-          </a>
+          </button>
         </div>
       </div>
 

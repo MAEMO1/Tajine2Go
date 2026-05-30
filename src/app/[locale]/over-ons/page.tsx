@@ -1,31 +1,23 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
+import { fetchPublicSiteContent } from "@/lib/site-content";
+import type { Locale } from "@/types/database";
 
 type Props = { params: Promise<{ locale: string }> };
 
 export default async function AboutPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const t = await getTranslations({ locale, namespace: "about" });
+  const content = await fetchPublicSiteContent(locale as Locale);
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-8">
-      <h1 className="font-heading text-3xl text-brand-brown">Over Tajine2Go</h1>
+      <h1 className="font-heading text-3xl text-brand-brown">{t("title")}</h1>
 
       <div className="mt-6 space-y-4 text-brand-brown-m">
-        <p>
-          Tajine2Go brengt de authentieke smaken van de Maghrebijnse keuken
-          naar Gent. Elke week bereiden we verse tajines, couscous en meer
-          met traditionele recepten en de beste ingrediënten.
-        </p>
-        <p>
-          Onze missie is simpel: iedereen laten genieten van huisgemaakte
-          Maghrebijnse gerechten, met de warmte en gastvrijheid die bij
-          onze cultuur hoort.
-        </p>
-        <p>
-          Naast onze wekelijkse takeaway bieden we ook catering aan voor
-          evenementen — van bruiloften en aqiqa&apos;s tot bedrijfsevenementen
-          en iftar.
-        </p>
+        {content.website_texts.about.body_paragraphs.map((paragraph, index) => (
+          <p key={`${index}-${paragraph.slice(0, 20)}`}>{paragraph}</p>
+        ))}
       </div>
     </div>
   );

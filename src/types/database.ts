@@ -31,6 +31,17 @@ export type EventType =
   | "iftar"
   | "other";
 
+export type DayName =
+  | "sunday"
+  | "monday"
+  | "tuesday"
+  | "wednesday"
+  | "thursday"
+  | "friday"
+  | "saturday";
+
+export type SlotMode = "slots" | "open" | "both";
+
 export type DishNameSnapshot = {
   nl: string;
   fr: string | null;
@@ -49,6 +60,10 @@ export type Dish = {
   description_fr: string | null;
   description_en: string | null;
   description_ar: string | null;
+  ingredients_nl: string[];
+  ingredients_fr: string[];
+  ingredients_en: string[];
+  ingredients_ar: string[];
   price_cents: number;
   image_url: string | null;
   category: string;
@@ -70,7 +85,7 @@ export type WeeklyMenu = {
 };
 
 export type WeeklyMenuWithDish = WeeklyMenu & {
-  dishes: Dish;
+  dishes: Dish | null;
 };
 
 export type Customer = {
@@ -216,6 +231,193 @@ export type Settings = {
   updated_at: string;
 };
 
+export type TakeawayScheduleDay = {
+  day: DayName;
+  slot_mode: SlotMode;
+  slots: string[];
+  open_window: string;
+};
+
+// Bestel-cutoff: aantal uren vóór de service-dag (00:00) waarop bestellen sluit.
+// 0 of null = geen cutoff (bestellen blijft open tot de service-dag zelf). Zie docs/adr/0001.
+export type TakeawayCutoff = {
+  hours_before: number;
+};
+
+export type TakeawaySchedule = {
+  days: TakeawayScheduleDay[];
+  cutoff?: TakeawayCutoff | null;
+};
+
+// Datum-uitzondering: overschrijft het basis weekpatroon voor één kalenderdatum.
+// closed=true → die dag gesloten. Anders open met (optioneel) eigen uren.
+export type TakeawayException = {
+  date: string;
+  closed: boolean;
+  slot_mode?: SlotMode;
+  slots?: string[];
+  open_window?: string;
+};
+
+export type TakeawayExceptions = {
+  exceptions: TakeawayException[];
+};
+
+export type DeliveryConfig = {
+  enabled: boolean;
+  fee_cents: number;
+  free_delivery_above_cents: number;
+  zip_codes: string[];
+};
+
+export type PaymentMethodsConfig = {
+  online_enabled: boolean;
+  cash_enabled: boolean;
+};
+
+export type PublicOrderConfig = {
+  date: string;
+  is_active: boolean;
+  slot_mode: SlotMode;
+  slots: string[];
+  open_window: string;
+  cutoff_at: string | null;
+  min_order_cents: number;
+  delivery_config: DeliveryConfig;
+  payment_methods: PaymentMethodsConfig;
+};
+
+export type BusinessInfo = {
+  name: string;
+  legal_name: string;
+  email: string;
+  phone: string;
+  address_line: string;
+  address_locality: string;
+  address_country: string;
+  vat_number: string;
+  bank_account: string;
+  serves_cuisine: string[];
+  price_range: string;
+  payment_copy: string;
+};
+
+export type WebsiteHomeText = {
+  hero_subtitle: string;
+  story_text: string;
+  catering_cta_title: string;
+  catering_cta_text: string;
+};
+
+export type WebsiteNotices = {
+  homepage_banner: string | null;
+  closed_message: string | null;
+  checkout_notice: string | null;
+};
+
+export type WebsiteAboutText = {
+  body_paragraphs: string[];
+};
+
+export type WebsiteCateringText = {
+  subtitle: string;
+  notice: string | null;
+};
+
+export type WebsiteLocaleTexts = {
+  home: WebsiteHomeText;
+  notices: WebsiteNotices;
+  about: WebsiteAboutText;
+  catering: WebsiteCateringText;
+};
+
+export type WebsiteLocaleTextInput = {
+  home?: Partial<WebsiteHomeText>;
+  notices?: Partial<WebsiteNotices>;
+  about?: {
+    body_paragraphs?: string[];
+  };
+  catering?: Partial<WebsiteCateringText>;
+};
+
+export type WebsiteTexts = Partial<Record<Locale, WebsiteLocaleTextInput>>;
+
+export type FaqEntry = {
+  id: string;
+  question: string;
+  answer: string;
+  sort_order: number;
+  is_active: boolean;
+};
+
+export type BrandAssets = {
+  header_logo_url: string | null;
+  logo_alt: string | null;
+};
+
+export type LegalPageContent = {
+  title: string;
+  body_paragraphs: string[];
+};
+
+export type LegalPages = {
+  privacy: LegalPageContent;
+  terms: LegalPageContent;
+};
+
+export type LegalPageContentInput = {
+  title?: string;
+  body_paragraphs?: string[];
+};
+
+export type LegalPagesInput = Partial<
+  Record<
+    Locale,
+    {
+      privacy?: LegalPageContentInput;
+      terms?: LegalPageContentInput;
+    }
+  >
+>;
+
+export type OpeningHoursLine = {
+  day: DayName;
+  label: string;
+  window: string;
+};
+
+export type OpeningHoursSpecification = {
+  "@type": "OpeningHoursSpecification";
+  dayOfWeek: string;
+  opens: string;
+  closes: string;
+};
+
+export type LocalizedSiteContent = {
+  business_info: BusinessInfo;
+  website_texts: WebsiteLocaleTexts;
+  faq_entries: FaqEntry[];
+  brand_assets: BrandAssets;
+  legal_pages: LegalPages;
+  opening_hours_lines: OpeningHoursLine[];
+  opening_hours_summary: string;
+  location_text: string;
+  opening_hours_specification: OpeningHoursSpecification[];
+};
+
+export type AdminContentSettings = {
+  business_info: BusinessInfo;
+  website_texts: Record<Locale, WebsiteLocaleTexts>;
+  faq_entries: Record<Locale, FaqEntry[]>;
+  brand_assets: BrandAssets;
+  legal_pages: Record<Locale, LegalPages>;
+};
+
+export type DishImageUploadResponse = {
+  url: string;
+  path: string;
+};
+
 // API response types
 export type MenuDish = {
   id: string;
@@ -223,6 +425,7 @@ export type MenuDish = {
   slug: string;
   name: string;
   description: string | null;
+  ingredients: string[];
   price_cents: number;
   image_url: string | null;
   category: string;
@@ -231,13 +434,16 @@ export type MenuDish = {
   portions_remaining: number | null;
 };
 
-export type MenuResponse = {
-  date: string;
-  is_active: boolean;
-  slot_mode: "slots" | "open" | "both";
-  slots: string[];
-  open_window: string;
+export type MenuResponse = PublicOrderConfig & {
   dishes: MenuDish[];
+};
+
+export type PublicOrderStatus = {
+  order_number: number;
+  status: string;
+  fulfillment: string;
+  pickup_slot: string | null;
+  total_cents: number;
 };
 
 export type Locale = "nl" | "fr" | "en" | "ar";

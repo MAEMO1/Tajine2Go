@@ -1,7 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { getMollieClient } from "@/lib/mollie";
-import { sendOrderConfirmation } from "@/lib/notifications";
+import {
+  sendAdminLatePaymentAlert,
+  sendAdminNewOrderNotification,
+} from "@/lib/notifications";
+
+function getCustomerName(customer: { first_name: string; last_name: string } | null) {
+  return customer ? `${customer.first_name} ${customer.last_name}` : "Onbekende klant";
+}
 
 export async function POST(request: NextRequest) {
   const supabase = createAdminClient();
@@ -29,52 +36,108 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Failed to fetch payment" }, { status: 500 });
   }
 
-  // Find order
+  const paymentMetadata =
+    payment.metadata && typeof payment.metadata === "object"
+      ? (payment.metadata as { orderId?: string })
+      : {};
+  const paymentOrderId = paymentMetadata.orderId;
+
+  if (!paymentOrderId || payment.id !== paymentId) {
+    return NextResponse.json({ error: "Payment metadata mismatch" }, { status: 400 });
+  }
+
   const { data: order } = await supabase
     .from("orders")
     .select("*, customers(*)")
-    .eq("mollie_payment_id", paymentId)
+    .eq("id", paymentOrderId)
+    .eq("mollie_payment_id", payment.id)
     .single();
 
   if (!order) {
-    console.error("Order not found for Mollie payment:", paymentId);
+    console.error("Order not found for Mollie payment:", paymentId, paymentOrderId);
     return NextResponse.json({ error: "Order not found" }, { status: 404 });
   }
 
-  // Idempotency: skip if already processed to terminal state
-  if (["paid", "refunded"].includes(order.payment_status) && payment.status === "paid") {
+  const paymentStatus = payment.status;
+  const isAdminCancelled =
+    order.status === "cancelled" && order.cancel_reason === "admin_cancelled";
+
+  if (paymentStatus === "paid" && ["paid", "refunded"].includes(order.payment_status)) {
+    return NextResponse.json({ status: "already_processed" });
+  }
+  if (
+    ["failed", "expired"].includes(paymentStatus) &&
+    order.status === "cancelled" &&
+    order.payment_status === "failed"
+  ) {
     return NextResponse.json({ status: "already_processed" });
   }
 
-  const status = payment.status;
+  if (isAdminCancelled) {
+    if (paymentStatus === "paid") {
+      const { error: latePaymentError } = await supabase
+        .from("orders")
+        .update({
+          payment_status: "paid",
+          stock_reserved_until: null,
+        })
+        .eq("id", order.id);
 
-  if (status === "paid") {
-    await supabase
+      if (latePaymentError) {
+        console.error("Failed to persist late payment after admin cancel:", latePaymentError);
+        return NextResponse.json({ error: "Failed to update order" }, { status: 500 });
+      }
+
+      await sendAdminLatePaymentAlert({
+        orderId: order.id,
+        orderNumber: order.order_number,
+        customerName: getCustomerName(order.customers),
+        customerEmail: order.customers?.email ?? null,
+        totalCents: order.total_cents,
+        fulfillment: order.fulfillment,
+      }).catch((err) => console.error("Late payment alert error:", err));
+
+      return NextResponse.json({ status: "late_paid_after_admin_cancel" });
+    }
+
+    if (paymentStatus === "failed" || paymentStatus === "expired") {
+      return NextResponse.json({ status: "ignored_terminal_state" });
+    }
+  }
+
+  if (paymentStatus === "paid") {
+    const { error: updateError } = await supabase
       .from("orders")
       .update({
         payment_status: "paid",
         status: "confirmed",
         confirmed_at: new Date().toISOString(),
+        stock_reserved_until: null,
       })
       .eq("id", order.id);
 
-    // Send notifications
+    if (updateError) {
+      console.error("Failed to mark order as paid:", updateError);
+      return NextResponse.json({ error: "Failed to update order" }, { status: 500 });
+    }
+
     const customer = order.customers;
-    if (customer) {
-      sendOrderConfirmation({
+    const { data: orderItems } = await supabase
+      .from("order_items")
+      .select("quantity")
+      .eq("order_id", order.id);
+
+    await sendAdminNewOrderNotification({
         orderId: order.id,
         orderNumber: order.order_number,
-        customerName: `${customer.first_name} ${customer.last_name}`,
-        customerEmail: customer.email,
+        customerName: getCustomerName(customer),
+        customerEmail: customer?.email ?? null,
         totalCents: order.total_cents,
         fulfillment: order.fulfillment,
-        pickupSlot: order.pickup_slot,
         paymentMethod: "online",
-        itemCount: 0, // Not critical for notification
-        statusToken: "", // Not needed for admin notification
-        locale: "nl",
-      }).catch((err) => console.error("Notification error:", err));
-    }
+        itemCount: (orderItems ?? []).reduce((sum, item) => sum + item.quantity, 0),
+      })
+      .catch((err) => console.error("Admin notification error:", err));
 
     // Generate invoice if requested
     if (order.invoice_requested && order.invoice_company_name) {
@@ -101,16 +164,22 @@ export async function POST(request: NextRequest) {
         { onConflict: "order_id" },
       );
     }
-  } else if (status === "failed" || status === "expired") {
-    await supabase
+  } else if (paymentStatus === "failed" || paymentStatus === "expired") {
+    const { error: updateError } = await supabase
       .from("orders")
       .update({
         payment_status: "failed",
         status: "cancelled",
         cancelled_at: new Date().toISOString(),
-        cancel_reason: status === "failed" ? "payment_failed" : "payment_expired",
+        cancel_reason: paymentStatus === "failed" ? "payment_failed" : "payment_expired",
+        stock_reserved_until: null,
       })
       .eq("id", order.id);
+
+    if (updateError) {
+      console.error("Failed to cancel failed/expired order:", updateError);
+      return NextResponse.json({ error: "Failed to update order" }, { status: 500 });
+    }
 
     // Release stock
     const { data: orderItems } = await supabase
@@ -127,13 +196,18 @@ export async function POST(request: NextRequest) {
       }
     }
   } else if (payment.amountRefunded && parseFloat(payment.amountRefunded.value) > 0) {
-    await supabase
+    const { error: refundUpdateError } = await supabase
       .from("orders")
       .update({
         payment_status: "refunded",
         refund_amount_cents: Math.round(parseFloat(payment.amountRefunded.value) * 100),
       })
       .eq("id", order.id);
+
+    if (refundUpdateError) {
+      console.error("Failed to mark order as refunded:", refundUpdateError);
+      return NextResponse.json({ error: "Failed to update order" }, { status: 500 });
+    }
   }
 
   return NextResponse.json({ status: "ok" });

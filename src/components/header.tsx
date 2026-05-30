@@ -6,9 +6,14 @@ import { LanguageSwitcher } from "./language-switcher";
 import { useCartStore } from "@/stores/cart";
 import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import Image from "next/image";
 
-export function Header() {
+type Props = {
+  logoUrl?: string | null;
+  logoAlt?: string | null;
+  brandName?: string;
+};
+
+export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
   const t = useTranslations("nav");
   const locale = useLocale();
   const pathname = usePathname();
@@ -16,6 +21,8 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const itemCount = useCartStore((s) => s.itemCount);
   const count = itemCount();
+  const logoSrc = logoUrl || "/logo-brand.png";
+  const logoText = logoAlt || brandName;
 
   const isHomepage = pathname === "/";
 
@@ -57,15 +64,12 @@ export function Header() {
         }`}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2.5 md:px-6">
-          {/* Logo */}
           <Link href="/" className="transition-transform duration-200 hover:scale-[1.02]">
-            <Image
-              src="/logo.png"
-              alt="Tajine2Go"
-              width={72}
-              height={72}
-              className="h-14 w-auto md:h-[72px]"
-              priority
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={logoSrc}
+              alt={logoText}
+              className="h-14 w-auto object-contain md:h-[72px]"
             />
           </Link>
 
@@ -90,14 +94,39 @@ export function Header() {
 
             <Link
               href="/bestellen"
-              className="group relative flex items-center rounded-full p-2 text-brand-brown-m transition-all duration-200 hover:bg-brand-warm hover:text-brand-orange"
+              className="group relative hidden items-center gap-2 rounded-full bg-brand-orange px-5 py-2.5 font-heading text-sm uppercase tracking-[0.12em] text-white shadow-[0_2px_10px_rgba(217,123,26,0.20)] transition-all duration-200 hover:bg-brand-orange-hover hover:shadow-[0_4px_20px_rgba(217,123,26,0.30)] active:scale-[0.98] md:inline-flex"
+              aria-label={t("order")}
+            >
+              <span>{t("order")}</span>
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M16 11V7a4 4 0 00-8 0v4M5 9h14l-1.5 11A2 2 0 0115.5 22h-7a2 2 0 01-2-2L5 9z"
+                />
+              </svg>
+              {count > 0 && (
+                <motion.span
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  className="absolute -end-1 -top-1 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-brand-brown px-1 text-[10px] font-bold text-white"
+                >
+                  {count}
+                </motion.span>
+              )}
+            </Link>
+
+            {/* Cart icon for mobile only */}
+            <Link
+              href="/bestellen"
+              className="group relative flex items-center rounded-full p-2 text-brand-brown-m transition-all duration-200 hover:bg-brand-warm hover:text-brand-orange md:hidden"
               aria-label={t("order")}
             >
               <svg className="h-[22px] w-[22px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z"
+                  d="M16 11V7a4 4 0 00-8 0v4M5 9h14l-1.5 11A2 2 0 0115.5 22h-7a2 2 0 01-2-2L5 9z"
                 />
               </svg>
               {count > 0 && (
@@ -210,7 +239,7 @@ export function Header() {
             <div className="px-6 pb-8">
               <div className="h-px bg-gradient-to-r from-transparent via-brand-warm2 to-transparent" />
               <p className="mt-4 text-center font-heading text-xs uppercase tracking-[0.2em] text-brand-brown-s/50">
-                Tajine2Go
+                {brandName}
               </p>
             </div>
           </motion.nav>

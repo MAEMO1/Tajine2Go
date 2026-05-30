@@ -1,6 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
 import { checkAdminAuth } from "@/lib/auth/admin";
 import { createAdminClient } from "@/lib/supabase/admin";
+
+const updateOrderStatusSchema = z.object({
+  id: z.string().uuid(),
+  status: z.enum([
+    "pending",
+    "confirmed",
+    "preparing",
+    "ready",
+    "out_for_delivery",
+    "completed",
+    "cancelled",
+  ]),
+}).strict();
 
 export async function GET(request: NextRequest) {
   const auth = await checkAdminAuth();
@@ -41,21 +55,32 @@ export async function PATCH(request: NextRequest) {
   }
 
   const supabase = createAdminClient();
-  const body = await request.json();
-  const { id, ...updates } = body;
-
-  if (!id) {
-    return NextResponse.json({ error: "Missing order ID" }, { status: 400 });
+  let body: unknown;
+  try {
+    body = await request.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
   }
 
-  const { error } = await supabase
-    .from("orders")
-    .update(updates)
-    .eq("id", id);
+  const parsed = updateOrderStatusSchema.safeParse(body);
+  if (!parsed.success) {
+    return NextResponse.json({ error: "Ongeldige statusupdate" }, { status: 400 });
+  }
+
+  const { data, error } = await supabase.rpc("apply_admin_order_status_transition", {
+    target_order_id: parsed.data.id,
+    next_status: parsed.data.status,
+  });
 
   if (error) {
+    if (error.message.includes("ORDER_NOT_FOUND")) {
+      return NextResponse.json({ error: "Bestelling niet gevonden" }, { status: 404 });
+    }
+    if (error.message.includes("INVALID_STATUS_TRANSITION")) {
+      return NextResponse.json({ error: "Ongeldige statusovergang" }, { status: 409 });
+    }
     return NextResponse.json({ error: "Update failed" }, { status: 500 });
   }
 
-  return NextResponse.json({ success: true });
+  return NextResponse.json({ success: true, order: data?.[0] ?? null });
 }

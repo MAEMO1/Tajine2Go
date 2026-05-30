@@ -13,10 +13,16 @@
   --color-brand-brown-m: #5C4023;
   --color-brand-brown-s: #9C8468;
 
-  /* Font families */
-  --font-heading: var(--font-bebas-neue), sans-serif;
-  --font-body: var(--font-source-sans-3), sans-serif;
-  --font-arabic: var(--font-noto-sans-arabic), sans-serif;
+  /* Type system — één familie: Geist (+ Geist Mono). Zie docs/adr/0002. */
+  --font-sans:    var(--font-geist), system-ui, sans-serif;
+  --font-mono:    var(--font-geist-mono), ui-monospace, monospace;
+  --font-arabic:  var(--font-noto-sans-arabic), sans-serif;
+
+  /* Legacy aliases → Geist (migreer classes mettertijd naar font-sans/font-mono) */
+  --font-heading: var(--font-geist), system-ui, sans-serif;
+  --font-body:    var(--font-geist), system-ui, sans-serif;
+  --font-display: var(--font-geist), system-ui, sans-serif;
+  --font-italic:  var(--font-geist), system-ui, sans-serif;
 }
 
 body {

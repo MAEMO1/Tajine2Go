@@ -21,7 +21,7 @@ De sleutelwoorden `MUST`, `MUST NOT`, `SHOULD`, `SHOULD NOT` en `MAY` zijn binde
 | Key | Value |
 |---|---|
 | Naam | Tajine2Go |
-| Concept | Maghrebijnse takeaway, 1 dag per week in v1, later opschaalbaar |
+| Concept | Marokkaanse takeaway met wekelijkse service (1 of meer service-dagen per week), later opschaalbaar |
 | Extra aanbod | Catering |
 | Regio | Gent, Belgie |
 | Publieke talen | `nl`, `fr`, `en`, `ar` |
@@ -34,7 +34,7 @@ De sleutelwoorden `MUST`, `MUST NOT`, `SHOULD`, `SHOULD NOT` en `MAY` zijn binde
 
 Deze keuzes zijn vastgezet en mogen niet meer door de implementer worden ingevuld:
 
-- v1 MUST exact 1 takeaway-dag per week ondersteunen.
+- v1 MUST minstens 1 service-dag per week ondersteunen. Beschikbaarheid = basis weekpatroon + datum-uitzonderingen + globale pauze met voorrang `globale pauze > datum-uitzondering > basis weekpatroon`; er kunnen dus 0 of meer service-dagen per week zijn (zie `docs/adr/0001-beschikbaarheid-weekpatroon-en-datum-uitzonderingen.md` en `CONTEXT.md`).
 - De publieke site MUST live werken in `nl`, `fr`, `en` en `ar`.
 - De adminomgeving MUST altijd Nederlands blijven.
 - Checkout MUST guest checkout ondersteunen; een klantaccount is geen v1-feature.
@@ -247,13 +247,13 @@ colors: {
 
 ```ts
 fontFamily: {
-  heading: ['Bebas Neue', 'sans-serif'],
-  body: ['Source Sans 3', 'sans-serif'],
-  arabic: ['Noto Sans Arabic', 'sans-serif'],
+  sans: ['Geist', 'system-ui', 'sans-serif'],        // titels én body
+  mono: ['Geist Mono', 'ui-monospace', 'monospace'], // labels, prijzen, codes
+  arabic: ['Noto Sans Arabic', 'sans-serif'],         // Arabisch (RTL)
 }
 ```
 
-Laad fonts via `next/font/google`.
+Eén familie (Geist) voor zowel display als body — hiërarchie via gewicht, grootte en tracking; géén aparte displayletter en géén serif. Geist Mono voor labels, prijzen/cijfers en codes. Laad fonts via `next/font`. Zie `docs/adr/0002-lettertype-een-moderne-grotesk-geist.md` (vervangt zowel Bebas Neue/Source Sans 3 als de editorial-set Gloock/Instrument Serif/IBM Plex Mono).
 
 ### 5.3 Componentregels
 
@@ -262,7 +262,7 @@ Laad fonts via `next/font/google`.
 - Kaarten MUST `bg-brand-cream`, `shadow-sm`, `rounded-xl` gebruiken.
 - Inputs MUST `border-brand-brown-s`, `rounded-lg`, `text-sm` gebruiken.
 - Dish cards MUST rij-layout gebruiken, geen uniforme card-grid.
-- Prijzen MUST prominent in heading font en brand orange getoond worden.
+- Prijzen MUST prominent getoond worden in een zwaar Geist-gewicht (of Geist Mono voor cijfers) en brand orange.
 
 ### 5.4 Responsive en RTL
 
@@ -583,7 +583,7 @@ De initiële seed MUST minimaal deze settings bevatten:
 
 ### 7.1 Functionele defaults
 
-- `takeaway_schedule.days` MUST in v1 precies 1 weekdag bevatten.
+- `takeaway_schedule.days` MAY 1 of meer weekdagen bevatten (het basis weekpatroon); datum-uitzonderingen kunnen dit per kalenderdatum overschrijven (zie `docs/adr/0001-beschikbaarheid-weekpatroon-en-datum-uitzonderingen.md`).
 - `delivery_config.zip_codes` MUST beperkt zijn tot expliciet ondersteunde Gentse postcodes.
 - `payment_methods` MUST standaard `bancontact`, `ideal`, `visa_mc` en `cash` ondersteunen.
 - `takeaway_active.active=false` MUST de publieke bestelflow volledig blokkeren.
@@ -1090,7 +1090,7 @@ Werk in deze volgorde. Elke stap MUST functioneel zijn voor je doorgaat.
 ### 15.4 i18n en UI
 
 - Publieke site werkt in `nl`, `fr`, `en`, `ar`.
-- Arabisch rendert RTL correct.
+- Marokkaans rendert rechts-naar-links correct.
 - Admin blijft Nederlands.
 - Dish list gebruikt row layout, geen generieke card-grid.
 
