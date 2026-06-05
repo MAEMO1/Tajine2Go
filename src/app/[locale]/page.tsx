@@ -86,7 +86,6 @@ export default async function HomePage({ params }: Props) {
       )}
       <HeroSection
         heroSubtitle={content.website_texts.home.hero_subtitle}
-        locality={content.business_info.address_locality}
       />
       <InfoStrip />
       <HomepageMenu
@@ -106,10 +105,8 @@ export default async function HomePage({ params }: Props) {
 
 function HeroSection({
   heroSubtitle,
-  locality,
 }: {
   heroSubtitle: string;
-  locality: string;
 }) {
   const t = useTranslations("home");
 
@@ -168,21 +165,23 @@ function HeroSection({
           </div>
         </div>
 
-        {/* === Right: storefront photograph === */}
-        <div className="relative aspect-[4/5] w-full overflow-hidden shadow-[0_25px_60px_-20px_rgba(45,27,10,0.35)]">
+        {/* === Right: takeaway hero photograph === */}
+        <div className="relative aspect-[4/5] w-full overflow-hidden bg-[#F4F0E8] shadow-[0_18px_50px_-30px_rgba(45,27,10,0.24)]">
           <Image
-            src="/hero-storefront.jpg"
-            alt="Tajine2Go winkel interieur in Gent"
+            src="/hero-takeaway-box.jpeg"
+            alt="Marokkaanse takeaway box met verse tajine"
             fill
             sizes="(min-width: 768px) 50vw, 100vw"
-            priority
-            className="object-cover object-[center_30%]"
+            preload
+            className="object-cover object-[center_55%] brightness-[1.025] contrast-[0.99] saturate-[0.985]"
           />
-          {/* Subtle top vignette for masthead legibility */}
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-1/4 bg-gradient-to-b from-brand-brown/55 to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-9 bg-gradient-to-r from-[#F4F0E8]/38 via-[#F4F0E8]/12 to-transparent backdrop-blur-[1px]" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-9 bg-gradient-to-l from-[#F4F0E8]/38 via-[#F4F0E8]/12 to-transparent backdrop-blur-[1px]" />
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-8 bg-gradient-to-b from-[#F4F0E8]/30 via-[#F4F0E8]/10 to-transparent backdrop-blur-[1px]" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-[#F4F0E8]/38 via-[#F4F0E8]/12 to-transparent backdrop-blur-[1px]" />
 
           {/* Caption overlay — mono labels in cream, like a magazine FIG line */}
-          <div className="absolute left-4 top-4 right-4 flex justify-between font-[family-name:var(--font-mono)] text-[9px] font-bold uppercase tracking-[0.28em] text-brand-cream/85">
+          <div className="absolute left-4 top-4 right-4 flex justify-between font-[family-name:var(--font-mono)] text-[9px] font-bold uppercase tracking-[0.28em] text-brand-brown/50">
             <span>Tajine2Go · Gent</span>
             <span>Mei MMXXVI</span>
           </div>
