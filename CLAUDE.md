@@ -6,6 +6,22 @@
 
 ---
 
+## Agent skills
+
+### Issue tracker
+
+Issues are tracked in GitHub Issues for `MAEMO1/Tajine2Go`. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Use the canonical mattpocock/skills triage labels. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+This is a single-context repo with root `CONTEXT.md` and `docs/adr/`. See `docs/agents/domain.md`.
+
+---
+
 ## 0. Normatieve taal
 
 De sleutelwoorden `MUST`, `MUST NOT`, `SHOULD`, `SHOULD NOT` en `MAY` zijn bindend.
