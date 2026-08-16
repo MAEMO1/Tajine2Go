@@ -123,8 +123,6 @@ function HeroSection({
           className="mt-5 text-balance font-display text-[clamp(38px,11vw,96px)] font-medium leading-[1.1] text-[#F6E9D2] md:mt-8 md:leading-[1.08]"
         >
           {t("heroLine1")}
-          <br />
-          {t("heroLine2")}
         </SplitHeading>
 
         <Reveal delay={0.35}>
