@@ -53,6 +53,7 @@ Deze keuzes zijn vastgezet en mogen niet meer door de implementer worden ingevul
 - v1 MUST minstens 1 service-dag per week ondersteunen. Beschikbaarheid = basis weekpatroon + datum-uitzonderingen + globale pauze met voorrang `globale pauze > datum-uitzondering > basis weekpatroon`; er kunnen dus 0 of meer service-dagen per week zijn (zie `docs/adr/0001-beschikbaarheid-weekpatroon-en-datum-uitzonderingen.md` en `CONTEXT.md`).
 - De publieke site MUST live werken in `nl`, `fr` en `en`. Arabisch is geschrapt (beslissing eigenaar 17/08/2026); er is geen RTL-ondersteuning meer nodig.
 - De adminomgeving MUST altijd Nederlands blijven.
+- Bestellen verloopt in de huidige release telefonisch (beslissing eigenaar, augustus 2026). De publieke bestel-UI (cart, checkout, orderstatuspagina) is verwijderd en MUST NOT herbouwd worden zolang deze beslissing staat. De checkout/order-API's, het datamodel en de bijhorende secties in dit document (o.a. §9.1, §9.2, §10) blijven het bindende contract voor een latere online-bestelrelease en zijn tot dan slapend.
 - Checkout MUST guest checkout ondersteunen; een klantaccount is geen v1-feature.
 - Het datamodel MUST wel auth-ready zijn voor een later klantenportaal.
 - Cashbetalingen MUST toegestaan zijn voor zowel `pickup` als `delivery`.
@@ -71,7 +72,7 @@ Deze keuzes zijn vastgezet en mogen niet meer door de implementer worden ingevul
 | Database | Supabase PostgreSQL | MUST |
 | Auth | Supabase Auth | MUST |
 | Styling | Tailwind CSS | MUST |
-| State | Zustand | MUST |
+| State | Zustand | MUST bij herinvoering van de online bestelflow; nu niet in gebruik |
 | i18n | next-intl | MUST |
 | Betalingen | Mollie | MUST |
 | E-mail | Resend | MUST |
@@ -171,8 +172,6 @@ tajine2go/
 │   │   │   ├── layout.tsx
 │   │   │   ├── page.tsx
 │   │   │   ├── menu/page.tsx
-│   │   │   ├── bestellen/page.tsx
-│   │   │   ├── order/[id]/page.tsx
 │   │   │   ├── catering/page.tsx
 │   │   │   ├── over-ons/page.tsx
 │   │   │   ├── faq/page.tsx
@@ -262,12 +261,13 @@ colors: {
 
 ```ts
 fontFamily: {
-  sans: ['Geist', 'system-ui', 'sans-serif'],        // titels én body
-  mono: ['Geist Mono', 'ui-monospace', 'monospace'], // labels, prijzen, codes
+  display: ['Cormorant Garamond', 'Georgia', 'serif'], // koppen en display; italic voor de hero-traditiezin
+  sans: ['Geist', 'system-ui', 'sans-serif'],          // body én alle cijfers (prijzen, telefoonnummers, uren)
+  mono: ['Geist Mono', 'ui-monospace', 'monospace'],   // legacy-restgebruik; geen nieuwe toepassingen
 }
 ```
 
-Eén familie (Geist) voor zowel display als body — hiërarchie via gewicht, grootte en tracking; géén aparte displayletter en géén serif. Geist Mono voor labels, prijzen/cijfers en codes. Laad fonts via `next/font`. Zie `docs/adr/0002-lettertype-een-moderne-grotesk-geist.md` (vervangt zowel Bebas Neue/Source Sans 3 als de editorial-set Gloock/Instrument Serif/IBM Plex Mono).
+Cormorant Garamond als displayletter (zoals het gedrukte brandmateriaal), Geist voor body — en alle cijfers MUST in Geist staan, ook prijzen en telefoonnummers. Vaste schaal via de utilities `type-h1/h2/h3/type-label` in `globals.css`. Laad fonts via `next/font`. Zie `docs/adr/0003-displayletter-cormorant-garamond.md` (vervangt ADR 0002 "één familie Geist").
 
 ### 5.3 Componentregels
 
@@ -276,12 +276,12 @@ Eén familie (Geist) voor zowel display als body — hiërarchie via gewicht, gr
 - Kaarten MUST `bg-brand-cream`, `shadow-sm`, `rounded-xl` gebruiken.
 - Inputs MUST `border-brand-brown-s`, `rounded-lg`, `text-sm` gebruiken.
 - Dish cards MUST rij-layout gebruiken, geen uniforme card-grid.
-- Prijzen MUST prominent getoond worden in een zwaar Geist-gewicht (of Geist Mono voor cijfers) en brand orange.
+- Prijzen MUST prominent getoond worden in een zwaar Geist-gewicht en brand orange.
 
 ### 5.4 Responsive
 
 - Desktop boven 900px MUST hero en admin in 2-kolom layout tonen.
-- Mobile onder 600px MUST cart als bottom sheet of drawer tonen.
+- Mobile onder 600px MUST cart als bottom sheet of drawer tonen (slapend zolang bestellen telefonisch gaat, zie §1.1).
 
 ---
 

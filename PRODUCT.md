@@ -14,11 +14,11 @@ web
 
 ## Product Purpose
 
-Bestelsite voor Tajine2Go, een Belgisch-Marokkaanse takeaway met wekelijkse service in Gent. Klanten bestellen vooruit (guest checkout, online of cash) voor de eerstvolgende service-dag; catering is een tweede omzetstroom. Succes = vlot vooruitbestellen zonder telefoon, en een admin die de hele operatie solo kan draaien.
+Website voor Tajine2Go, een Belgisch-Marokkaanse takeaway in Gent. Bestellen gaat in de huidige release telefonisch (beslissing eigenaar, augustus 2026): de site toont de vaste menukaart en de belnummers; catering is een tweede omzetstroom met een aanvraagformulier. Succes = de klant vindt menu en nummer in een paar seconden, en een admin die de hele operatie solo kan draaien. De online-bestelflow (guest checkout, Mollie) blijft als slapend contract bestaan voor later.
 
 ## Positioning
 
-Huisgemaakt en beperkt: een klein wisselend weekmenu, vers en traag gegaard op de service-dag. Schaarste en ambacht zijn de kern — geen doorlopende kaart, geen fastfood-versie van Marokkaans. Het weekpatroon-model (bestellen vóór de cutoff, beperkte porties per gerecht) is het mechanisme dat dit waarmaakt.
+Huisgemaakt en beperkt: een vaste menukaart met 18 gerechten, vers en traag gegaard. Ambacht is de kern — geen fastfood-versie van de Marokkaanse keuken. De klassieke menukaart-uitstraling van het drukwerk (serif-koppen, puntjeslijnen, ornamenten) draagt dat online.
 
 ## Operating Context
 
@@ -40,7 +40,7 @@ Huisgemaakt en beperkt: een klein wisselend weekmenu, vers en traag gegaard op d
 - Kleurenpalet (beslissing eigenaar 16/08/2026, verfijnd op het drukwerk): accent is terracotta #D2691E (uit het zellige-patroon, gedempt t.o.v. kit-Spice-Orange), achtergrond warm papier #FBF2DC (zoals menukaart/poster i.p.v. kit-webwit #FFF8EA); Saffron Gold #F5A400, Tajine Dark Brown #3B1606 en Warm Brown #78320C blijven uit het kit. Site-tokens in `globals.css` @theme en CLAUDE.md §5.1 zijn de bron.
 - Logo-regels uit de usage guide: min. 180px breed (primary), 10% clearspace, nooit uitrekken of herkleuren buiten de meegeleverde varianten, dark badge op donkere ondergronden, favicon nooit als header-logo.
 - Eén letterfamilie: Geist (display én body), Geist Mono voor labels/prijzen/cijfers.
-- Bindende design language: docs/redesign/design-language.md v3 "Op zacht vuur" (licht↔donker sectieritme, zellige/khatam-geometrie, GSAP-motion, Three.js tajine-hero).
+- Bindende design-afspraken: CLAUDE.md §5 en docs/adr/0003 (Cormorant display + Geist body). docs/redesign/design-language.md is historisch (beschrijft de geschrapte v3-richting).
 - Toon: warm, premium, toegankelijk, Belgisch-Marokkaans.
 
 ## Evidence on Hand

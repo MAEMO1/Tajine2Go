@@ -1,8 +1,9 @@
 # Tajine2Go — Design Language v3 "Op zacht vuur"
 
-> Bindend voor de 2026 redesign. Vult CLAUDE.md §5 aan — overtreedt het nooit.
-> Concept: de site als slow-cooked zintuiglijke ervaring. Warmte, stoom, terracotta,
-> zellige-geometrie. Scrollen = het deksel van de tajine optillen.
+> VEROUDERD (17/08/2026). Dit document beschrijft de geschrapte v3-richting
+> (Geist-only typografie, Arabisch/RTL, Three.js-hero, cart-animaties) en is
+> NIET meer bindend. De actuele afspraken staan in CLAUDE.md §5, PRODUCT.md
+> en docs/adr/0003. Bewaard als historische referentie.
 
 ## 0. Onaantastbaar (uit CLAUDE.md)
 
