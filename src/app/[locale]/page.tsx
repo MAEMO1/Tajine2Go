@@ -83,13 +83,13 @@ function HeroSection({
 
   return (
     <section className="relative isolate overflow-hidden bg-[#4A1E08]">
-      {/* Scherp zellige-patroon (beker/gevelplaat) + warme donkere waas voor leesbaarheid */}
+      {/* Zellige-patroon (beker/gevelplaat), licht geblurd + warme donkere waas voor leesbaarheid */}
       <div
-        className="absolute inset-0 bg-[url('/brand/pattern-zellige.jpg')] bg-[length:300px_300px]"
+        className="absolute -inset-2 bg-[url('/brand/pattern-zellige.jpg')] bg-[length:300px_300px] blur-[4px]"
         aria-hidden="true"
       />
       <div
-        className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(45,15,4,0.62)_0%,rgba(35,11,3,0.85)_100%)]"
+        className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(45,15,4,0.68)_0%,rgba(35,11,3,0.88)_100%)]"
         aria-hidden="true"
       />
 
@@ -109,7 +109,7 @@ function HeroSection({
         </Reveal>
 
         <Reveal delay={0.15}>
-          <div className="mt-6 flex items-center justify-center gap-3 text-brand-gold/90 md:mt-10 md:gap-4">
+          <div className="mt-6 flex items-center justify-center gap-3 text-[#FFC24A] md:mt-10 md:gap-4">
             <span className="hidden h-px bg-brand-gold/60 sm:block sm:w-8 md:w-14" aria-hidden="true" />
             <p className="max-w-[26ch] text-balance font-display text-[12px] font-semibold uppercase leading-[1.9] tracking-[0.24em] sm:max-w-none md:text-[15px] md:tracking-[0.32em]">
               {t("heroKicker")}
@@ -128,7 +128,7 @@ function HeroSection({
         </SplitHeading>
 
         <Reveal delay={0.35}>
-          <p className="mt-5 text-balance font-script text-[clamp(22px,6vw,34px)] leading-normal text-brand-gold md:mt-7">
+          <p className="mt-5 text-balance font-script text-[clamp(22px,6vw,34px)] leading-normal text-[#FFC24A] [text-shadow:0_2px_12px_rgba(0,0,0,0.45)] md:mt-7">
             {heroSubtitle}
           </p>
         </Reveal>
