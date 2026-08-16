@@ -10,7 +10,17 @@ export function PhoneOrderButton({ label, className }: { label: string; classNam
   const t = useTranslations("nav");
   const tHome = useTranslations("home");
   const [open, setOpen] = useState(false);
+  const [direction, setDirection] = useState<"up" | "down">("up");
   const wrapperRef = useRef<HTMLDivElement>(null);
+
+  function toggle() {
+    if (!open && wrapperRef.current) {
+      // Open naar boven, tenzij daar te weinig zichtbare ruimte is (~230px popover)
+      const { top } = wrapperRef.current.getBoundingClientRect();
+      setDirection(top > 240 ? "up" : "down");
+    }
+    setOpen(!open);
+  }
 
   useEffect(() => {
     if (!open) return;
@@ -32,7 +42,7 @@ export function PhoneOrderButton({ label, className }: { label: string; classNam
     <div ref={wrapperRef} className="relative">
       <button
         type="button"
-        onClick={() => setOpen(!open)}
+        onClick={toggle}
         aria-expanded={open}
         aria-haspopup="true"
         className={className}
@@ -46,11 +56,13 @@ export function PhoneOrderButton({ label, className }: { label: string; classNam
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, y: 6 }}
+            initial={{ opacity: 0, y: direction === "up" ? 6 : -6 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 6 }}
+            exit={{ opacity: 0, y: direction === "up" ? 6 : -6 }}
             transition={{ duration: 0.18, ease: "easeOut" }}
-            className="absolute bottom-full left-1/2 z-50 mb-2 w-64 -translate-x-1/2 overflow-hidden rounded-xl border border-brand-warm2 bg-brand-cream text-start shadow-[0_16px_40px_-12px_rgba(59,22,6,0.3)]"
+            className={`absolute left-1/2 z-50 w-64 -translate-x-1/2 overflow-hidden rounded-xl border border-brand-warm2 bg-brand-cream text-start shadow-[0_16px_40px_-12px_rgba(59,22,6,0.3)] ${
+              direction === "up" ? "bottom-full mb-2" : "top-full mt-2"
+            }`}
           >
             <p className="px-4 pb-1 pt-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-brown-s">
               {t("orderByPhone")}
