@@ -49,7 +49,7 @@
     "nextService": "الخدمة القادمة",
     "orderBy": "اطلب قبل {time}",
     "infoPayment": "Bancontact · نقداً · عبر الإنترنت",
-    "menuTitle": "قائمة هذا",
+    "menuTitle": "قائمة الأسبوع",
     "scrollToMenu": "عرض القائمة",
     "cateringPhone": "تقديم طلب",
     "cateringEmail": "اتصل بنا",
@@ -60,6 +60,10 @@
     "heroTitleA": "نكهات",
     "heroTitleAccent": "مغربية",
     "heroTitleB": "أصيلة، طازجة كل يوم.",
+    "heroKicker": "مأكولات مغربية جاهزة وخدمة تموين",
+    "heroLine1": "نكهات أصيلة",
+    "heroLine2": "محضّر طازجاً",
+    "heroCateringCta": "طلب خدمة التموين",
     "uspFreshShort": "تُحضَّر يومياً",
     "uspRecipes": "وصفات تقليدية",
     "uspRecipesShort": "مذاق أصيل",
@@ -76,9 +80,13 @@
     "ingredients": "المكونات",
     "allergens": "مسببات الحساسية",
     "categories": {
+      "tajine": "طواجن",
+      "couscous": "كسكس",
+      "bstilla": "بسطيلة وحساء",
       "main": "الأطباق الرئيسية",
       "side": "الأطباق الجانبية",
       "dessert": "الحلويات",
+      "sweet": "حلويات",
       "drink": "المشروبات"
     }
   },

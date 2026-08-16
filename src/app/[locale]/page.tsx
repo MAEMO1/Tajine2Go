@@ -2,9 +2,10 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { setRequestLocale, getTranslations, getLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { ScrollReveal } from "@/components/scroll-reveal";
 import { InfoStrip } from "@/components/info-strip";
 import { HomepageMenu } from "@/components/homepage-menu";
+import { Reveal, SplitHeading } from "@/components/motion/reveal";
+import { Khatam } from "@/components/decor/khatam";
 import { fetchMenuData } from "@/lib/menu-data";
 import { fetchPublicSiteContent } from "@/lib/site-content";
 import type { Locale } from "@/types/database";
@@ -22,20 +23,6 @@ export default async function HomePage({ params }: Props) {
     fetchMenuData(currentLocale),
     fetchPublicSiteContent(currentLocale),
   ]);
-
-  const t = await getTranslations({ locale: currentLocale, namespace: "home" });
-  const serviceDayLabel = new Intl.DateTimeFormat(currentLocale, {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-  }).format(new Date(`${menuData.date}T12:00:00`));
-  const cutoffLabel = menuData.cutoff_at
-    ? new Intl.DateTimeFormat(currentLocale, {
-        weekday: "long",
-        hour: "2-digit",
-        minute: "2-digit",
-      }).format(new Date(menuData.cutoff_at))
-    : null;
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -67,28 +54,8 @@ export default async function HomePage({ params }: Props) {
           {content.website_texts.notices.homepage_banner}
         </section>
       )}
-      {menuData.is_active && (
-        <section className="border-b border-brand-warm2 bg-brand-cream px-4 py-2.5">
-          <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-3 gap-y-1 text-center font-mono text-xs uppercase tracking-[0.18em]">
-            <span className="relative flex h-2 w-2" aria-hidden="true">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-orange opacity-60" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-brand-orange" />
-            </span>
-            <span className="text-brand-brown">
-              {t("nextService")}: {serviceDayLabel}
-              {menuData.open_window ? ` · ${menuData.open_window}` : ""}
-            </span>
-            {cutoffLabel && (
-              <span className="text-brand-orange">· {t("orderBy", { time: cutoffLabel })}</span>
-            )}
-          </div>
-        </section>
-      )}
-      <HeroSection
-        heroSubtitle={content.website_texts.home.hero_subtitle}
-        locality={content.business_info.address_locality}
-      />
-      <InfoStrip />
+      <HeroSection heroSubtitle={content.website_texts.home.hero_subtitle} />
+      <UspStrip />
       <HomepageMenu
         menu={menuData}
         closedMessage={content.website_texts.notices.closed_message}
@@ -98,260 +65,308 @@ export default async function HomePage({ params }: Props) {
         title={content.website_texts.home.catering_cta_title}
         text={content.website_texts.home.catering_cta_text}
       />
+      <InfoStrip />
     </>
   );
 }
 
-/* -- Hero Section — editorial style v3 (matches print pieces) -- */
+/* ------------------------------------------------------------------ */
+/* Hero — "Hero Final" comp: donker geblurd mozaïek, gouden kaderlijn, */
+/* gecentreerd logo, serif-kop in crème, script-traditieregel, 2 CTA's */
+/* ------------------------------------------------------------------ */
 
 function HeroSection({
   heroSubtitle,
-  locality,
 }: {
   heroSubtitle: string;
-  locality: string;
 }) {
   const t = useTranslations("home");
 
   return (
-    <section className="relative overflow-hidden bg-[#F4F0E8]">
-      <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-4 py-12 md:grid-cols-[1.08fr_1fr] md:gap-14 md:px-8 md:py-20 lg:py-24">
+    <section className="relative isolate overflow-hidden bg-[#4A1E08]">
+      {/* Geblurd mozaïekpatroon (beker/gevelplaat) + warme donkere waas */}
+      <div
+        className="absolute -inset-8 bg-[url('/brand/pattern-mosaic.svg')] bg-[length:340px_340px] blur-[14px] saturate-[0.85]"
+        aria-hidden="true"
+      />
+      <div
+        className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(59,22,6,0.42)_0%,rgba(45,15,4,0.78)_100%)]"
+        aria-hidden="true"
+      />
 
-        {/* === Left: editorial text column === */}
-        <div className="relative z-10 max-w-2xl">
-          {/* Kicker — mono letterspaced caps with leading rule */}
-          <div className="animate-fade-up flex items-center gap-3 font-[family-name:var(--font-mono)] text-[11px] font-bold uppercase tracking-[0.32em] text-brand-orange">
-            <span className="h-px w-12 bg-brand-orange" />
-            <span>Een nieuw hoofdstuk in de Gentse keuken</span>
+      {/* Dubbele gouden kaderlijn */}
+      <div className="pointer-events-none absolute inset-3 border border-brand-gold/45 md:inset-5" aria-hidden="true" />
+      <div className="pointer-events-none absolute inset-4 border border-brand-gold/25 md:inset-7" aria-hidden="true" />
+
+      {/* Mobile-first: compacte maten en verticale ritmes, vanaf md ruimer */}
+      <div className="relative mx-auto flex min-h-[100svh] max-w-4xl flex-col items-center justify-center px-7 py-14 text-center md:px-6 md:py-24">
+        <Reveal>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/brand/logo/Tajine2Go_logo_primary_transparent_640w.png"
+            alt="Tajine2Go"
+            className="h-[72px] w-auto drop-shadow-[0_6px_18px_rgba(0,0,0,0.45)] md:h-32"
+          />
+        </Reveal>
+
+        <Reveal delay={0.15}>
+          <div className="mt-6 flex items-center justify-center gap-3 text-brand-gold/90 md:mt-10 md:gap-4">
+            <span className="hidden h-px bg-brand-gold/60 sm:block sm:w-8 md:w-14" aria-hidden="true" />
+            <p className="max-w-[26ch] text-balance font-display text-[12px] font-semibold uppercase leading-[1.9] tracking-[0.24em] sm:max-w-none md:text-[15px] md:tracking-[0.32em]">
+              {t("heroKicker")}
+            </p>
+            <span className="hidden h-px bg-brand-gold/60 sm:block sm:w-8 md:w-14" aria-hidden="true" />
           </div>
+        </Reveal>
 
-          {/* Headline — Gloock display serif, italic accent on Marokkaanse */}
-          <h1 className="animate-fade-up-delay-1 mt-6 font-[family-name:var(--font-display)] text-[clamp(52px,7.4vw,108px)] font-normal leading-[0.94] tracking-[-0.02em] text-brand-brown">
-            {t("heroTitleA")}{" "}
-            <em className="font-[family-name:var(--font-italic)] italic text-brand-orange">
-              {t("heroTitleAccent")}
-            </em>{" "}
-            {t("heroTitleB")}
-          </h1>
+        <SplitHeading
+          as="h1"
+          className="mt-5 text-balance font-display text-[clamp(38px,11vw,96px)] font-medium leading-[1.1] text-[#F6E9D2] md:mt-8 md:leading-[1.08]"
+        >
+          {t("heroLine1")}
+          <br />
+          {t("heroLine2")}
+        </SplitHeading>
 
-          {/* Italic deck — InstrumentSerif italic */}
-          <p className="animate-fade-up-delay-2 mt-8 max-w-xl font-[family-name:var(--font-italic)] text-[clamp(18px,1.6vw,24px)] italic leading-[1.4] text-brand-brown-m">
+        <Reveal delay={0.35}>
+          <p className="mt-5 text-balance font-script text-[clamp(22px,6vw,34px)] leading-normal text-brand-gold md:mt-7">
             {heroSubtitle}
           </p>
+        </Reveal>
 
-          {/* Hairline rule, full text-column width */}
-          <div className="animate-fade-up-delay-2 mt-10 h-px bg-brand-brown/85" />
-
-          {/* Bottom action row: URL-style "Bekijk menu" link + monospaced labels */}
-          <div className="animate-fade-up-delay-3 mt-6 flex flex-wrap items-end justify-between gap-6">
-            <div className="flex flex-wrap items-center gap-3">
-              <a
-                href="#menu"
-                className="group inline-flex items-center gap-2 rounded-full bg-brand-brown px-7 py-3.5 font-[family-name:var(--font-mono)] text-[11px] font-bold uppercase tracking-[0.32em] text-brand-cream transition-all duration-300 hover:bg-brand-brown-m active:scale-[0.98]"
-              >
-                {t("viewMenu")}
-                <svg className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-              </a>
-              <Link
-                href="/bestellen"
-                className="inline-flex items-center gap-2 rounded-full border border-brand-brown/85 px-7 py-3 font-[family-name:var(--font-mono)] text-[11px] font-bold uppercase tracking-[0.32em] text-brand-brown transition-all duration-300 hover:bg-brand-brown hover:text-brand-cream active:scale-[0.98]"
-              >
-                {t("orderNow")}
-              </Link>
-            </div>
-            <div className="font-[family-name:var(--font-mono)] text-[10px] font-bold uppercase tracking-[0.28em] leading-[1.7] text-brand-brown/60">
-              <div><span className="text-brand-orange">Plaats</span> Gent · BE</div>
-              <div><span className="text-brand-orange">Editie</span> Nº 01</div>
-            </div>
+        <Reveal delay={0.5}>
+          <div className="mt-8 flex w-full max-w-xs flex-col items-stretch gap-3 sm:max-w-none sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-4 md:mt-10">
+            <a
+              href="#menu"
+              className="inline-flex items-center justify-center rounded-md bg-brand-orange px-8 py-3.5 font-display text-lg font-bold text-white shadow-[0_6px_24px_rgba(0,0,0,0.35)] transition-colors duration-300 hover:bg-brand-orange-hover active:scale-[0.98]"
+            >
+              {t("viewMenu")}
+            </a>
+            <Link
+              href="/catering"
+              className="inline-flex items-center justify-center rounded-md border border-[#F6E9D2]/70 px-8 py-3.5 font-display text-lg font-bold text-[#F6E9D2] transition-all duration-300 hover:bg-[#F6E9D2]/10 active:scale-[0.98]"
+            >
+              {t("heroCateringCta")}
+            </Link>
           </div>
-        </div>
-
-        {/* === Right: storefront photograph === */}
-        <div className="relative aspect-[4/5] w-full overflow-hidden shadow-[0_25px_60px_-20px_rgba(45,27,10,0.35)]">
-          <Image
-            src="/hero-storefront.jpg"
-            alt="Tajine2Go winkel interieur in Gent"
-            fill
-            sizes="(min-width: 768px) 50vw, 100vw"
-            priority
-            className="object-cover object-[center_30%]"
-          />
-          {/* Subtle top vignette for masthead legibility */}
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-1/4 bg-gradient-to-b from-brand-brown/55 to-transparent" />
-
-          {/* Caption overlay — mono labels in cream, like a magazine FIG line */}
-          <div className="absolute left-4 top-4 right-4 flex justify-between font-[family-name:var(--font-mono)] text-[9px] font-bold uppercase tracking-[0.28em] text-brand-cream/85">
-            <span>Tajine2Go · Gent</span>
-            <span>Mei MMXXVI</span>
-          </div>
-        </div>
-      </div>
-
-      {/* === USP strip beneath the hero === */}
-      <div className="relative border-t border-brand-warm2/80 bg-brand-cream">
-        <div className="mx-auto grid max-w-7xl gap-y-6 px-4 py-8 sm:grid-cols-3 md:gap-x-12 md:px-8 md:py-10">
-          <UspItem
-            icon={
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 2C12 2 6 8 6 13a6 6 0 0012 0c0-5-6-11-6-11z" />
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 17v5M9 22h6" />
-              </svg>
-            }
-            title={t("uspFresh")}
-            subtitle={t("uspFreshShort")}
-          />
-          <UspItem
-            icon={
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M10 4h4M9 4v3m6-3v3M6 7h12l-1 13a2 2 0 01-2 2H9a2 2 0 01-2-2L6 7z" />
-                <path strokeLinecap="round" strokeLinejoin="round" d="M8 11h8M8 15h8" opacity="0.4" />
-              </svg>
-            }
-            title={t("uspRecipes")}
-            subtitle={t("uspRecipesShort")}
-          />
-          <UspItem
-            icon={
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6}>
-                <circle cx="12" cy="12" r="9" />
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 7v5l3 2" />
-              </svg>
-            }
-            title={t("uspFast")}
-            subtitle={t("uspFastShort")}
-          />
-        </div>
+        </Reveal>
       </div>
     </section>
   );
 }
 
-function UspItem({
-  icon,
-  title,
-  subtitle,
-}: {
-  icon: React.ReactNode;
-  title: string;
-  subtitle: string;
-}) {
+/* ------------------------------------------------------------------ */
+/* USP strip                                                           */
+/* ------------------------------------------------------------------ */
+
+function UspStrip() {
+  const t = useTranslations("home");
+
+  const usps = [
+    {
+      key: "fresh",
+      title: t("uspFresh"),
+      subtitle: t("uspFreshShort"),
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6}>
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M12 2C12 2 6 8 6 13a6 6 0 0012 0c0-5-6-11-6-11z"
+          />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M12 17v5M9 22h6" />
+        </svg>
+      ),
+    },
+    {
+      key: "recipes",
+      title: t("uspRecipes"),
+      subtitle: t("uspRecipesShort"),
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6}>
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M10 4h4M9 4v3m6-3v3M6 7h12l-1 13a2 2 0 01-2 2H9a2 2 0 01-2-2L6 7z"
+          />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M8 11h8M8 15h8" opacity="0.4" />
+        </svg>
+      ),
+    },
+    {
+      key: "fast",
+      title: t("uspFast"),
+      subtitle: t("uspFastShort"),
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6}>
+          <circle cx="12" cy="12" r="9" />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M12 7v5l3 2" />
+        </svg>
+      ),
+    },
+  ];
+
   return (
-    <div className="flex items-center gap-4">
-      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-brand-warm/60 text-brand-bronze">
-        <span className="block h-6 w-6">{icon}</span>
+    <section>
+      <div className="mx-auto grid max-w-7xl gap-4 px-4 py-10 sm:grid-cols-3 md:gap-6 md:px-8 md:py-12">
+        {usps.map((usp, index) => (
+          <Reveal key={usp.key} delay={index * 0.12}>
+            <div className="group flex items-center gap-4 rounded-2xl border border-brand-warm2/70 bg-brand-cream/85 p-5 backdrop-blur-[2px] transition-all duration-300 hover:-translate-y-1 hover:border-brand-orange/30 hover:shadow-[0_16px_40px_-16px_rgba(217,123,26,0.3)]">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-brand-warm text-brand-bronze transition-colors duration-300 group-hover:bg-brand-orange group-hover:text-white">
+                <span className="block h-6 w-6">{usp.icon}</span>
+              </div>
+              <div>
+                <div className="font-display text-lg font-semibold leading-snug text-brand-brown">
+                  {usp.title}
+                </div>
+                <div className="text-sm text-brand-brown-s">{usp.subtitle}</div>
+              </div>
+            </div>
+          </Reveal>
+        ))}
       </div>
-      <div>
-        <div className="font-heading text-base uppercase tracking-[0.1em] text-brand-brown">
-          {title}
-        </div>
-        <div className="text-sm text-brand-brown-s">{subtitle}</div>
-      </div>
-    </div>
+    </section>
   );
 }
 
-/* -- Story Section -- */
+/* ------------------------------------------------------------------ */
+/* Story — the dark ember heart of the page                            */
+/* ------------------------------------------------------------------ */
 
 function StorySection({ storyText }: { storyText: string }) {
   const t = useTranslations("home");
 
   return (
-    <section className="relative overflow-hidden bg-brand-cream px-4 py-16 md:py-20">
-      {/* Subtle background pattern */}
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_50%,rgba(217,123,26,0.04),transparent_50%),radial-gradient(circle_at_80%_50%,rgba(140,78,16,0.03),transparent_50%)]" />
-
-      <ScrollReveal>
-        <div className="relative mx-auto max-w-3xl text-center">
-          {/* Decorative diamond */}
-          <div className="mb-8 flex items-center justify-center gap-3">
-            <div className="h-px w-16 bg-gradient-to-r from-transparent to-brand-warm2" />
-            <div className="h-2 w-2 rotate-45 border border-brand-orange/40" />
-            <div className="h-px w-16 bg-gradient-to-l from-transparent to-brand-warm2" />
+    <section className="relative overflow-hidden bg-brand-warm px-4 py-16 md:py-24">
+      <div className="relative mx-auto grid max-w-6xl items-center gap-10 md:grid-cols-[1.1fr_1fr] md:gap-16">
+        <div className="text-center md:text-start">
+          <div className="flex items-center justify-center gap-3 text-brand-bronze md:justify-start">
+            <span className="h-px w-10 bg-brand-gold/70" aria-hidden="true" />
+            <Khatam className="h-4 w-4 text-brand-gold" />
+            <span className="h-px w-10 bg-brand-gold/70" aria-hidden="true" />
           </div>
 
-          <h2 className="font-heading text-3xl uppercase tracking-[0.15em] text-brand-brown md:text-4xl">
-            {t("storyTitle")}
-          </h2>
-          <p className="mt-5 text-[17px] leading-[1.8] text-brand-brown-m">
-            {storyText}
-          </p>
-          <Link
-            href="/over-ons"
-            className="mt-6 inline-block font-heading text-sm uppercase tracking-[0.15em] text-brand-orange transition-colors hover:text-brand-orange-hover"
+          <SplitHeading
+            as="h2"
+            className="mt-5 font-display text-[clamp(34px,4.6vw,56px)] font-medium leading-[1.12] text-brand-brown"
           >
-            {t("storyLink")} &rarr;
-          </Link>
+            {t("storyTitle")}
+          </SplitHeading>
+
+          <Reveal delay={0.2}>
+            <p className="mx-auto mt-5 max-w-xl text-[17px] leading-[1.8] text-brand-brown-m md:mx-0">
+              {storyText}
+            </p>
+          </Reveal>
+
+          <Reveal delay={0.3}>
+            <Link
+              href="/over-ons"
+              className="mt-7 inline-flex items-center justify-center rounded-md border border-brand-brown/60 px-7 py-3 font-display text-lg font-semibold text-brand-brown transition-all duration-300 hover:bg-brand-brown hover:text-brand-cream active:scale-[0.98]"
+            >
+              {t("storyLink")}
+            </Link>
+          </Reveal>
         </div>
-      </ScrollReveal>
+
+        <div className="relative">
+          <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border-4 border-brand-cream shadow-[0_25px_60px_-25px_rgba(59,22,6,0.45)]">
+            <Image
+              src="/hero-storefront.jpg"
+              alt="Tajine2Go winkel in Gent"
+              fill
+              sizes="(min-width: 768px) 45vw, 100vw"
+              className="object-cover object-[center_30%]"
+            />
+          </div>
+        </div>
+      </div>
     </section>
   );
 }
 
-/* -- Catering Section -- */
+/* ------------------------------------------------------------------ */
+/* Catering CTA                                                        */
+/* ------------------------------------------------------------------ */
 
 function CateringSection({ title, text }: { title: string; text: string }) {
   const t = useTranslations("home");
   const tCatering = useTranslations("catering");
 
+  const eventTypes = [
+    tCatering("eventTypes.wedding"),
+    tCatering("eventTypes.aqiqa"),
+    tCatering("eventTypes.corporate"),
+    tCatering("eventTypes.funeral"),
+    tCatering("eventTypes.iftar"),
+  ];
+
   return (
-    <section className="relative overflow-hidden border-t border-brand-warm2 bg-brand-warm px-4 py-16 md:py-24">
-      {/* Atmospheric gradient */}
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(217,123,26,0.08),transparent_60%)]" />
-
-      <ScrollReveal>
-        <div className="relative mx-auto grid max-w-5xl items-center gap-12 md:grid-cols-2">
-          <div>
-            <div className="mb-6 flex items-center gap-3">
-              <div className="h-px w-10 bg-brand-orange/40" />
-              <span className="font-heading text-xs uppercase tracking-[0.2em] text-brand-orange">
-                Catering
-              </span>
-            </div>
-
-            <h2 className="font-heading text-3xl uppercase tracking-[0.1em] text-brand-brown md:text-[40px] md:leading-[1.1]">
-              {title}
-            </h2>
-            <p className="mt-5 text-[17px] leading-relaxed text-brand-brown-m">
-              {text}
+    <section className="relative overflow-hidden bg-brand-cream px-4 py-16 md:py-24">
+      <div className="relative mx-auto grid max-w-6xl items-center gap-10 md:grid-cols-2">
+        <div className="text-center md:text-start">
+          <Reveal>
+            <p className="font-display text-[13px] font-semibold uppercase tracking-[0.28em] text-brand-bronze">
+              Catering
             </p>
-            <div className="mt-4 text-sm text-brand-brown-s">
-              <strong className="text-brand-brown">{tCatering("eventTypes.wedding")}</strong>
-              {" \u00b7 "}{tCatering("eventTypes.aqiqa")}
-              {" \u00b7 "}{tCatering("eventTypes.corporate")}
-              {" \u00b7 "}{tCatering("eventTypes.funeral")}
-              {" \u00b7 "}{tCatering("eventTypes.iftar")}
+          </Reveal>
+
+          <SplitHeading
+            as="h2"
+            className="mt-4 font-display text-[clamp(32px,4.2vw,52px)] font-medium leading-[1.12] text-brand-brown"
+          >
+            {title}
+          </SplitHeading>
+
+          <Reveal delay={0.2}>
+            <p className="mx-auto mt-4 max-w-xl text-[17px] leading-relaxed text-brand-brown-m md:mx-0">{text}</p>
+          </Reveal>
+
+          <Reveal delay={0.3}>
+            <div className="mt-5 flex flex-wrap justify-center gap-2 md:justify-start">
+              {eventTypes.map((eventType) => (
+                <span
+                  key={eventType}
+                  className="rounded-full border border-brand-brown/15 bg-brand-warm px-3.5 py-1.5 text-xs font-medium text-brand-brown-m"
+                >
+                  {eventType}
+                </span>
+              ))}
             </div>
-            <div className="mt-8 flex flex-wrap gap-3">
+          </Reveal>
+
+          <Reveal delay={0.4}>
+            <div className="mt-7 flex flex-wrap justify-center gap-3 md:justify-start">
               <Link
                 href="/catering"
-                className="rounded-full bg-brand-orange px-7 py-3 font-heading text-[15px] uppercase tracking-[0.12em] text-white transition-all duration-300 hover:bg-brand-orange-hover hover:shadow-[0_4px_20px_rgba(217,123,26,0.25)] active:scale-[0.98]"
+                className="inline-flex items-center justify-center rounded-md bg-brand-orange px-8 py-3 font-display text-lg font-semibold text-white shadow-[0_6px_20px_rgba(199,90,10,0.3)] transition-colors duration-300 hover:bg-brand-orange-hover active:scale-[0.98]"
               >
                 {t("cateringPhone")}
               </Link>
               <Link
                 href="/contact"
-                className="rounded-full border-2 border-brand-brown/80 px-7 py-3 font-heading text-[15px] uppercase tracking-[0.12em] text-brand-brown transition-all duration-300 hover:bg-brand-brown hover:text-brand-cream active:scale-[0.98]"
+                className="inline-flex items-center justify-center rounded-md border border-brand-brown/60 px-8 py-3 font-display text-lg font-semibold text-brand-brown transition-all duration-300 hover:bg-brand-brown hover:text-brand-cream active:scale-[0.98]"
               >
                 {t("cateringEmail")}
               </Link>
             </div>
-          </div>
+          </Reveal>
+        </div>
 
-          {/* Placeholder image area with pattern */}
-          <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-gradient-to-br from-brand-warm2/80 to-brand-warm2/40">
-            {/* Zellige-inspired dot pattern */}
-            <div className="absolute inset-0 opacity-[0.12]" style={{
-              backgroundImage: `radial-gradient(circle, #D97B1A 1px, transparent 1px)`,
-              backgroundSize: "20px 20px",
-            }} />
-            <div className="flex h-full items-center justify-center">
-              <span className="font-heading text-7xl tracking-[0.1em] text-brand-orange/10">T2G</span>
+        {/* Mozaïekpaneel met merkteken — knipoog naar beker en gevelplaat */}
+        <div className="relative hidden md:block">
+          <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-2xl border border-brand-gold/40 bg-[url('/brand/pattern-mosaic.svg')] bg-[length:96px_96px] shadow-[0_25px_60px_-25px_rgba(59,22,6,0.5)]">
+            <div className="flex h-40 w-40 items-center justify-center rounded-full bg-brand-cream shadow-[0_10px_30px_rgba(0,0,0,0.35)]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/brand/logo/Tajine2Go_icon_128.png"
+                alt=""
+                className="h-24 w-auto"
+              />
             </div>
           </div>
         </div>
-      </ScrollReveal>
+      </div>
     </section>
   );
 }

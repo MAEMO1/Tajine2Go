@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import { formatPrice } from "@/lib/format";
@@ -55,9 +55,9 @@ export function DashboardContent({
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={chartData}>
               <XAxis dataKey="date" tick={{ fontSize: 11 }} />
-              <YAxis tick={{ fontSize: 11 }} tickFormatter={(v) => `€${v}`} />
-              <Tooltip formatter={(value) => [`€${Number(value).toFixed(2)}`, "Omzet"]} />
-              <Bar dataKey="revenue" fill="#D97B1A" radius={[4, 4, 0, 0]} />
+              <YAxis tick={{ fontSize: 11 }} tickFormatter={(v) => `â‚¬${v}`} />
+              <Tooltip formatter={(value) => [`â‚¬${Number(value).toFixed(2)}`, "Omzet"]} />
+              <Bar dataKey="revenue" fill="#E75A0A" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>

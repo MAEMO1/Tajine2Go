@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LineChart, Line } from "recharts";
 import { formatPrice } from "@/lib/format";
@@ -71,9 +71,9 @@ export function AnalyticsContent({ dailySummary, dishRankings, vatSummary, cater
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={dailyData}>
               <XAxis dataKey="date" tick={{ fontSize: 10 }} />
-              <YAxis tick={{ fontSize: 11 }} tickFormatter={(v) => `€${v}`} />
-              <Tooltip formatter={(value) => [`€${Number(value).toFixed(2)}`, "Omzet"]} />
-              <Bar dataKey="revenue" fill="#D97B1A" radius={[4, 4, 0, 0]} />
+              <YAxis tick={{ fontSize: 11 }} tickFormatter={(v) => `â‚¬${v}`} />
+              <Tooltip formatter={(value) => [`â‚¬${Number(value).toFixed(2)}`, "Omzet"]} />
+              <Bar dataKey="revenue" fill="#E75A0A" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -114,10 +114,10 @@ export function AnalyticsContent({ dailySummary, dishRankings, vatSummary, cater
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={vatData}>
                     <XAxis dataKey="month" tick={{ fontSize: 10 }} />
-                    <YAxis tick={{ fontSize: 11 }} tickFormatter={(v) => `€${v}`} />
-                    <Tooltip formatter={(value) => [`€${Number(value).toFixed(2)}`]} />
-                    <Line type="monotone" dataKey="total" stroke="#D97B1A" strokeWidth={2} />
-                    <Line type="monotone" dataKey="vat" stroke="#EDAC2A" strokeWidth={2} />
+                    <YAxis tick={{ fontSize: 11 }} tickFormatter={(v) => `â‚¬${v}`} />
+                    <Tooltip formatter={(value) => [`â‚¬${Number(value).toFixed(2)}`]} />
+                    <Line type="monotone" dataKey="total" stroke="#E75A0A" strokeWidth={2} />
+                    <Line type="monotone" dataKey="vat" stroke="#F5A400" strokeWidth={2} />
                   </LineChart>
                 </ResponsiveContainer>
               </div>
@@ -134,9 +134,9 @@ export function AnalyticsContent({ dailySummary, dishRankings, vatSummary, cater
                   {vatData.map((v) => (
                     <tr key={v.month} className="border-b border-brand-warm2">
                       <td className="py-1">{v.month}</td>
-                      <td className="py-1 text-right">€{v.subtotal.toFixed(2)}</td>
-                      <td className="py-1 text-right text-brand-gold">€{v.vat.toFixed(2)}</td>
-                      <td className="py-1 text-right font-medium">€{v.total.toFixed(2)}</td>
+                      <td className="py-1 text-right">â‚¬{v.subtotal.toFixed(2)}</td>
+                      <td className="py-1 text-right text-brand-gold">â‚¬{v.vat.toFixed(2)}</td>
+                      <td className="py-1 text-right font-medium">â‚¬{v.total.toFixed(2)}</td>
                     </tr>
                   ))}
                 </tbody>

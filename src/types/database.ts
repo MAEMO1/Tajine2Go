@@ -65,6 +65,7 @@ export type Dish = {
   ingredients_en: string[];
   ingredients_ar: string[];
   price_cents: number;
+  price_l_cents: number | null;
   image_url: string | null;
   category: string;
   allergens: string[];
@@ -427,6 +428,7 @@ export type MenuDish = {
   description: string | null;
   ingredients: string[];
   price_cents: number;
+  price_l_cents: number | null;
   image_url: string | null;
   category: string;
   allergens: string[];

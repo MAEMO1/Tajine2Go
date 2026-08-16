@@ -8,6 +8,7 @@ import { CookieConsent } from "@/components/cookie-consent";
 import { PlausibleScript } from "@/components/plausible";
 import { StickyBar } from "@/components/sticky-bar";
 import { CartDrawer } from "@/components/cart-drawer";
+import { MotionProvider } from "@/components/motion/motion-provider";
 import { fetchPublicSiteContent } from "@/lib/site-content";
 import type { Locale as DatabaseLocale } from "@/types/database";
 
@@ -35,17 +36,19 @@ export default async function LocaleLayout({ children, params }: Props) {
   return (
     <div dir={isRtl ? "rtl" : "ltr"} lang={locale} className="flex min-h-full flex-col">
       <NextIntlClientProvider locale={locale}>
-        <Header
-          logoUrl={content.brand_assets.header_logo_url}
-          logoAlt={content.brand_assets.logo_alt ?? content.business_info.name}
-          brandName={content.business_info.name}
-        />
-        <main className="flex-1">{children}</main>
-        <Footer />
-        <CartDrawer />
-        <StickyBar />
-        <CookieConsent />
-        <PlausibleScript />
+        <MotionProvider>
+          <Header
+            logoUrl={content.brand_assets.header_logo_url}
+            logoAlt={content.brand_assets.logo_alt ?? content.business_info.name}
+            brandName={content.business_info.name}
+          />
+          <main className="flex-1">{children}</main>
+          <Footer />
+          <CartDrawer />
+          <StickyBar />
+          <CookieConsent />
+          <PlausibleScript />
+        </MotionProvider>
       </NextIntlClientProvider>
     </div>
   );

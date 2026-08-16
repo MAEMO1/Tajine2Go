@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -295,7 +295,7 @@ export function ContentManager({ initialContent }: Props) {
           <div>
             <h2 className="font-heading text-xl text-brand-bronze">Branding</h2>
             <p className="mt-1 text-sm text-brand-brown-s">
-              Beheer het publieke header-logo. Zonder logo-URL valt de site terug op `/logo.png`.
+              Beheer het publieke header-logo. Zonder logo-URL valt de site terug op het standaard brand-logo.
             </p>
           </div>
           <button
@@ -532,7 +532,7 @@ export function ContentManager({ initialContent }: Props) {
               <div>
                 <h3 className="font-heading text-lg text-brand-brown">About</h3>
                 <p className="mt-1 text-sm text-brand-brown-s">
-                  Eén paragraaf per blok, gescheiden door een lege regel.
+                  EÃ©n paragraaf per blok, gescheiden door een lege regel.
                 </p>
               </div>
               <button

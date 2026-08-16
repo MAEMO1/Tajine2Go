@@ -35,6 +35,10 @@
     "heroTitleA": "Authentieke",
     "heroTitleAccent": "Marokkaanse",
     "heroTitleB": "smaken, vers geserveerd.",
+    "heroKicker": "Marokkaanse afhaalgerechten en catering",
+    "heroLine1": "Authentieke smaken",
+    "heroLine2": "Vers bereid",
+    "heroCateringCta": "Catering aanvragen",
     "heroSubtitle": "Snel, gezond en vol traditionele smaak. Bereid met liefde. Voor jou.",
     "orderNow": "Bestel nu",
     "viewMenu": "Bekijk menu",
@@ -57,7 +61,7 @@
     "nextService": "Volgende service",
     "orderBy": "bestel voor {time}",
     "infoPayment": "Bancontact · Cash · Online",
-    "menuTitle": "Menu van deze",
+    "menuTitle": "Menu van de week",
     "scrollToMenu": "Bekijk het menu",
     "cateringPhone": "Aanvraag indienen",
     "cateringEmail": "Contact opnemen",
@@ -76,9 +80,13 @@
     "ingredients": "Ingrediënten",
     "allergens": "Allergenen",
     "categories": {
+      "tajine": "Tajines",
+      "couscous": "Couscous",
+      "bstilla": "Bstilla & soep",
       "main": "Hoofdgerechten",
       "side": "Bijgerechten",
       "dessert": "Desserts",
+      "sweet": "Zoet",
       "drink": "Dranken"
     }
   },

@@ -3,7 +3,8 @@
 import { useLocale, useTranslations } from "next-intl";
 import { useRef, useState, useEffect, useCallback } from "react";
 import { DishRow } from "@/components/dish-row";
-import { ScrollReveal } from "@/components/scroll-reveal";
+import { Reveal } from "@/components/motion/reveal";
+import { smoothScrollTo } from "@/lib/motion/lenis-store";
 import type { MenuResponse, MenuDish } from "@/types/database";
 
 type Props = {
@@ -11,7 +12,7 @@ type Props = {
   closedMessage?: string | null;
 };
 
-const CATEGORY_ORDER = ["main", "side", "dessert", "drink"];
+const CATEGORY_ORDER = ["tajine", "couscous", "bstilla", "main", "side", "dessert", "sweet", "drink"];
 
 export function HomepageMenu({ menu, closedMessage }: Props) {
   const t = useTranslations("menu");
@@ -52,9 +53,7 @@ export function HomepageMenu({ menu, closedMessage }: Props) {
   function scrollToCategory(category: string) {
     const el = categoryRefs.current.get(category);
     if (el) {
-      const yOffset = -130;
-      const y = el.getBoundingClientRect().top + window.scrollY + yOffset;
-      window.scrollTo({ top: y, behavior: "smooth" });
+      smoothScrollTo(el, -130);
     }
   }
 
@@ -66,31 +65,37 @@ export function HomepageMenu({ menu, closedMessage }: Props) {
 
   return (
     <section id="menu" className="pb-24">
-      {/* Sticky category bar */}
-      <div className="sticky top-[77px] z-40 border-b border-brand-warm2/60 bg-brand-cream/92 backdrop-blur-md">
-        <div className="mx-auto flex max-w-4xl flex-col items-start justify-between gap-2 px-4 py-3 sm:flex-row sm:items-center md:px-6">
-          <div>
-            <h2 className="font-heading text-2xl uppercase tracking-[0.12em] text-brand-brown sm:text-3xl">
-              {tHome("menuTitle")} <span className="text-brand-orange">{t("title")}</span>
-            </h2>
-            <p className="text-sm capitalize text-brand-brown-s">{formattedDate}</p>
-          </div>
-          <div className="flex flex-wrap gap-1">
-            {sortedCategories.map(([category]) => (
-              <button
-                key={category}
-                type="button"
-                onClick={() => scrollToCategory(category)}
-                className={`rounded-full px-4 py-1.5 font-heading text-sm uppercase tracking-[0.12em] transition-all duration-250 ${
-                  activeCategory === category
-                    ? "bg-brand-orange text-white shadow-[0_2px_8px_rgba(217,123,26,0.2)]"
-                    : "text-brand-brown-s hover:bg-brand-warm hover:text-brand-brown"
-                }`}
-              >
-                {t(`categories.${category}` as Parameters<typeof t>[0])}
-              </button>
-            ))}
-          </div>
+      {/* Menukaart-kop: gecentreerd, met boog-ornament zoals het drukwerk */}
+      <div className="mx-auto max-w-3xl px-4 pt-14 text-center md:px-6 md:pt-20">
+        <svg className="mx-auto w-40 text-brand-bronze" viewBox="0 0 200 54" aria-hidden="true">
+          <path d="M10,54 Q10,30 40,25 C68,20 82,16 100,4 C118,16 132,20 160,25 Q190,30 190,54" fill="none" stroke="currentColor" strokeWidth="2.5" />
+          <path d="M22,54 Q22,36 48,31 C72,27 86,22 100,13 C114,22 128,27 152,31 Q178,36 178,54" fill="none" stroke="#F5A400" strokeWidth="1.4" />
+        </svg>
+        <h2 className="mt-3 font-display text-[clamp(30px,4.5vw,48px)] font-medium leading-tight text-brand-brown">
+          {tHome("menuTitle")}
+        </h2>
+        <p className="mt-2 font-display text-[15px] uppercase tracking-[0.2em] text-brand-bronze">
+          {formattedDate}
+        </p>
+      </div>
+
+      {/* Categorie-navigatie */}
+      <div className="sticky top-[64px] z-40 mt-6 border-y border-brand-warm2/60 bg-brand-cream/92 backdrop-blur-md md:top-[93px]">
+        <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-center gap-1 px-4 py-2.5 md:px-6">
+          {sortedCategories.map(([category]) => (
+            <button
+              key={category}
+              type="button"
+              onClick={() => scrollToCategory(category)}
+              className={`rounded-full px-4 py-1.5 font-display text-sm font-semibold transition-all duration-300 ${
+                activeCategory === category
+                  ? "bg-brand-orange text-white shadow-[0_2px_8px_rgba(199,90,10,0.25)]"
+                  : "text-brand-brown-m hover:bg-brand-warm hover:text-brand-brown"
+              }`}
+            >
+              {t(`categories.${category}` as Parameters<typeof t>[0])}
+            </button>
+          ))}
         </div>
       </div>
 
@@ -115,19 +120,20 @@ export function HomepageMenu({ menu, closedMessage }: Props) {
                 if (el) categoryRefs.current.set(category, el);
               }}
             >
-              {/* Category header with decorative line */}
-              <div className="mb-3 flex items-center gap-3">
-                <h3 className="whitespace-nowrap font-heading text-xl uppercase tracking-[0.15em] text-brand-bronze">
+              {/* Categoriekop: gecentreerd met ornamenten, zoals de gedrukte kaart */}
+              <div className="mb-4 flex items-center justify-center gap-4">
+                <span className="text-[11px] text-brand-gold" aria-hidden="true">&#10022;</span>
+                <h3 className="whitespace-nowrap font-display text-xl font-semibold uppercase tracking-[0.14em] text-brand-bronze">
                   {t(`categories.${category}` as Parameters<typeof t>[0])}
                 </h3>
-                <div className="h-px flex-1 bg-gradient-to-r from-brand-warm2 to-transparent" />
+                <span className="text-[11px] text-brand-gold" aria-hidden="true">&#10022;</span>
               </div>
 
               <div>
                 {dishes.map((dish, index) => (
-                  <ScrollReveal key={dish.id} delay={index * 0.05}>
+                  <Reveal key={dish.id} delay={Math.min(index * 0.06, 0.3)}>
                     <DishRow dish={dish} isActive={menu.is_active} />
-                  </ScrollReveal>
+                  </Reveal>
                 ))}
               </div>
             </div>

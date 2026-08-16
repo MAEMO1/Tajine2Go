@@ -49,7 +49,7 @@
     "nextService": "Prochain service",
     "orderBy": "commandez avant {time}",
     "infoPayment": "Bancontact · Cash · En ligne",
-    "menuTitle": "Menu de cette",
+    "menuTitle": "Menu de la semaine",
     "scrollToMenu": "Voir le menu",
     "cateringPhone": "Soumettre une demande",
     "cateringEmail": "Nous contacter",
@@ -60,6 +60,10 @@
     "heroTitleA": "Saveurs",
     "heroTitleAccent": "marocaines",
     "heroTitleB": "authentiques, fraîchement servies.",
+    "heroKicker": "Plats marocains à emporter et traiteur",
+    "heroLine1": "Saveurs authentiques",
+    "heroLine2": "Fraîchement préparé",
+    "heroCateringCta": "Demander un devis traiteur",
     "uspFreshShort": "Préparés chaque jour",
     "uspRecipes": "Recettes traditionnelles",
     "uspRecipesShort": "Saveur authentique",
@@ -76,9 +80,13 @@
     "ingredients": "Ingrédients",
     "allergens": "Allergènes",
     "categories": {
+      "tajine": "Tajines",
+      "couscous": "Couscous",
+      "bstilla": "Bstilla & soupe",
       "main": "Plats principaux",
       "side": "Accompagnements",
       "dessert": "Desserts",
+      "sweet": "Douceurs",
       "drink": "Boissons"
     }
   },

@@ -39,3 +39,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# redesign visual-check output
+.claude-screens/
+
+# stray dev-server logs
+.next-dev-*.log
+
+# Claude Code lokale permissies
+.claude/settings.local.json

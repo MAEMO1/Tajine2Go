@@ -4,6 +4,7 @@ import { useTranslations, useLocale } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { LanguageSwitcher } from "./language-switcher";
 import { useCartStore } from "@/stores/cart";
+import { smoothScrollTo } from "@/lib/motion/lenis-store";
 import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -21,7 +22,7 @@ export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
   const [scrolled, setScrolled] = useState(false);
   const itemCount = useCartStore((s) => s.itemCount);
   const count = itemCount();
-  const logoSrc = logoUrl || "/logo-brand.png";
+  const logoSrc = logoUrl || "/brand/logo/Tajine2Go_logo_primary_transparent_640w.png";
   const logoText = logoAlt || brandName;
 
   const isHomepage = pathname === "/";
@@ -44,9 +45,9 @@ export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
 
   function handleScrollOrNavigate(scrollTarget: string | null) {
     if (scrollTarget && isHomepage) {
-      const el = document.querySelector(scrollTarget);
+      const el = document.querySelector<HTMLElement>(scrollTarget);
       if (el) {
-        el.scrollIntoView({ behavior: "smooth" });
+        smoothScrollTo(el, -90);
         setMobileOpen(false);
         return true;
       }
@@ -57,19 +58,30 @@ export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
   return (
     <>
       <header
-        className={`sticky top-0 z-50 transition-all duration-300 ${
+        className={`z-50 bg-brand-cream transition-all duration-300 ${
+          isHomepage ? "fixed inset-x-0 top-0" : "sticky top-0"
+        } ${
+          isHomepage && !scrolled ? "pointer-events-none -translate-y-full opacity-0" : ""
+        } ${
           scrolled
-            ? "border-b border-brand-warm2/80 bg-brand-cream/90 shadow-[0_1px_20px_rgba(45,27,10,0.06)] backdrop-blur-md"
-            : "bg-brand-cream"
+            ? "border-b border-brand-warm2/80 bg-brand-cream/90 shadow-[0_1px_20px_rgba(59,22,6,0.06)] backdrop-blur-md"
+            : ""
         }`}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2.5 md:px-6">
-          <Link href="/" className="transition-transform duration-200 hover:scale-[1.02]">
+          <Link href="/" className="shrink-0 transition-transform duration-200 hover:scale-[1.02]">
+            {/* Mobiel: icon-only merkteken (brand usage guide); desktop: primary horizontal */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={logoUrl || "/brand/logo/Tajine2Go_icon_128.png"}
+              alt={logoText}
+              className="h-11 w-auto object-contain md:hidden"
+            />
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={logoSrc}
               alt={logoText}
-              className="h-14 w-auto object-contain md:h-[72px]"
+              className="hidden h-[72px] w-auto object-contain md:block"
             />
           </Link>
 
@@ -94,17 +106,27 @@ export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
 
             <Link
               href="/bestellen"
-              className="group relative hidden items-center gap-2 rounded-full bg-brand-orange px-5 py-2.5 font-heading text-sm uppercase tracking-[0.12em] text-white shadow-[0_2px_10px_rgba(217,123,26,0.20)] transition-all duration-200 hover:bg-brand-orange-hover hover:shadow-[0_4px_20px_rgba(217,123,26,0.30)] active:scale-[0.98] md:inline-flex"
+              data-cart-target
+              className="group relative hidden items-center gap-2 rounded-full bg-brand-orange px-5 py-2.5 font-mono text-xs font-bold uppercase tracking-[0.18em] text-white shadow-[0_2px_10px_rgba(217,123,26,0.20)] transition-all duration-200 hover:bg-brand-orange-hover hover:shadow-[0_4px_20px_rgba(217,123,26,0.30)] active:scale-[0.98] md:inline-flex"
               aria-label={t("order")}
             >
               <span>{t("order")}</span>
-              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
+              <motion.svg
+                key={count}
+                animate={count > 0 ? { rotate: [0, -12, 9, -5, 0] } : undefined}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+                className="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2.2}
+              >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   d="M16 11V7a4 4 0 00-8 0v4M5 9h14l-1.5 11A2 2 0 0115.5 22h-7a2 2 0 01-2-2L5 9z"
                 />
-              </svg>
+              </motion.svg>
               {count > 0 && (
                 <motion.span
                   initial={{ scale: 0 }}
@@ -119,6 +141,7 @@ export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
             {/* Cart icon for mobile only */}
             <Link
               href="/bestellen"
+              data-cart-target
               className="group relative flex items-center rounded-full p-2 text-brand-brown-m transition-all duration-200 hover:bg-brand-warm hover:text-brand-orange md:hidden"
               aria-label={t("order")}
             >
@@ -270,10 +293,10 @@ function SmartNavLink({
   const isActive = pathname === href;
 
   const baseClass =
-    "relative rounded-full px-4 py-2 font-heading text-[15px] uppercase tracking-[0.12em] transition-all duration-200";
-  const activeClass = "bg-brand-warm text-brand-brown";
+    "relative px-4 py-2 font-mono text-[11px] font-bold uppercase tracking-[0.18em] transition-all duration-200 after:absolute after:bottom-0.5 after:left-1/2 after:h-px after:w-0 after:-translate-x-1/2 after:bg-brand-orange after:transition-all after:duration-300";
+  const activeClass = "text-brand-brown after:w-1/2";
   const inactiveClass =
-    "text-brand-brown-s hover:bg-brand-warm/60 hover:text-brand-brown";
+    "text-brand-brown-s hover:text-brand-brown hover:after:w-1/2";
 
   if (scrollTarget && isHomepage) {
     return (

@@ -49,7 +49,7 @@
     "nextService": "Next service",
     "orderBy": "order by {time}",
     "infoPayment": "Bancontact · Cash · Online",
-    "menuTitle": "This week's",
+    "menuTitle": "Menu of the week",
     "scrollToMenu": "View the menu",
     "cateringPhone": "Submit request",
     "cateringEmail": "Contact us",
@@ -60,6 +60,10 @@
     "heroTitleA": "Authentic",
     "heroTitleAccent": "Moroccan",
     "heroTitleB": "flavours, freshly served.",
+    "heroKicker": "Moroccan takeaway and catering",
+    "heroLine1": "Authentic flavours",
+    "heroLine2": "Freshly prepared",
+    "heroCateringCta": "Request catering",
     "uspFreshShort": "Prepared daily",
     "uspRecipes": "Traditional recipes",
     "uspRecipesShort": "Authentic flavour",
@@ -76,9 +80,13 @@
     "ingredients": "Ingredients",
     "allergens": "Allergens",
     "categories": {
+      "tajine": "Tagines",
+      "couscous": "Couscous",
+      "bstilla": "Bstilla & soup",
       "main": "Main dishes",
       "side": "Side dishes",
       "dessert": "Desserts",
+      "sweet": "Sweets",
       "drink": "Drinks"
     }
   },

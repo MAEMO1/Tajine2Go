@@ -40,6 +40,7 @@ CREATE TABLE dishes (
   description_en TEXT,
   description_ar TEXT,
   price_cents INTEGER NOT NULL,
+  price_l_cents INTEGER,
   image_url TEXT,
   category TEXT NOT NULL DEFAULT 'main',
   allergens TEXT[] NOT NULL DEFAULT '{}',

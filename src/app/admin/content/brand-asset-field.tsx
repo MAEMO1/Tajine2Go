@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useRef, useState } from "react";
 
@@ -47,7 +47,7 @@ export function BrandAssetField({ value, altValue, onUrlChange, onAltChange }: P
             <img src={value} alt={altValue || "Brand preview"} className="h-full w-full object-contain p-4" />
           ) : (
             <div className="px-4 text-center text-sm text-brand-brown-s">
-              Geen logo geconfigureerd. De site valt terug op `/logo.png`.
+              Geen logo geconfigureerd. De site valt terug op het standaard brand-logo.
             </div>
           )}
         </div>

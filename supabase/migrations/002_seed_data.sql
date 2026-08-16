@@ -74,64 +74,30 @@ INSERT INTO settings (key, value) VALUES
 );
 
 
--- 2. SAMPLE DISHES
+-- 2. DISHES — de echte menukaart (gedrukte kaart, augustus 2026)
+-- M-prijs in price_cents, L-prijs in price_l_cents (NULL = één maat).
+-- Beschrijvingen en allergenen vult de eigenaar later aan via de admin.
 -- ------------------------------------------------------------
 
-INSERT INTO dishes (slug, name_nl, name_fr, name_en, name_ar, description_nl, description_fr, description_en, description_ar, price_cents, category, allergens) VALUES
-(
-  'tajine-kip',
-  'Tajine met kip', 'Tajine au poulet', 'Chicken tagine', 'طاجين الدجاج',
-  'Malse kip met olijven en ingelegde citroen, langzaam gegaard in traditionele kruiden.',
-  'Poulet tendre aux olives et citron confit, mijoté lentement aux épices traditionnelles.',
-  'Tender chicken with olives and preserved lemon, slow-cooked in traditional spices.',
-  'دجاج طري بالزيتون والليمون المخلل، مطهو ببطء بالتوابل التقليدية.',
-  1450, 'main', '{}'
-),
-(
-  'tajine-lam',
-  'Tajine met lam', 'Tajine d''agneau', 'Lamb tagine', 'طاجين اللحم',
-  'Mals lamsvlees met pruimen en amandelen in een zoet-hartige saus.',
-  'Agneau tendre aux pruneaux et amandes dans une sauce aigre-douce.',
-  'Tender lamb with prunes and almonds in a sweet-savoury sauce.',
-  'لحم غنم طري بالبرقوق واللوز في صلصة حلوة ومالحة.',
-  1650, 'main', '{}'
-),
-(
-  'couscous-groenten',
-  'Couscous met groenten', 'Couscous aux légumes', 'Vegetable couscous', 'كسكس بالخضر',
-  'Luchtige couscous met seizoensgroenten en pikante bouillon.',
-  'Couscous léger aux légumes de saison et bouillon épicé.',
-  'Fluffy couscous with seasonal vegetables and spicy broth.',
-  'كسكس خفيف بالخضر الموسمية ومرق حار.',
-  1250, 'main', '{gluten}'
-),
-(
-  'pastilla-kip',
-  'Pastilla met kip', 'Pastilla au poulet', 'Chicken pastilla', 'بسطيلة الدجاج',
-  'Krokante filodeeg gevuld met gekruide kip, amandelen en kaneel.',
-  'Pâte filo croustillante farcie de poulet épicé, amandes et cannelle.',
-  'Crispy filo pastry filled with spiced chicken, almonds and cinnamon.',
-  'عجينة فيلو مقرمشة محشوة بالدجاج المتبل واللوز والقرفة.',
-  1350, 'main', '{gluten,nuts}'
-),
-(
-  'harira',
-  'Harira soep', 'Soupe Harira', 'Harira soup', 'حريرة',
-  'Rijke Marokkaanse soep met linzen, kikkererwten en verse kruiden.',
-  'Riche soupe marocaine aux lentilles, pois chiches et herbes fraîches.',
-  'Rich Moroccan soup with lentils, chickpeas and fresh herbs.',
-  'حساء مغربي غني بالعدس والحمص والأعشاب الطازجة.',
-  750, 'side', '{}'
-),
-(
-  'baklava',
-  'Baklava', 'Baklava', 'Baklava', 'بقلاوة',
-  'Huisgemaakte baklava met pistache en honing.',
-  'Baklava maison à la pistache et au miel.',
-  'Homemade baklava with pistachio and honey.',
-  'بقلاوة منزلية بالفستق والعسل.',
-  550, 'dessert', '{gluten,nuts}'
-);
+INSERT INTO dishes (slug, name_nl, name_fr, name_en, name_ar, price_cents, price_l_cents, category, allergens) VALUES
+('tajine-royal', 'Tajine Royal (runds)', 'Tajine Royale (bœuf)', 'Tajine Royal (beef)', 'طاجين ملكي (لحم بقري)', 1700, 2200, 'tajine', '{}'),
+('tajine-kefta', 'Tajine Kefta', 'Tajine Kefta', 'Kefta tagine', 'طاجين كفتة', 1300, 1800, 'tajine', '{}'),
+('tajine-kip-groenten', 'Tajine Kip en groenten', 'Tajine Poulet et légumes', 'Chicken & vegetable tagine', 'طاجين دجاج بالخضر', 1500, 2000, 'tajine', '{}'),
+('tajine-veggie', 'Tajine Veggie', 'Tajine Végé', 'Veggie tagine', 'طاجين خضر', 1300, 1800, 'tajine', '{}'),
+('tajine-kip-olijven-citroen', 'Tajine Kip, olijven en citroen', 'Tajine Poulet, olives et citron', 'Chicken tagine with olives & lemon', 'طاجين دجاج بالزيتون والليمون', 1500, 2000, 'tajine', '{}'),
+('couscous-kip-merguez', 'Couscous Kip Merguez', 'Couscous Poulet Merguez', 'Chicken & merguez couscous', 'كسكس دجاج وميرغيز', 1700, 2200, 'couscous', '{gluten}'),
+('couscous-kip', 'Couscous Kip', 'Couscous Poulet', 'Chicken couscous', 'كسكس دجاج', 1500, 2000, 'couscous', '{gluten}'),
+('couscous-runds', 'Couscous Runds', 'Couscous Bœuf', 'Beef couscous', 'كسكس لحم بقري', 1700, 2200, 'couscous', '{gluten}'),
+('couscous-veggie', 'Couscous Veggie', 'Couscous Végé', 'Veggie couscous', 'كسكس خضر', 1300, 1800, 'couscous', '{gluten}'),
+('bstilla-kip', 'Bstilla Kip', 'Bstilla Poulet', 'Chicken bstilla', 'بسطيلة دجاج', 900, NULL, 'bstilla', '{gluten}'),
+('bstilla-vis', 'Bstilla Vis', 'Bstilla Poisson', 'Fish bstilla', 'بسطيلة سمك', 1200, NULL, 'bstilla', '{gluten,fish}'),
+('bstilla-groenten', 'Bstilla Groenten', 'Bstilla Légumes', 'Vegetable bstilla', 'بسطيلة خضر', 900, NULL, 'bstilla', '{gluten}'),
+('harira', 'Harira', 'Harira', 'Harira', 'حريرة', 500, NULL, 'bstilla', '{}'),
+('thee', 'Thee', 'Thé', 'Mint tea', 'أتاي', 250, NULL, 'drink', '{}'),
+('koffie', 'Koffie', 'Café', 'Coffee', 'قهوة', 300, NULL, 'drink', '{}'),
+('frisdranken', 'Frisdranken', 'Boissons fraîches', 'Soft drinks', 'مشروبات غازية', 250, NULL, 'drink', '{}'),
+('thee-koekjes', 'Thee + koekjes', 'Thé + biscuits', 'Tea + cookies', 'أتاي مع حلويات', 550, NULL, 'sweet', '{gluten}'),
+('koekje-pack', 'Koekje pack', 'Pack de biscuits', 'Cookie pack', 'علبة حلويات', 600, NULL, 'sweet', '{gluten}');
 
 -- 3. SAMPLE WEEKLY MENU (upcoming Saturday)
 -- ------------------------------------------------------------
@@ -155,8 +121,8 @@ BEGIN
       dish.id,
       next_sat,
       CASE
-        WHEN (SELECT category FROM dishes WHERE id = dish.id) = 'main' THEN 30
-        WHEN (SELECT category FROM dishes WHERE id = dish.id) = 'side' THEN 40
+        WHEN (SELECT category FROM dishes WHERE id = dish.id) IN ('tajine', 'couscous') THEN 30
+        WHEN (SELECT category FROM dishes WHERE id = dish.id) = 'bstilla' THEN 40
         ELSE NULL
       END
     );
