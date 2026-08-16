@@ -3,7 +3,6 @@
 import { useTranslations, useLocale } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { LanguageSwitcher } from "./language-switcher";
-import { useCartStore } from "@/stores/cart";
 import { smoothScrollTo } from "@/lib/motion/lenis-store";
 import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -20,8 +19,6 @@ export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const itemCount = useCartStore((s) => s.itemCount);
-  const count = itemCount();
   const logoSrc = logoUrl || "/brand/logo/Tajine2Go_logo_primary_transparent_640w.png";
   const logoText = logoAlt || brandName;
 
@@ -104,64 +101,27 @@ export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
           <div className="flex items-center gap-2">
             <LanguageSwitcher />
 
-            <Link
-              href="/bestellen"
-              data-cart-target
-              className="group relative hidden min-h-11 items-center gap-2 rounded-md bg-brand-orange-hover px-6 py-2.5 font-display text-base font-semibold text-white shadow-[0_2px_10px_rgba(181,84,15,0.20)] transition-all duration-200 hover:bg-brand-orange-deep hover:shadow-[0_4px_20px_rgba(181,84,15,0.30)] active:scale-[0.98] md:inline-flex"
-              aria-label={t("order")}
+            {/* Bestellen gaat telefonisch */}
+            <a
+              href="tel:+3293773251"
+              className="hidden min-h-11 items-center gap-2 rounded-md bg-brand-orange-hover px-6 py-2.5 font-display text-base font-semibold text-white shadow-[0_2px_10px_rgba(181,84,15,0.20)] transition-all duration-200 hover:bg-brand-orange-deep hover:shadow-[0_4px_20px_rgba(181,84,15,0.30)] active:scale-[0.98] md:inline-flex"
             >
-              <span>{t("order")}</span>
-              <motion.svg
-                key={count}
-                animate={count > 0 ? { rotate: [0, -12, 9, -5, 0] } : undefined}
-                transition={{ duration: 0.5, ease: "easeOut" }}
-                className="h-4 w-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2.2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M16 11V7a4 4 0 00-8 0v4M5 9h14l-1.5 11A2 2 0 0115.5 22h-7a2 2 0 01-2-2L5 9z"
-                />
-              </motion.svg>
-              {count > 0 && (
-                <motion.span
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  className="absolute -end-1 -top-1 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-brand-brown px-1 text-[10px] font-bold text-white"
-                >
-                  {count}
-                </motion.span>
-              )}
-            </Link>
-
-            {/* Cart icon for mobile only */}
-            <Link
-              href="/bestellen"
-              data-cart-target
-              className="group relative flex min-h-11 min-w-11 items-center justify-center rounded-full p-2 text-brand-brown-m transition-all duration-200 hover:bg-brand-warm hover:text-brand-orange md:hidden"
-              aria-label={t("order")}
-            >
-              <svg className="h-[22px] w-[22px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M16 11V7a4 4 0 00-8 0v4M5 9h14l-1.5 11A2 2 0 0115.5 22h-7a2 2 0 01-2-2L5 9z"
-                />
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h2.28a1 1 0 01.95.68l1.1 3.29a1 1 0 01-.45 1.17l-1.4.84a12.04 12.04 0 005.54 5.54l.84-1.4a1 1 0 011.17-.45l3.29 1.1a1 1 0 01.68.95V19a2 2 0 01-2 2h-1C9.72 21 3 14.28 3 6V5z" />
               </svg>
-              {count > 0 && (
-                <motion.span
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  className="absolute -end-0.5 -top-0.5 flex h-[18px] w-[18px] items-center justify-center rounded-full bg-brand-orange text-[10px] font-bold text-white"
-                >
-                  {count}
-                </motion.span>
-              )}
-            </Link>
+              <span>{t("order")}: 09 377 32 51</span>
+            </a>
+
+            {/* Bel-knop voor mobiel */}
+            <a
+              href="tel:+3293773251"
+              className="flex min-h-11 min-w-11 items-center justify-center rounded-full p-2 text-brand-brown-m transition-all duration-200 hover:bg-brand-warm hover:text-brand-orange md:hidden"
+              aria-label={`${t("order")}: 09 377 32 51`}
+            >
+              <svg className="h-[22px] w-[22px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h2.28a1 1 0 01.95.68l1.1 3.29a1 1 0 01-.45 1.17l-1.4.84a12.04 12.04 0 005.54 5.54l.84-1.4a1 1 0 011.17-.45l3.29 1.1a1 1 0 01.68.95V19a2 2 0 01-2 2h-1C9.72 21 3 14.28 3 6V5z" />
+              </svg>
+            </a>
 
             <button
               type="button"

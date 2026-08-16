@@ -6,8 +6,6 @@ import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { CookieConsent } from "@/components/cookie-consent";
 import { PlausibleScript } from "@/components/plausible";
-import { StickyBar } from "@/components/sticky-bar";
-import { CartDrawer } from "@/components/cart-drawer";
 import { MotionProvider } from "@/components/motion/motion-provider";
 import { fetchPublicSiteContent } from "@/lib/site-content";
 import type { Locale as DatabaseLocale } from "@/types/database";
@@ -52,8 +50,6 @@ export default async function LocaleLayout({ children, params }: Props) {
           />
           <main id="main" className="flex-1">{children}</main>
           <Footer />
-          <CartDrawer />
-          <StickyBar />
           <CookieConsent />
           <PlausibleScript />
         </MotionProvider>
