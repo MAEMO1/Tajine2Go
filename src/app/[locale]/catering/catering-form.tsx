@@ -101,7 +101,7 @@ export function CateringForm({ subtitle, notice }: Props) {
         <Khatam className="pointer-events-none absolute -top-12 h-64 w-64 text-brand-orange/[0.06] ltr:-right-12 rtl:-left-12" />
         <div className="relative mx-auto max-w-2xl text-center">
           <Reveal>
-            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-brand-orange text-white shadow-[0_8px_30px_rgba(181,84,15,0.35)]">
+            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-brand-orange-hover text-white shadow-[0_8px_30px_rgba(181,84,15,0.35)]">
               <svg
                 className="h-6 w-6"
                 fill="none"
@@ -250,7 +250,7 @@ export function CateringForm({ subtitle, notice }: Props) {
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full rounded-md bg-brand-orange py-3.5 font-display text-lg font-semibold text-white shadow-[0_6px_20px_rgba(181,84,15,0.3)] transition-colors duration-300 hover:bg-brand-orange-hover active:scale-[0.98] disabled:opacity-50"
+                className="w-full rounded-md bg-brand-orange-hover py-3.5 font-display text-lg font-semibold text-white shadow-[0_6px_20px_rgba(181,84,15,0.3)] transition-colors duration-300 hover:bg-brand-orange-deep active:scale-[0.98] disabled:opacity-50"
               >
                 {submitting ? t("sending") : t("submit")}
               </button>

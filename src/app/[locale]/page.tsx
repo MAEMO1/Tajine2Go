@@ -135,7 +135,7 @@ function HeroSection({
           <div className="mt-8 flex w-full max-w-xs flex-col items-stretch gap-3 sm:max-w-none sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-4 md:mt-10">
             <a
               href="#menu"
-              className="inline-flex items-center justify-center rounded-md bg-brand-orange px-8 py-3.5 font-display text-lg font-bold text-white shadow-[0_6px_24px_rgba(0,0,0,0.35)] transition-colors duration-300 hover:bg-brand-orange-hover active:scale-[0.98]"
+              className="inline-flex items-center justify-center rounded-md bg-brand-orange-hover px-8 py-3.5 font-display text-lg font-bold text-white shadow-[0_6px_24px_rgba(0,0,0,0.35)] transition-colors duration-300 hover:bg-brand-orange-deep active:scale-[0.98]"
             >
               {t("viewMenu")}
             </a>
@@ -148,6 +148,24 @@ function HeroSection({
           </div>
         </Reveal>
       </div>
+
+      {/* Scroll-aanwijzing: hint dat het menu eronder staat */}
+      <a
+        href="#menu"
+        aria-label={t("scrollToMenu")}
+        className="absolute bottom-7 left-1/2 flex h-11 w-11 -translate-x-1/2 items-center justify-center rounded-full text-[#F6E9D2]/80 transition-colors hover:text-[#F6E9D2]"
+      >
+        <svg
+          className="h-7 w-7 motion-safe:animate-bounce"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={1.8}
+          aria-hidden="true"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+        </svg>
+      </a>
     </section>
   );
 }
@@ -257,7 +275,7 @@ function CateringSection({ title, text }: { title: string; text: string }) {
             <div className="mt-7 flex flex-wrap justify-center gap-3 md:justify-start">
               <Link
                 href="/catering"
-                className="inline-flex items-center justify-center rounded-md bg-brand-orange px-8 py-3 font-display text-lg font-semibold text-white shadow-[0_6px_20px_rgba(181,84,15,0.3)] transition-colors duration-300 hover:bg-brand-orange-hover active:scale-[0.98]"
+                className="inline-flex items-center justify-center rounded-md bg-brand-orange-hover px-8 py-3 font-display text-lg font-semibold text-white shadow-[0_6px_20px_rgba(181,84,15,0.3)] transition-colors duration-300 hover:bg-brand-orange-deep active:scale-[0.98]"
               >
                 {t("cateringPhone")}
               </Link>

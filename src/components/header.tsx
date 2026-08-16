@@ -107,7 +107,7 @@ export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
             <Link
               href="/bestellen"
               data-cart-target
-              className="group relative hidden items-center gap-2 rounded-full bg-brand-orange px-5 py-2.5 font-mono text-xs font-bold uppercase tracking-[0.18em] text-white shadow-[0_2px_10px_rgba(181,84,15,0.20)] transition-all duration-200 hover:bg-brand-orange-hover hover:shadow-[0_4px_20px_rgba(181,84,15,0.30)] active:scale-[0.98] md:inline-flex"
+              className="group relative hidden min-h-11 items-center gap-2 rounded-md bg-brand-orange-hover px-6 py-2.5 font-display text-base font-semibold text-white shadow-[0_2px_10px_rgba(181,84,15,0.20)] transition-all duration-200 hover:bg-brand-orange-deep hover:shadow-[0_4px_20px_rgba(181,84,15,0.30)] active:scale-[0.98] md:inline-flex"
               aria-label={t("order")}
             >
               <span>{t("order")}</span>
@@ -142,7 +142,7 @@ export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
             <Link
               href="/bestellen"
               data-cart-target
-              className="group relative flex items-center rounded-full p-2 text-brand-brown-m transition-all duration-200 hover:bg-brand-warm hover:text-brand-orange md:hidden"
+              className="group relative flex min-h-11 min-w-11 items-center justify-center rounded-full p-2 text-brand-brown-m transition-all duration-200 hover:bg-brand-warm hover:text-brand-orange md:hidden"
               aria-label={t("order")}
             >
               <svg className="h-[22px] w-[22px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
@@ -165,7 +165,7 @@ export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
 
             <button
               type="button"
-              className="rounded-full p-2 text-brand-brown-m transition-colors hover:bg-brand-warm hover:text-brand-brown lg:hidden"
+              className="flex min-h-11 min-w-11 items-center justify-center rounded-full p-2 text-brand-brown-m transition-colors hover:bg-brand-warm hover:text-brand-brown lg:hidden"
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-label="Menu"
             >
@@ -206,7 +206,7 @@ export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
             className="fixed inset-y-0 z-50 flex w-[280px] flex-col border-brand-warm2 bg-brand-cream shadow-[-8px_0_30px_rgba(45,27,10,0.08)] ltr:right-0 ltr:border-l rtl:left-0 rtl:border-r lg:hidden"
           >
             <div className="flex items-center justify-between px-6 py-5">
-              <span className="font-heading text-xl uppercase tracking-[0.15em] text-brand-brown">
+              <span className="font-display text-xl font-semibold text-brand-brown">
                 Menu
               </span>
               <button
@@ -238,7 +238,7 @@ export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
                       {...motionProps}
                       type="button"
                       onClick={() => handleScrollOrNavigate(link.scrollTarget)}
-                      className="rounded-lg px-4 py-3 text-start font-heading text-lg uppercase tracking-[0.12em] text-brand-brown-m transition-colors hover:bg-brand-warm hover:text-brand-brown"
+                      className="rounded-lg px-4 py-3 text-start font-display text-lg font-semibold text-brand-brown-m transition-colors hover:bg-brand-warm hover:text-brand-brown"
                     >
                       {link.label}
                     </motion.button>
@@ -248,7 +248,7 @@ export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
                   <motion.div key={link.href} {...motionProps}>
                     <Link
                       href={link.href}
-                      className="block rounded-lg px-4 py-3 font-heading text-lg uppercase tracking-[0.12em] text-brand-brown-m transition-colors hover:bg-brand-warm hover:text-brand-brown"
+                      className="block rounded-lg px-4 py-3 font-display text-lg font-semibold text-brand-brown-m transition-colors hover:bg-brand-warm hover:text-brand-brown"
                       onClick={() => setMobileOpen(false)}
                     >
                       {link.label}
@@ -261,7 +261,7 @@ export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
             {/* Bottom decorative accent */}
             <div className="px-6 pb-8">
               <div className="h-px bg-gradient-to-r from-transparent via-brand-warm2 to-transparent" />
-              <p className="mt-4 text-center font-heading text-xs uppercase tracking-[0.2em] text-brand-brown-s/50">
+              <p className="mt-4 text-center font-display text-xs uppercase tracking-[0.2em] text-brand-brown-s/50">
                 {brandName}
               </p>
             </div>
@@ -293,7 +293,7 @@ function SmartNavLink({
   const isActive = pathname === href;
 
   const baseClass =
-    "relative px-4 py-2 font-mono text-[11px] font-bold uppercase tracking-[0.18em] transition-all duration-200 after:absolute after:bottom-0.5 after:left-1/2 after:h-px after:w-0 after:-translate-x-1/2 after:bg-brand-orange after:transition-all after:duration-300";
+    "relative px-4 py-2 font-display text-[17px] font-semibold transition-all duration-200 after:absolute after:bottom-0.5 after:left-1/2 after:h-px after:w-0 after:-translate-x-1/2 after:bg-brand-orange after:transition-all after:duration-300";
   const activeClass = "text-brand-brown after:w-1/2";
   const inactiveClass =
     "text-brand-brown-s hover:text-brand-brown hover:after:w-1/2";

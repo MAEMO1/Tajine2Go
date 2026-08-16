@@ -544,7 +544,7 @@ export function CheckoutForm({ config, checkoutNotice, closedMessage }: Props) {
           <button
             type="submit"
             disabled={submitting || closed || !minimumReached}
-            className="w-full rounded-full bg-brand-orange py-4 font-mono text-[12px] font-bold uppercase tracking-[0.28em] text-white shadow-[0_8px_30px_rgba(181,84,15,0.35)] transition-colors duration-300 hover:bg-brand-orange-hover active:scale-[0.98] disabled:opacity-50 disabled:shadow-none"
+            className="w-full rounded-full bg-brand-orange-hover py-4 font-mono text-[12px] font-bold uppercase tracking-[0.28em] text-white shadow-[0_8px_30px_rgba(181,84,15,0.35)] transition-colors duration-300 hover:bg-brand-orange-deep active:scale-[0.98] disabled:opacity-50 disabled:shadow-none"
           >
             {submitting ? t("processing") : t("placeOrder")}
           </button>

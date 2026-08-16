@@ -179,7 +179,7 @@ function StatusTimeline({ status, fulfillment }: { status: string; fulfillment: 
                 <span
                   className={`relative flex h-10 w-10 items-center justify-center rounded-full border transition-colors ${
                     isCurrent
-                      ? "border-brand-orange bg-brand-orange text-white shadow-[0_8px_24px_-8px_rgba(181,84,15,0.6)]"
+                      ? "border-brand-orange bg-brand-orange-hover text-white shadow-[0_8px_24px_-8px_rgba(181,84,15,0.6)]"
                       : isDone
                         ? "border-brand-orange/30 bg-brand-warm text-brand-orange"
                         : "border-brand-brown/15 bg-brand-cream text-brand-brown-s/50"

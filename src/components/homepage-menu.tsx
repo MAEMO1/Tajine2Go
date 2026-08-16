@@ -78,9 +78,9 @@ export function HomepageMenu({ menu, closedMessage }: Props) {
               key={category}
               type="button"
               onClick={() => scrollToCategory(category)}
-              className={`rounded-full px-4 py-1.5 font-display text-sm font-semibold transition-all duration-300 ${
+              className={`min-h-11 rounded-full px-4 font-display text-sm font-semibold transition-all duration-300 ${
                 activeCategory === category
-                  ? "bg-brand-orange text-white shadow-[0_2px_8px_rgba(181,84,15,0.25)]"
+                  ? "bg-brand-orange-hover text-white shadow-[0_2px_8px_rgba(181,84,15,0.25)]"
                   : "text-brand-brown-m hover:bg-brand-warm hover:text-brand-brown"
               }`}
             >

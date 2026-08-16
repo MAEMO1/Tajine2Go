@@ -146,7 +146,7 @@ export function DishRow({ dish, isActive }: Props) {
                 className={`rounded-full px-5 py-2 text-sm font-semibold text-white transition-all duration-300 active:scale-90 ${
                   justAdded
                     ? "bg-brand-bronze"
-                    : "bg-brand-orange hover:scale-105 hover:bg-brand-orange-hover hover:shadow-[0_4px_16px_rgba(181,84,15,0.4)]"
+                    : "bg-brand-orange hover:scale-105 hover:bg-brand-orange-deep hover:shadow-[0_4px_16px_rgba(181,84,15,0.4)]"
                 }`}
               >
                 {justAdded ? `✓ ${t("added")}` : t("addToCart")}
