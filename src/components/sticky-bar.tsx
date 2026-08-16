@@ -34,7 +34,7 @@ export function StickyBar() {
                 initial={{ scale: 0.6 }}
                 animate={{ scale: 1 }}
                 transition={{ type: "spring", damping: 12, stiffness: 400 }}
-                className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-orange font-mono text-sm font-bold text-white shadow-[0_2px_8px_rgba(217,123,26,0.25)]"
+                className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-orange font-mono text-sm font-bold text-white shadow-[0_2px_8px_rgba(181,84,15,0.25)]"
               >
                 {count}
               </motion.span>

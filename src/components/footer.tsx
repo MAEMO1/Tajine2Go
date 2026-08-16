@@ -15,7 +15,7 @@ export async function Footer() {
   return (
     <footer className="section-ember relative overflow-hidden bg-brand-brown">
       <ZelligeOverlay className="absolute inset-0 text-brand-gold opacity-[0.04]" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_center,rgba(217,123,26,0.1),transparent_55%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_center,rgba(181,84,15,0.1),transparent_55%)]" />
 
       {/* Afsluitend merkmoment — serif, zoals het drukwerk */}
       <div className="relative mx-auto max-w-7xl overflow-hidden px-4 pt-14 md:px-6 md:pt-18">

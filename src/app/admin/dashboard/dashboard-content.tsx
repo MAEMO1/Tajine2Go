@@ -57,7 +57,7 @@ export function DashboardContent({
               <XAxis dataKey="date" tick={{ fontSize: 11 }} />
               <YAxis tick={{ fontSize: 11 }} tickFormatter={(v) => `â‚¬${v}`} />
               <Tooltip formatter={(value) => [`â‚¬${Number(value).toFixed(2)}`, "Omzet"]} />
-              <Bar dataKey="revenue" fill="#E75A0A" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="revenue" fill="#D2691E" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>

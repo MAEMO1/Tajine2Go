@@ -245,12 +245,12 @@ Gebruik deze custom colors in `tailwind.config.ts`:
 ```ts
 colors: {
   brand: {
-    orange: '#E75A0A',        // Spice Orange (brand kit)
-    'orange-hover': '#C64B06',
+    orange: '#D2691E',        // Terracotta (zellige-patroon; gedempt t.o.v. kit-Spice-Orange, beslissing eigenaar 16/08/2026)
+    'orange-hover': '#B5540F',
     gold: '#F5A400',          // Saffron Gold (brand kit)
     bronze: '#78320C',        // Warm Brown (brand kit)
-    cream: '#FFF8EA',         // Soft Cream Background (brand kit)
-    warm: '#FBF0D6',
+    cream: '#FBF2DC',         // Warm papier (drukwerk; warmer dan kit-web-achtergrond, beslissing eigenaar)
+    warm: '#F6E8C9',
     warm2: '#F6E3B1',         // Cream (brand kit, wordmark fill)
     brown: '#3B1606',         // Tajine Dark Brown (brand kit)
     'brown-m': '#6B3E1E',

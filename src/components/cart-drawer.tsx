@@ -208,7 +208,7 @@ export function CartDrawer() {
                 <Link
                   href="/bestellen"
                   onClick={() => closeCart()}
-                  className="mt-4 block w-full rounded-full bg-brand-orange py-3.5 text-center font-mono text-xs font-bold uppercase tracking-[0.24em] text-white transition-all duration-300 hover:bg-brand-orange-hover hover:shadow-[0_4px_20px_rgba(217,123,26,0.3)] active:scale-[0.99]"
+                  className="mt-4 block w-full rounded-full bg-brand-orange py-3.5 text-center font-mono text-xs font-bold uppercase tracking-[0.24em] text-white transition-all duration-300 hover:bg-brand-orange-hover hover:shadow-[0_4px_20px_rgba(181,84,15,0.3)] active:scale-[0.99]"
                 >
                   {t("checkout")}
                 </Link>

@@ -265,7 +265,7 @@ function CateringSection({ title, text }: { title: string; text: string }) {
             <div className="mt-7 flex flex-wrap justify-center gap-3 md:justify-start">
               <Link
                 href="/catering"
-                className="inline-flex items-center justify-center rounded-md bg-brand-orange px-8 py-3 font-display text-lg font-semibold text-white shadow-[0_6px_20px_rgba(199,90,10,0.3)] transition-colors duration-300 hover:bg-brand-orange-hover active:scale-[0.98]"
+                className="inline-flex items-center justify-center rounded-md bg-brand-orange px-8 py-3 font-display text-lg font-semibold text-white shadow-[0_6px_20px_rgba(181,84,15,0.3)] transition-colors duration-300 hover:bg-brand-orange-hover active:scale-[0.98]"
               >
                 {t("cateringPhone")}
               </Link>

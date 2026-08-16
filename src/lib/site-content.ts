@@ -128,7 +128,7 @@ const DEFAULT_WEBSITE_TEXTS: Record<Locale, WebsiteLocaleTexts> = {
     notices: {
       homepage_banner: null,
       closed_message:
-        "We zijn momenteel gesloten. Bekijk ons menu voor de volgende besteldag.",
+        "Bestellen doe je telefonisch: bel 09 377 32 51 of 0451 01 61 44.",
       checkout_notice: null,
     },
     about: {
@@ -155,7 +155,7 @@ const DEFAULT_WEBSITE_TEXTS: Record<Locale, WebsiteLocaleTexts> = {
     notices: {
       homepage_banner: null,
       closed_message:
-        "Nous sommes actuellement fermés. Consultez notre menu pour le prochain jour de commande.",
+        "Commandez par téléphone : appelez le 09 377 32 51 ou le 0451 01 61 44.",
       checkout_notice: null,
     },
     about: {
@@ -182,7 +182,7 @@ const DEFAULT_WEBSITE_TEXTS: Record<Locale, WebsiteLocaleTexts> = {
     notices: {
       homepage_banner: null,
       closed_message:
-        "We are currently closed. Check our menu for the next order day.",
+        "Order by phone: call 09 377 32 51 or 0451 01 61 44.",
       checkout_notice: null,
     },
     about: {
@@ -209,7 +209,7 @@ const DEFAULT_WEBSITE_TEXTS: Record<Locale, WebsiteLocaleTexts> = {
     notices: {
       homepage_banner: null,
       closed_message:
-        "نحن مغلقون حالياً. اطلع على قائمتنا ليوم الطلب التالي.",
+        "للطلب اتصل بنا هاتفياً: 09 377 32 51 أو 0451 01 61 44.",
       checkout_notice: null,
     },
     about: {

@@ -8,7 +8,7 @@ import { Khatam } from "@/components/decor/khatam";
 export function HeroSceneFallback() {
   return (
     <div
-      className="absolute inset-0 flex items-center justify-center bg-[radial-gradient(ellipse_at_center,rgba(217,123,26,0.32),transparent_65%)]"
+      className="absolute inset-0 flex items-center justify-center bg-[radial-gradient(ellipse_at_center,rgba(181,84,15,0.32),transparent_65%)]"
       aria-hidden="true"
     >
       <Khatam className="h-44 w-44 text-brand-gold/30 md:h-64 md:w-64" />

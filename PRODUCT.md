@@ -37,7 +37,7 @@ Huisgemaakt en beperkt: een klein wisselend weekmenu, vers en traag gegaard op d
 ## Brand Commitments
 
 - Officieel brand kit (aangeleverd 16/08/2026, bron: `Tajine2Go_logo_full.zip`) is bindend: primary horizontal logo (tajine-op-wieltjes + wordmark), stacked, icon-only, wordmark, mono en dark-badge varianten. Web-assets staan in `public/brand/`; favicons/manifest in `public/` root; bronbestanden (print, masters, social) bewaart de eigenaar buiten de repo.
-- Kit-kleurenpalet is leidend (beslissing eigenaar): Spice Orange #E75A0A, Saffron Gold #F5A400, Tajine Dark Brown #3B1606, Warm Brown #78320C, Cream #F6E3B1, Soft Cream Background #FFF8EA. Site-tokens in `globals.css` @theme en CLAUDE.md §5.1 volgen dit palet.
+- Kleurenpalet (beslissing eigenaar 16/08/2026, verfijnd op het drukwerk): accent is terracotta #D2691E (uit het zellige-patroon, gedempt t.o.v. kit-Spice-Orange), achtergrond warm papier #FBF2DC (zoals menukaart/poster i.p.v. kit-webwit #FFF8EA); Saffron Gold #F5A400, Tajine Dark Brown #3B1606 en Warm Brown #78320C blijven uit het kit. Site-tokens in `globals.css` @theme en CLAUDE.md §5.1 zijn de bron.
 - Logo-regels uit de usage guide: min. 180px breed (primary), 10% clearspace, nooit uitrekken of herkleuren buiten de meegeleverde varianten, dark badge op donkere ondergronden, favicon nooit als header-logo.
 - Eén letterfamilie: Geist (display én body), Geist Mono voor labels/prijzen/cijfers, Noto Sans Arabic voor ar.
 - Bindende design language: docs/redesign/design-language.md v3 "Op zacht vuur" (licht↔donker sectieritme, zellige/khatam-geometrie, GSAP-motion, Three.js tajine-hero).

@@ -22,7 +22,7 @@ export function flyToCart(fromEl: HTMLElement) {
   const dot = document.createElement("div");
   dot.setAttribute("aria-hidden", "true");
   dot.className =
-    "pointer-events-none fixed z-[110] h-3.5 w-3.5 rounded-full bg-brand-orange shadow-[0_2px_8px_rgba(217,123,26,0.5)]";
+    "pointer-events-none fixed z-[110] h-3.5 w-3.5 rounded-full bg-brand-orange shadow-[0_2px_8px_rgba(181,84,15,0.5)]";
   document.body.appendChild(dot);
 
   const startX = from.left + from.width / 2 - 7;

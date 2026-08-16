@@ -45,7 +45,7 @@ export default function NotFound() {
       <div className="animate-fade-up-delay-3 relative mt-9">
         <Link
           href="/"
-          className="inline-flex items-center justify-center rounded-md bg-brand-orange px-8 py-3 font-display text-lg font-semibold text-white shadow-[0_6px_20px_rgba(199,90,10,0.3)] transition-colors duration-300 hover:bg-brand-orange-hover active:scale-[0.98]"
+          className="inline-flex items-center justify-center rounded-md bg-brand-orange px-8 py-3 font-display text-lg font-semibold text-white shadow-[0_6px_20px_rgba(181,84,15,0.3)] transition-colors duration-300 hover:bg-brand-orange-hover active:scale-[0.98]"
         >
           {t("back")}
         </Link>

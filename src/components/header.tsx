@@ -107,7 +107,7 @@ export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
             <Link
               href="/bestellen"
               data-cart-target
-              className="group relative hidden items-center gap-2 rounded-full bg-brand-orange px-5 py-2.5 font-mono text-xs font-bold uppercase tracking-[0.18em] text-white shadow-[0_2px_10px_rgba(217,123,26,0.20)] transition-all duration-200 hover:bg-brand-orange-hover hover:shadow-[0_4px_20px_rgba(217,123,26,0.30)] active:scale-[0.98] md:inline-flex"
+              className="group relative hidden items-center gap-2 rounded-full bg-brand-orange px-5 py-2.5 font-mono text-xs font-bold uppercase tracking-[0.18em] text-white shadow-[0_2px_10px_rgba(181,84,15,0.20)] transition-all duration-200 hover:bg-brand-orange-hover hover:shadow-[0_4px_20px_rgba(181,84,15,0.30)] active:scale-[0.98] md:inline-flex"
               aria-label={t("order")}
             >
               <span>{t("order")}</span>

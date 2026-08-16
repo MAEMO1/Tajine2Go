@@ -42,14 +42,14 @@ export function orderConfirmationHtml(params: {
 }) {
   return `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-      <h1 style="color: #E75A0A; font-size: 28px;">Tajine2Go</h1>
+      <h1 style="color: #D2691E; font-size: 28px;">Tajine2Go</h1>
       <h2 style="color: #3B1606;">Bedankt voor je bestelling!</h2>
       <p>Hallo ${params.customerName},</p>
       <p>Je bestelling <strong>${params.orderNumber}</strong> is bevestigd.</p>
       <table style="width: 100%; border-collapse: collapse; margin: 16px 0;">
         <tr>
           <td style="padding: 8px 0; color: #6B3E1E;">Totaal:</td>
-          <td style="padding: 8px 0; font-weight: bold; color: #E75A0A;">${params.totalFormatted}</td>
+          <td style="padding: 8px 0; font-weight: bold; color: #D2691E;">${params.totalFormatted}</td>
         </tr>
         <tr>
           <td style="padding: 8px 0; color: #6B3E1E;">Type:</td>
@@ -63,7 +63,7 @@ export function orderConfirmationHtml(params: {
         ` : ""}
       </table>
       <p>
-        <a href="${params.statusUrl}" style="display: inline-block; background: #E75A0A; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: bold;">
+        <a href="${params.statusUrl}" style="display: inline-block; background: #D2691E; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: bold;">
           Bekijk je bestelling
         </a>
       </p>
@@ -85,7 +85,7 @@ export function adminNewOrderHtml(params: {
 }) {
   return `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-      <h1 style="color: #E75A0A;">Nieuwe bestelling ${params.orderNumber}</h1>
+      <h1 style="color: #D2691E;">Nieuwe bestelling ${params.orderNumber}</h1>
       <table style="width: 100%; border-collapse: collapse;">
         <tr><td style="padding: 6px 0; color: #666;">Klant:</td><td>${params.customerName} (${params.customerEmail})</td></tr>
         <tr><td style="padding: 6px 0; color: #666;">Totaal:</td><td style="font-weight: bold;">${params.totalFormatted}</td></tr>
