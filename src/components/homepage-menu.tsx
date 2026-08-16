@@ -123,7 +123,7 @@ export function HomepageMenu({ menu, closedMessage }: Props) {
               <div>
                 {dishes.map((dish, index) => (
                   <Reveal key={dish.id} delay={Math.min(index * 0.06, 0.3)}>
-                    <DishRow dish={dish} isActive={menu.is_active} />
+                    <DishRow dish={dish} />
                   </Reveal>
                 ))}
               </div>

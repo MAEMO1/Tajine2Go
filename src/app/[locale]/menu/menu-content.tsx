@@ -129,7 +129,7 @@ export function MenuContent({ menu, closedMessage }: Props) {
                 <div className="space-y-3">
                   {dishes.map((dish, index) => (
                     <Reveal key={dish.id} delay={Math.min(index * 0.06, 0.3)}>
-                      <DishRow dish={dish} isActive={menu.is_active} />
+                      <DishRow dish={dish} />
                     </Reveal>
                   ))}
                 </div>

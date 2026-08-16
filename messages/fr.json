@@ -53,8 +53,6 @@
     "noItems": "Aucun plat disponible pour le moment.",
     "soldOut": "Épuisé",
     "portionsLeft": "{count, plural, one {# portion restante} other {# portions restantes}}",
-    "addToCart": "Ajouter",
-    "added": "Ajouté",
     "ingredients": "Ingrédients",
     "allergens": "Allergènes",
     "categories": {

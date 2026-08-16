@@ -53,8 +53,6 @@
     "noItems": "Momenteel geen gerechten beschikbaar.",
     "soldOut": "Uitverkocht",
     "portionsLeft": "{count, plural, one {# portie over} other {# porties over}}",
-    "addToCart": "Toevoegen",
-    "added": "Toegevoegd",
     "ingredients": "Ingrediënten",
     "allergens": "Allergenen",
     "categories": {

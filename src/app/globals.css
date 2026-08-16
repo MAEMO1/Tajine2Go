@@ -166,17 +166,6 @@ html.lenis body {
   overflow: hidden;
 }
 
-/* ── Custom cursor: hide the native arrow, keep text/form affordances ── */
-@media (pointer: fine) {
-  html.has-custom-cursor body {
-    cursor: none;
-  }
-
-  html.has-custom-cursor :is(input, textarea, select) {
-    cursor: auto;
-  }
-}
-
 /* ── FAQ accordion: animate native <details> without JavaScript ── */
 .faq-details > .faq-answer {
   display: grid;

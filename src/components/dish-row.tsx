@@ -1,49 +1,16 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import { useCartStore } from "@/stores/cart";
 import { formatMenuPrice } from "@/lib/format";
-import { flyToCart } from "@/lib/motion/fly-to-cart";
 import type { MenuDish } from "@/types/database";
 
 type Props = {
   dish: MenuDish;
-  isActive: boolean;
 };
 
-export function DishRow({ dish, isActive }: Props) {
+export function DishRow({ dish }: Props) {
   const t = useTranslations("menu");
-  const addItem = useCartStore((s) => s.addItem);
-  const [justAdded, setJustAdded] = useState(false);
-  const resetTimer = useRef<number | null>(null);
-  const addButtonRef = useRef<HTMLButtonElement>(null);
-
-  useEffect(
-    () => () => {
-      if (resetTimer.current) window.clearTimeout(resetTimer.current);
-    },
-    [],
-  );
-
-  function handleAdd() {
-    addItem({
-      weekly_menu_id: dish.weekly_menu_id,
-      dish_id: dish.id,
-      name: dish.name,
-      price_cents: dish.price_cents,
-      image_url: dish.image_url,
-    });
-    if (addButtonRef.current) {
-      flyToCart(addButtonRef.current);
-    }
-    setJustAdded(true);
-    if (resetTimer.current) window.clearTimeout(resetTimer.current);
-    resetTimer.current = window.setTimeout(() => setJustAdded(false), 1400);
-  }
-
-  const canOrder = isActive && !dish.is_soldout;
 
   return (
     <div className="group relative flex gap-4 border-b border-brand-warm2/70 px-3 py-5 transition-all duration-300 hover:bg-brand-warm/40 sm:gap-5">
@@ -130,26 +97,6 @@ export function DishRow({ dish, isActive }: Props) {
                 )}
             </div>
           </div>
-
-          {canOrder && (
-            <div className="flex flex-col items-end gap-1">
-              <button
-                ref={addButtonRef}
-                type="button"
-                onClick={handleAdd}
-                className={`rounded-full px-5 py-2 text-sm font-semibold text-white transition-all duration-300 active:scale-90 ${
-                  justAdded
-                    ? "bg-brand-bronze"
-                    : "bg-brand-orange hover:scale-105 hover:bg-brand-orange-deep hover:shadow-[0_4px_16px_rgba(181,84,15,0.4)]"
-                }`}
-              >
-                {justAdded ? `✓ ${t("added")}` : t("addToCart")}
-              </button>
-              <span className="sr-only" role="status" aria-live="polite">
-                {justAdded ? `${dish.name} — ${t("added")}` : ""}
-              </span>
-            </div>
-          )}
         </div>
       </div>
     </div>
