@@ -18,6 +18,7 @@ export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
   const locale = useLocale();
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [phoneOpen, setPhoneOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const logoSrc = logoUrl || "/brand/logo/Tajine2Go_logo_primary_transparent_640w.png";
   const logoText = logoAlt || brandName;
@@ -31,6 +32,25 @@ export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Popover sluit bij klik erbuiten of Escape
+  useEffect(() => {
+    if (!phoneOpen) return;
+    function onPointerDown(event: PointerEvent) {
+      if (!(event.target as HTMLElement).closest("[data-phone-popover]")) {
+        setPhoneOpen(false);
+      }
+    }
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") setPhoneOpen(false);
+    }
+    window.addEventListener("pointerdown", onPointerDown);
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      window.removeEventListener("pointerdown", onPointerDown);
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [phoneOpen]);
 
   const navLinks = [
     { href: "/menu" as const, label: t("menu"), scrollTarget: "#menu" },
@@ -101,16 +121,61 @@ export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
           <div className="flex items-center gap-2">
             <LanguageSwitcher />
 
-            {/* Bestellen gaat telefonisch */}
-            <a
-              href="tel:+3293773251"
-              className="hidden min-h-11 items-center gap-2 rounded-md bg-brand-orange-hover px-6 py-2.5 font-display text-base font-semibold text-white shadow-[0_2px_10px_rgba(181,84,15,0.20)] transition-all duration-200 hover:bg-brand-orange-deep hover:shadow-[0_4px_20px_rgba(181,84,15,0.30)] active:scale-[0.98] md:inline-flex"
-            >
-              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h2.28a1 1 0 01.95.68l1.1 3.29a1 1 0 01-.45 1.17l-1.4.84a12.04 12.04 0 005.54 5.54l.84-1.4a1 1 0 011.17-.45l3.29 1.1a1 1 0 01.68.95V19a2 2 0 01-2 2h-1C9.72 21 3 14.28 3 6V5z" />
-              </svg>
-              <span>{t("order")}: 09 377 32 51</span>
-            </a>
+            {/* Bestellen gaat telefonisch: desktop toont een popover met beide nummers */}
+            <div className="relative hidden md:block" data-phone-popover>
+              <button
+                type="button"
+                onClick={() => setPhoneOpen(!phoneOpen)}
+                aria-expanded={phoneOpen}
+                aria-haspopup="true"
+                className="inline-flex min-h-11 items-center gap-2 rounded-md bg-brand-orange-hover px-6 py-2.5 font-display text-base font-semibold text-white shadow-[0_2px_10px_rgba(181,84,15,0.20)] transition-all duration-200 hover:bg-brand-orange-deep hover:shadow-[0_4px_20px_rgba(181,84,15,0.30)] active:scale-[0.98]"
+              >
+                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h2.28a1 1 0 01.95.68l1.1 3.29a1 1 0 01-.45 1.17l-1.4.84a12.04 12.04 0 005.54 5.54l.84-1.4a1 1 0 011.17-.45l3.29 1.1a1 1 0 01.68.95V19a2 2 0 01-2 2h-1C9.72 21 3 14.28 3 6V5z" />
+                </svg>
+                <span>{t("order")}</span>
+                <svg
+                  className={`h-3.5 w-3.5 transition-transform duration-200 ${phoneOpen ? "rotate-180" : ""}`}
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2.2}
+                  aria-hidden="true"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+
+              <AnimatePresence>
+                {phoneOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -6 }}
+                    transition={{ duration: 0.18, ease: "easeOut" }}
+                    className="absolute end-0 top-full z-50 mt-2 w-64 overflow-hidden rounded-xl border border-brand-warm2 bg-brand-cream shadow-[0_16px_40px_-12px_rgba(59,22,6,0.3)]"
+                  >
+                    <p className="px-4 pb-1 pt-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-brown-s">
+                      {t("orderByPhone")}
+                    </p>
+                    <a
+                      href="tel:+3293773251"
+                      className="flex min-h-11 items-center gap-3 px-4 py-2 transition-colors hover:bg-brand-warm"
+                      onClick={() => setPhoneOpen(false)}
+                    >
+                      <span className="font-display text-lg font-semibold text-brand-brown">09 377 32 51</span>
+                    </a>
+                    <a
+                      href="tel:+32451016144"
+                      className="flex min-h-11 items-center gap-3 border-t border-brand-warm2/60 px-4 py-2 transition-colors hover:bg-brand-warm"
+                      onClick={() => setPhoneOpen(false)}
+                    >
+                      <span className="font-display text-lg font-semibold text-brand-brown">0451 01 61 44</span>
+                    </a>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
 
             {/* Bel-knop voor mobiel */}
             <a

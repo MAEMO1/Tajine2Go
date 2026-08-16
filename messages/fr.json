@@ -29,7 +29,8 @@
     "catering": "Traiteur",
     "about": "À propos",
     "faq": "FAQ",
-    "contact": "Contact"
+    "contact": "Contact",
+    "orderByPhone": "Commandez par téléphone"
   },
   "home": {
     "heroTitle": "Saveurs marocaines authentiques, fraîchement servies",
