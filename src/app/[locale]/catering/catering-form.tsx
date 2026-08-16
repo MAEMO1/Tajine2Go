@@ -26,7 +26,7 @@ type Props = {
 };
 
 const inputClasses =
-  "w-full rounded-lg border border-brand-brown-s bg-brand-cream px-3.5 py-2.5 text-sm text-brand-brown placeholder:text-brand-brown-s/60 transition-colors focus:border-brand-orange focus:outline-none";
+  "w-full rounded-lg border border-brand-brown-s/60 bg-white/60 px-3.5 py-2.5 text-[15px] text-brand-brown placeholder:text-brand-brown-s/60 transition-colors focus:border-brand-orange focus:outline-none";
 
 export function CateringForm({ subtitle, notice }: Props) {
   const t = useTranslations("catering");
@@ -175,7 +175,7 @@ export function CateringForm({ subtitle, notice }: Props) {
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <Reveal>
               <div className="rounded-2xl border border-brand-warm2/70 bg-brand-cream p-6 shadow-sm md:p-7">
-                <SectionLabel index="01" label={tCheckout("personalInfo")} />
+                <SectionLabel label={tCheckout("personalInfo")} />
                 <div className="mt-5 grid gap-4 sm:grid-cols-2">
                   <InputField label={tCheckout("firstName")} error={errors.first_name} requiredLabel={t("required")}>
                     <input
@@ -203,7 +203,7 @@ export function CateringForm({ subtitle, notice }: Props) {
 
             <Reveal delay={0.08}>
               <div className="rounded-2xl border border-brand-warm2/70 bg-brand-cream p-6 shadow-sm md:p-7">
-                <SectionLabel index="02" label={t("eventType")} />
+                <SectionLabel label={t("eventType")} />
                 <div className="mt-5 grid gap-4 sm:grid-cols-2">
                   <InputField label={t("eventType")} error={errors.event_type} requiredLabel={t("required")}>
                     <select {...register("event_type", { required: true })} className={inputClasses}>
@@ -233,7 +233,7 @@ export function CateringForm({ subtitle, notice }: Props) {
 
             <Reveal delay={0.16}>
               <div className="rounded-2xl border border-brand-warm2/70 bg-brand-cream p-6 shadow-sm md:p-7">
-                <SectionLabel index="03" label={t("message")} />
+                <SectionLabel label={t("message")} />
                 <div className="mt-5 space-y-4">
                   <InputField label={t("dietaryNeeds")}>
                     <input {...register("dietary_needs")} className={inputClasses} />
@@ -247,52 +247,34 @@ export function CateringForm({ subtitle, notice }: Props) {
 
             <Reveal delay={0.22}>
               {error && <p className="mb-4 text-sm text-red-600">{error}</p>}
-              <Magnetic className="w-full">
-                <button
-                  type="submit"
-                  disabled={submitting}
-                  className="w-full rounded-full bg-brand-orange py-4 font-mono text-[11px] font-bold uppercase tracking-[0.28em] text-white shadow-[0_8px_30px_rgba(217,123,26,0.35)] transition-colors duration-300 hover:bg-brand-orange-hover active:scale-[0.98] disabled:opacity-50"
-                >
-                  {submitting ? t("sending") : t("submit")}
-                </button>
-              </Magnetic>
+              <button
+                type="submit"
+                disabled={submitting}
+                className="w-full rounded-md bg-brand-orange py-3.5 font-display text-lg font-semibold text-white shadow-[0_6px_20px_rgba(199,90,10,0.3)] transition-colors duration-300 hover:bg-brand-orange-hover active:scale-[0.98] disabled:opacity-50"
+              >
+                {submitting ? t("sending") : t("submit")}
+              </button>
             </Reveal>
           </form>
 
-          {/* === Decorative ember panel (desktop) === */}
+          {/* === Mozaïekpaneel met merkteken (desktop) === */}
           <Reveal delay={0.15} y={36} className="hidden md:block">
             <div className="md:sticky md:top-28">
-              <div className="section-ember relative overflow-hidden rounded-[24px] bg-[linear-gradient(160deg,#21130a_0%,#3a2410_55%,#5a3413_100%)] p-8 shadow-[0_35px_80px_-25px_rgba(45,27,10,0.55)]">
-                <ZelligeOverlay className="absolute inset-0 text-brand-gold opacity-[0.07]" />
-                <div className="relative">
-                  <div className="flex items-center gap-3 text-brand-gold">
-                    <span className="h-px w-10 bg-brand-gold/60" aria-hidden="true" />
-                    <Khatam className="h-4 w-4" />
-                    <span className="h-px w-10 bg-brand-gold/30" aria-hidden="true" />
+              <div className="relative overflow-hidden rounded-2xl border border-brand-gold/40 bg-[url('/brand/pattern-mosaic.svg')] bg-[length:96px_96px] p-8 shadow-[0_25px_60px_-25px_rgba(59,22,6,0.5)]">
+                <div className="relative flex flex-col items-center gap-8 py-6">
+                  <div className="flex h-36 w-36 items-center justify-center rounded-full bg-brand-cream shadow-[0_10px_30px_rgba(0,0,0,0.35)]">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src="/brand/logo/Tajine2Go_icon_128.png" alt="" className="h-20 w-auto" />
                   </div>
-
-                  <p className="mt-6 font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-brand-cream/70">
-                    {t("title")}
-                  </p>
-
-                  <div className="my-10 flex justify-center">
-                    <Khatam className="animate-float h-32 w-32 text-brand-gold/40" />
-                  </div>
-
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap justify-center gap-2">
                     {eventTypeChips.map((eventType) => (
                       <span
                         key={eventType}
-                        className="rounded-full border border-brand-cream/20 bg-brand-cream/10 px-3.5 py-1.5 text-xs font-medium text-brand-cream/85"
+                        className="rounded-full bg-brand-cream/90 px-3.5 py-1.5 text-xs font-medium text-brand-brown"
                       >
                         {eventType}
                       </span>
                     ))}
-                  </div>
-
-                  <div className="mt-10 flex items-end justify-between font-mono text-[9px] font-bold uppercase tracking-[0.28em] text-brand-cream/60">
-                    <span>Tajine2Go · Gent</span>
-                    <span>MMXXVI</span>
                   </div>
                 </div>
               </div>
@@ -313,12 +295,11 @@ declare global {
   }
 }
 
-function SectionLabel({ index, label }: { index: string; label: string }) {
+function SectionLabel({ label }: { label: string }) {
   return (
-    <div className="flex items-center gap-3 font-mono text-[10px] font-bold uppercase tracking-[0.28em]">
-      <span className="text-brand-orange">{index}</span>
-      <KhatamSolid className="h-2.5 w-2.5 text-brand-orange" />
-      <span className="text-brand-brown-m">{label}</span>
+    <div className="flex items-center gap-2.5">
+      <span className="text-[10px] text-brand-gold" aria-hidden="true">&#10022;</span>
+      <span className="font-display text-lg font-semibold text-brand-bronze">{label}</span>
     </div>
   );
 }
@@ -336,7 +317,7 @@ function InputField({
 }) {
   return (
     <div>
-      <label className="font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-brand-brown-m">
+      <label className="text-sm font-medium text-brand-brown-m">
         {label}
       </label>
       <div className="mt-1.5">{children}</div>

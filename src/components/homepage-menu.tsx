@@ -57,12 +57,6 @@ export function HomepageMenu({ menu, closedMessage }: Props) {
     }
   }
 
-  const formattedDate = new Intl.DateTimeFormat(locale, {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-  }).format(new Date(`${menu.date}T12:00:00`));
-
   return (
     <section id="menu" className="pb-24">
       {/* Menukaart-kop: gecentreerd, met boog-ornament zoals het drukwerk */}
@@ -74,9 +68,6 @@ export function HomepageMenu({ menu, closedMessage }: Props) {
         <h2 className="mt-3 font-display text-[clamp(30px,4.5vw,48px)] font-medium leading-tight text-brand-brown">
           {tHome("menuTitle")}
         </h2>
-        <p className="mt-2 font-display text-[15px] uppercase tracking-[0.2em] text-brand-bronze">
-          {formattedDate}
-        </p>
       </div>
 
       {/* Categorie-navigatie */}

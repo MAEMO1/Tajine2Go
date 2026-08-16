@@ -60,20 +60,10 @@ export function MenuContent({ menu, closedMessage }: Props) {
     }
   }
 
-  const formattedDate = new Intl.DateTimeFormat(locale, {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-  }).format(new Date(`${menu.date}T12:00:00`));
-
   return (
     <>
       {/* === Menukaart-kop: boog-ornament + serif, zoals het drukwerk === */}
       <PageHeader title={t("title")} />
-      <p className="mt-2 text-center font-display text-[15px] uppercase tracking-[0.2em] text-brand-bronze">
-        <span className="capitalize">{formattedDate}</span>
-        {menu.open_window ? ` · ${menu.open_window}` : ""}
-      </p>
 
       {/* === Sticky category quick-nav === */}
       {sortedCategories.length > 0 && (

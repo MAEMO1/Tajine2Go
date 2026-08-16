@@ -55,7 +55,6 @@ export default async function HomePage({ params }: Props) {
         </section>
       )}
       <HeroSection heroSubtitle={content.website_texts.home.hero_subtitle} />
-      <UspStrip />
       <HomepageMenu
         menu={menuData}
         closedMessage={content.website_texts.notices.closed_message}
@@ -155,79 +154,6 @@ function HeroSection({
   );
 }
 
-/* ------------------------------------------------------------------ */
-/* USP strip                                                           */
-/* ------------------------------------------------------------------ */
-
-function UspStrip() {
-  const t = useTranslations("home");
-
-  const usps = [
-    {
-      key: "fresh",
-      title: t("uspFresh"),
-      subtitle: t("uspFreshShort"),
-      icon: (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6}>
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M12 2C12 2 6 8 6 13a6 6 0 0012 0c0-5-6-11-6-11z"
-          />
-          <path strokeLinecap="round" strokeLinejoin="round" d="M12 17v5M9 22h6" />
-        </svg>
-      ),
-    },
-    {
-      key: "recipes",
-      title: t("uspRecipes"),
-      subtitle: t("uspRecipesShort"),
-      icon: (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6}>
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M10 4h4M9 4v3m6-3v3M6 7h12l-1 13a2 2 0 01-2 2H9a2 2 0 01-2-2L6 7z"
-          />
-          <path strokeLinecap="round" strokeLinejoin="round" d="M8 11h8M8 15h8" opacity="0.4" />
-        </svg>
-      ),
-    },
-    {
-      key: "fast",
-      title: t("uspFast"),
-      subtitle: t("uspFastShort"),
-      icon: (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6}>
-          <circle cx="12" cy="12" r="9" />
-          <path strokeLinecap="round" strokeLinejoin="round" d="M12 7v5l3 2" />
-        </svg>
-      ),
-    },
-  ];
-
-  return (
-    <section>
-      <div className="mx-auto grid max-w-7xl gap-4 px-4 py-10 sm:grid-cols-3 md:gap-6 md:px-8 md:py-12">
-        {usps.map((usp, index) => (
-          <Reveal key={usp.key} delay={index * 0.12}>
-            <div className="group flex items-center gap-4 rounded-2xl border border-brand-warm2/70 bg-brand-cream/85 p-5 backdrop-blur-[2px] transition-all duration-300 hover:-translate-y-1 hover:border-brand-orange/30 hover:shadow-[0_16px_40px_-16px_rgba(217,123,26,0.3)]">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-brand-warm text-brand-bronze transition-colors duration-300 group-hover:bg-brand-orange group-hover:text-white">
-                <span className="block h-6 w-6">{usp.icon}</span>
-              </div>
-              <div>
-                <div className="font-display text-lg font-semibold leading-snug text-brand-brown">
-                  {usp.title}
-                </div>
-                <div className="text-sm text-brand-brown-s">{usp.subtitle}</div>
-              </div>
-            </div>
-          </Reveal>
-        ))}
-      </div>
-    </section>
-  );
-}
 
 /* ------------------------------------------------------------------ */
 /* Story — the dark ember heart of the page                            */

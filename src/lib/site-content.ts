@@ -80,11 +80,12 @@ const COUNTRY_FALLBACKS: Record<Locale, string> = {
   ar: "بلجيكا",
 };
 
+// Fallback zolang er geen uurrooster in de settings staat.
 const CLOSED_LABELS: Record<Locale, string> = {
-  nl: "Momenteel gesloten",
-  fr: "Actuellement fermé",
-  en: "Currently closed",
-  ar: "مغلق حالياً",
+  nl: "6 dagen per week open — uren volgen binnenkort",
+  fr: "Ouvert 6 jours sur 7 — horaires bientôt disponibles",
+  en: "Open 6 days a week — opening hours coming soon",
+  ar: "مفتوح 6 أيام في الأسبوع — سنعلن عن الأوقات قريباً",
 };
 
 const EVERY_DAY_PREFIX: Record<Locale, string> = {
