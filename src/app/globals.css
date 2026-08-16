@@ -20,7 +20,7 @@
 
   /* Redesign 2026 "familiekeuken": klassieke serif + script (hero e.a.) */
   --font-display: var(--font-cormorant), Georgia, serif;
-  --font-script:  var(--font-great-vibes), var(--font-cormorant), cursive;
+  --font-script:  var(--font-cormorant), serif;
 
   /* Legacy aliases → Geist (migreer classes mettertijd naar font-sans/font-mono) */
   --font-heading: var(--font-geist), system-ui, sans-serif;

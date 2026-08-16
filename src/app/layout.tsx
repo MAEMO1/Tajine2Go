@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Geist, Geist_Mono, Great_Vibes, Noto_Sans_Arabic } from "next/font/google";
+import { Cormorant_Garamond, Geist, Geist_Mono, Noto_Sans_Arabic } from "next/font/google";
 import "./globals.css";
 
 // Eén type-familie voor de hele publieke site: Geist (+ Geist Mono). Zie docs/adr/0002.
@@ -22,18 +22,12 @@ const notoSansArabic = Noto_Sans_Arabic({
 });
 
 // Redesign 2026 "familiekeuken": klassieke serif voor display (zoals het
-// gedrukte brandmateriaal) + script voor de traditie-zin in de hero.
+// gedrukte brandmateriaal); de traditie-zin in de hero gebruikt de italic.
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
-  display: "swap",
-});
-
-const greatVibes = Great_Vibes({
-  variable: "--font-great-vibes",
-  subsets: ["latin"],
-  weight: "400",
+  style: ["normal", "italic"],
   display: "swap",
 });
 
@@ -69,7 +63,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      className={`${geist.variable} ${geistMono.variable} ${notoSansArabic.variable} ${cormorant.variable} ${greatVibes.variable} h-full antialiased`}
+      className={`${geist.variable} ${geistMono.variable} ${notoSansArabic.variable} ${cormorant.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">{children}</body>

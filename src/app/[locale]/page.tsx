@@ -126,7 +126,7 @@ function HeroSection({
         </SplitHeading>
 
         <Reveal delay={0.35}>
-          <p className="mt-5 text-balance font-script text-[clamp(22px,6vw,34px)] leading-normal text-[#F6E9D2] [text-shadow:0_2px_10px_rgba(0,0,0,0.5)] md:mt-7">
+          <p className="mt-5 text-balance font-display text-[clamp(20px,5vw,30px)] font-medium italic leading-normal text-[#F6E9D2] md:mt-7">
             {heroSubtitle}
           </p>
         </Reveal>
