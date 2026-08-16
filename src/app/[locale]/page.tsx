@@ -83,13 +83,13 @@ function HeroSection({
 
   return (
     <section className="relative isolate overflow-hidden bg-[#4A1E08]">
-      {/* Geblurd mozaïekpatroon (beker/gevelplaat) + warme donkere waas */}
+      {/* Scherp zellige-patroon (beker/gevelplaat) + warme donkere waas voor leesbaarheid */}
       <div
-        className="absolute -inset-8 bg-[url('/brand/pattern-mosaic.svg')] bg-[length:340px_340px] blur-[14px] saturate-[0.85]"
+        className="absolute inset-0 bg-[url('/brand/pattern-zellige.jpg')] bg-[length:300px_300px]"
         aria-hidden="true"
       />
       <div
-        className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(59,22,6,0.42)_0%,rgba(45,15,4,0.78)_100%)]"
+        className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(45,15,4,0.62)_0%,rgba(35,11,3,0.85)_100%)]"
         aria-hidden="true"
       />
 
@@ -281,7 +281,7 @@ function CateringSection({ title, text }: { title: string; text: string }) {
 
         {/* Mozaïekpaneel met merkteken — knipoog naar beker en gevelplaat */}
         <div className="relative hidden md:block">
-          <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-2xl border border-brand-gold/40 bg-[url('/brand/pattern-mosaic.svg')] bg-[length:96px_96px] shadow-[0_25px_60px_-25px_rgba(59,22,6,0.5)]">
+          <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-2xl border border-brand-gold/40 bg-[url('/brand/pattern-zellige.jpg')] bg-[length:300px_300px] shadow-[0_25px_60px_-25px_rgba(59,22,6,0.5)]">
             <div className="flex h-40 w-40 items-center justify-center rounded-full bg-brand-cream shadow-[0_10px_30px_rgba(0,0,0,0.35)]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img

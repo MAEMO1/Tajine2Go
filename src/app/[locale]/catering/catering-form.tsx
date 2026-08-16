@@ -260,7 +260,7 @@ export function CateringForm({ subtitle, notice }: Props) {
           {/* === Mozaïekpaneel met merkteken (desktop) === */}
           <Reveal delay={0.15} y={36} className="hidden md:block">
             <div className="md:sticky md:top-28">
-              <div className="relative overflow-hidden rounded-2xl border border-brand-gold/40 bg-[url('/brand/pattern-mosaic.svg')] bg-[length:96px_96px] p-8 shadow-[0_25px_60px_-25px_rgba(59,22,6,0.5)]">
+              <div className="relative overflow-hidden rounded-2xl border border-brand-gold/40 bg-[url('/brand/pattern-zellige.jpg')] bg-[length:300px_300px] p-8 shadow-[0_25px_60px_-25px_rgba(59,22,6,0.5)]">
                 <div className="relative flex flex-col items-center gap-8 py-6">
                   <div className="flex h-36 w-36 items-center justify-center rounded-full bg-brand-cream shadow-[0_10px_30px_rgba(0,0,0,0.35)]">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
