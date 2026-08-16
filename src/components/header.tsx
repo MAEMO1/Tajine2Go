@@ -15,6 +15,7 @@ type Props = {
 
 export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
   const t = useTranslations("nav");
+  const tHome = useTranslations("home");
   const locale = useLocale();
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -187,6 +188,16 @@ export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
                     >
                       <span className="font-display text-lg font-semibold text-brand-brown">0451 01 61 44</span>
                     </a>
+                    <Link
+                      href="/menu"
+                      className="flex min-h-11 items-center gap-2 border-t border-brand-warm2/60 bg-brand-warm/50 px-4 py-2 transition-colors hover:bg-brand-warm"
+                      onClick={() => setPhoneOpen(false)}
+                    >
+                      <span className="font-display text-base font-semibold text-brand-brown-m">{tHome("viewMenu")}</span>
+                      <svg className="h-3.5 w-3.5 text-brand-brown-m rtl:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2} aria-hidden="true">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                      </svg>
+                    </Link>
                   </motion.div>
                 )}
               </AnimatePresence>

@@ -4,6 +4,7 @@ import { setRequestLocale, getTranslations, getLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { InfoStrip } from "@/components/info-strip";
 import { HomepageMenu } from "@/components/homepage-menu";
+import { PhoneOrderButton } from "@/components/phone-order-button";
 import { Reveal, SplitHeading } from "@/components/motion/reveal";
 import { Khatam } from "@/components/decor/khatam";
 import { fetchMenuData } from "@/lib/menu-data";
@@ -133,12 +134,10 @@ function HeroSection({
 
         <Reveal delay={0.5}>
           <div className="mt-8 flex w-full max-w-xs flex-col items-stretch gap-3 sm:max-w-none sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-4 md:mt-10">
-            <a
-              href="#menu"
-              className="inline-flex items-center justify-center rounded-md bg-brand-orange-hover px-8 py-3.5 font-display text-lg font-bold text-white shadow-[0_6px_24px_rgba(0,0,0,0.35)] transition-colors duration-300 hover:bg-brand-orange-deep active:scale-[0.98]"
-            >
-              {t("viewMenu")}
-            </a>
+            <PhoneOrderButton
+              label={t("orderNow")}
+              className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-brand-orange-hover px-8 py-3.5 font-display text-lg font-bold text-white shadow-[0_6px_24px_rgba(0,0,0,0.35)] transition-colors duration-300 hover:bg-brand-orange-deep active:scale-[0.98] sm:w-auto"
+            />
             <Link
               href="/catering"
               className="inline-flex items-center justify-center rounded-md border border-[#F6E9D2]/70 px-8 py-3.5 font-display text-lg font-bold text-[#F6E9D2] transition-all duration-300 hover:bg-[#F6E9D2]/10 active:scale-[0.98]"
