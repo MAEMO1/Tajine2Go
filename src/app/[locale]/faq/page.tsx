@@ -24,8 +24,8 @@ export default async function FaqPage({ params }: Props) {
               <details className="faq-details group rounded-2xl border border-brand-warm2/70 bg-brand-cream transition-colors hover:border-brand-orange/30">
                 <summary className="flex cursor-pointer items-center justify-between gap-4 px-5 py-4">
                   <span className="flex items-baseline gap-3">
-                    <span className="font-mono text-[10px] font-bold text-brand-orange">
-                      {String(index + 1).padStart(2, "0")}
+                    <span className="text-[11px] text-brand-gold" aria-hidden="true">
+                      &#10022;
                     </span>
                     <span className="font-semibold text-brand-brown">{faq.question}</span>
                   </span>
