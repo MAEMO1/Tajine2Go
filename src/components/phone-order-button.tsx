@@ -10,14 +10,15 @@ export function PhoneOrderButton({ label, className }: { label: string; classNam
   const t = useTranslations("nav");
   const tHome = useTranslations("home");
   const [open, setOpen] = useState(false);
-  const [direction, setDirection] = useState<"up" | "down">("up");
+  const [direction, setDirection] = useState<"up" | "down">("down");
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   function toggle() {
     if (!open && wrapperRef.current) {
-      // Open naar boven, tenzij daar te weinig zichtbare ruimte is (~230px popover)
-      const { top } = wrapperRef.current.getBoundingClientRect();
-      setDirection(top > 240 ? "up" : "down");
+      // Standaard naar beneden; alleen naar boven als de popover (~240px) onder de schermrand zou vallen
+      const { bottom } = wrapperRef.current.getBoundingClientRect();
+      const spaceBelow = window.innerHeight - bottom;
+      setDirection(spaceBelow < 240 ? "up" : "down");
     }
     setOpen(!open);
   }
