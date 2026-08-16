@@ -40,7 +40,7 @@ De sleutelwoorden `MUST`, `MUST NOT`, `SHOULD`, `SHOULD NOT` en `MAY` zijn binde
 | Concept | Marokkaanse takeaway met wekelijkse service (1 of meer service-dagen per week), later opschaalbaar |
 | Extra aanbod | Catering |
 | Regio | Gent, Belgie |
-| Publieke talen | `nl`, `fr`, `en`, `ar` |
+| Publieke talen | `nl`, `fr`, `en` (Arabisch geschrapt, beslissing eigenaar 17/08/2026) |
 | Admin taal | `nl` only |
 | Domein | `tajine2go.be` |
 | Primaire doelgroep | Klanten in en rond Gent |
@@ -51,7 +51,7 @@ De sleutelwoorden `MUST`, `MUST NOT`, `SHOULD`, `SHOULD NOT` en `MAY` zijn binde
 Deze keuzes zijn vastgezet en mogen niet meer door de implementer worden ingevuld:
 
 - v1 MUST minstens 1 service-dag per week ondersteunen. Beschikbaarheid = basis weekpatroon + datum-uitzonderingen + globale pauze met voorrang `globale pauze > datum-uitzondering > basis weekpatroon`; er kunnen dus 0 of meer service-dagen per week zijn (zie `docs/adr/0001-beschikbaarheid-weekpatroon-en-datum-uitzonderingen.md` en `CONTEXT.md`).
-- De publieke site MUST live werken in `nl`, `fr`, `en` en `ar`.
+- De publieke site MUST live werken in `nl`, `fr` en `en`. Arabisch is geschrapt (beslissing eigenaar 17/08/2026); er is geen RTL-ondersteuning meer nodig.
 - De adminomgeving MUST altijd Nederlands blijven.
 - Checkout MUST guest checkout ondersteunen; een klantaccount is geen v1-feature.
 - Het datamodel MUST wel auth-ready zijn voor een later klantenportaal.
@@ -159,8 +159,7 @@ tajine2go/
 ├── messages/
 │   ├── nl.json
 │   ├── fr.json
-│   ├── en.json
-│   └── ar.json
+│   └── en.json
 ├── supabase/
 │   ├── migrations/
 │   │   ├── 001_initial_schema.sql
@@ -265,7 +264,6 @@ colors: {
 fontFamily: {
   sans: ['Geist', 'system-ui', 'sans-serif'],        // titels én body
   mono: ['Geist Mono', 'ui-monospace', 'monospace'], // labels, prijzen, codes
-  arabic: ['Noto Sans Arabic', 'sans-serif'],         // Arabisch (RTL)
 }
 ```
 
@@ -280,12 +278,10 @@ Eén familie (Geist) voor zowel display als body — hiërarchie via gewicht, gr
 - Dish cards MUST rij-layout gebruiken, geen uniforme card-grid.
 - Prijzen MUST prominent getoond worden in een zwaar Geist-gewicht (of Geist Mono voor cijfers) en brand orange.
 
-### 5.4 Responsive en RTL
+### 5.4 Responsive
 
 - Desktop boven 900px MUST hero en admin in 2-kolom layout tonen.
 - Mobile onder 600px MUST cart als bottom sheet of drawer tonen.
-- Bij `locale === 'ar'` MUST `<html dir="rtl">` gezet worden.
-- RTL padding, alignment en icon richting MUST gespiegeld worden.
 
 ---
 
@@ -313,11 +309,9 @@ De database MUST minimaal deze enums bevatten:
 - `name_nl TEXT NOT NULL`
 - `name_fr TEXT`
 - `name_en TEXT`
-- `name_ar TEXT`
 - `description_nl TEXT`
 - `description_fr TEXT`
 - `description_en TEXT`
-- `description_ar TEXT`
 - `price_cents INTEGER NOT NULL`
 - `image_url TEXT`
 - `category TEXT NOT NULL DEFAULT 'main'`
@@ -432,8 +426,7 @@ Regels:
 {
   "nl": "string",
   "fr": "string | null",
-  "en": "string | null",
-  "ar": "string | null"
+  "en": "string | null"
 }
 ```
 
@@ -659,7 +652,7 @@ Alle inputvalidatie MUST via Zod gebeuren, zowel client als server.
 
 ```ts
 type CheckoutRequest = {
-  locale: 'nl' | 'fr' | 'en' | 'ar'
+  locale: 'nl' | 'fr' | 'en'
   items: {
     weekly_menu_id: string
     quantity: number
@@ -994,8 +987,7 @@ Regels:
 
 ### 13.1 i18n
 
-- `messages/nl.json`, `fr.json`, `en.json`, `ar.json` MUST dezelfde sleutelstructuur delen.
-- `ar` MUST RTL renderen.
+- `messages/nl.json`, `fr.json`, `en.json` MUST dezelfde sleutelstructuur delen.
 - Admin copy MUST Nederlands blijven.
 
 ### 13.2 SEO
@@ -1105,8 +1097,7 @@ Werk in deze volgorde. Elke stap MUST functioneel zijn voor je doorgaat.
 
 ### 15.4 i18n en UI
 
-- Publieke site werkt in `nl`, `fr`, `en`, `ar`.
-- Marokkaans rendert rechts-naar-links correct.
+- Publieke site werkt in `nl`, `fr`, `en`.
 - Admin blijft Nederlands.
 - Dish list gebruikt row layout, geen generieke card-grid.
 

@@ -17,7 +17,7 @@ const defaultMessages: MessageGetter = (key) => DEFAULT_MESSAGES[key] ?? key;
 export function createCheckoutSchema(t: MessageGetter = defaultMessages) {
   return z
     .object({
-      locale: z.enum(["nl", "fr", "en", "ar"]),
+      locale: z.enum(["nl", "fr", "en"]),
       items: z
         .array(
           z.object({

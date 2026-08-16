@@ -24,7 +24,6 @@ const LOCALES: { value: Locale; label: string }[] = [
   { value: "nl", label: "NL" },
   { value: "fr", label: "FR" },
   { value: "en", label: "EN" },
-  { value: "ar", label: "AR" },
 ];
 
 const INPUT_CLASS =

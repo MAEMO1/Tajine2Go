@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Geist, Geist_Mono, Noto_Sans_Arabic } from "next/font/google";
+import { Cormorant_Garamond, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
 // Eén type-familie voor de hele publieke site: Geist (+ Geist Mono). Zie docs/adr/0002.
@@ -12,12 +12,6 @@ const geist = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
-  display: "swap",
-});
-
-const notoSansArabic = Noto_Sans_Arabic({
-  variable: "--font-noto-sans-arabic",
-  subsets: ["arabic"],
   display: "swap",
 });
 
@@ -63,7 +57,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      className={`${geist.variable} ${geistMono.variable} ${notoSansArabic.variable} ${cormorant.variable} h-full antialiased`}
+      className={`${geist.variable} ${geistMono.variable} ${cormorant.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">{children}</body>

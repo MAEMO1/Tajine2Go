@@ -46,7 +46,6 @@ export type DishNameSnapshot = {
   nl: string;
   fr: string | null;
   en: string | null;
-  ar: string | null;
 };
 
 export type Dish = {
@@ -55,15 +54,12 @@ export type Dish = {
   name_nl: string;
   name_fr: string | null;
   name_en: string | null;
-  name_ar: string | null;
   description_nl: string | null;
   description_fr: string | null;
   description_en: string | null;
-  description_ar: string | null;
   ingredients_nl: string[];
   ingredients_fr: string[];
   ingredients_en: string[];
-  ingredients_ar: string[];
   price_cents: number;
   price_l_cents: number | null;
   image_url: string | null;
@@ -448,4 +444,4 @@ export type PublicOrderStatus = {
   total_cents: number;
 };
 
-export type Locale = "nl" | "fr" | "en" | "ar";
+export type Locale = "nl" | "fr" | "en";

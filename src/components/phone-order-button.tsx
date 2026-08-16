@@ -88,7 +88,7 @@ export function PhoneOrderButton({ label, className }: { label: string; classNam
               onClick={() => setOpen(false)}
             >
               <span className="font-display text-base font-semibold text-brand-brown-m">{tHome("viewMenu")}</span>
-              <svg className="h-3.5 w-3.5 text-brand-brown-m rtl:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2} aria-hidden="true">
+              <svg className="h-3.5 w-3.5 text-brand-brown-m" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2} aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
             </a>

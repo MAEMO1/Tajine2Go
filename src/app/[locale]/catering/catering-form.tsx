@@ -98,7 +98,7 @@ export function CateringForm({ subtitle, notice }: Props) {
   if (submitted) {
     return (
       <section className="relative overflow-hidden px-4 py-24 md:py-32">
-        <Khatam className="pointer-events-none absolute -top-12 h-64 w-64 text-brand-orange/[0.06] ltr:-right-12 rtl:-left-12" />
+        <Khatam className="pointer-events-none absolute -top-12 h-64 w-64 text-brand-orange/[0.06] -right-12" />
         <div className="relative mx-auto max-w-2xl text-center">
           <Reveal>
             <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-brand-orange-hover text-white shadow-[0_8px_30px_rgba(181,84,15,0.35)]">

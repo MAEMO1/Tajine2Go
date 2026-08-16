@@ -194,7 +194,7 @@ export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
                       onClick={() => setPhoneOpen(false)}
                     >
                       <span className="font-display text-base font-semibold text-brand-brown-m">{tHome("viewMenu")}</span>
-                      <svg className="h-3.5 w-3.5 text-brand-brown-m rtl:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2} aria-hidden="true">
+                      <svg className="h-3.5 w-3.5 text-brand-brown-m" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2} aria-hidden="true">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                       </svg>
                     </Link>
@@ -243,7 +243,7 @@ export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 28, stiffness: 280 }}
-            className="fixed inset-y-0 z-50 flex w-[280px] flex-col border-brand-warm2 bg-brand-cream shadow-[-8px_0_30px_rgba(45,27,10,0.08)] ltr:right-0 ltr:border-l rtl:left-0 rtl:border-r lg:hidden"
+            className="fixed inset-y-0 z-50 flex w-[280px] flex-col border-brand-warm2 bg-brand-cream shadow-[-8px_0_30px_rgba(45,27,10,0.08)] right-0 border-l lg:hidden"
           >
             <div className="flex items-center justify-between px-6 py-5">
               <span className="font-display text-xl font-semibold text-brand-brown">

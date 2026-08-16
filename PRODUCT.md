@@ -8,7 +8,7 @@ web
 
 ## Users
 
-- Primair: klanten in en rond Gent die vooruitbestellen voor een wekelijkse service-dag (afhalen of levering binnen toegelaten Gentse postcodes). Publieke talen: nl, fr, en, ar (RTL).
+- Primair: klanten in en rond Gent die vooruitbestellen voor een wekelijkse service-dag (afhalen of levering binnen toegelaten Gentse postcodes). Publieke talen: nl, fr, en (Arabisch geschrapt, beslissing eigenaar 17/08/2026).
 - Secundair: cateringklanten voor events (trouwfeest, aqiqa, corporate, begrafenis, iftar) die een aanvraag indienen en manueel opgevolgd worden.
 - Intern: de uitbater zelf via een Nederlandstalige adminomgeving (orders, menu, klanten, catering, analytics).
 
@@ -39,7 +39,7 @@ Huisgemaakt en beperkt: een klein wisselend weekmenu, vers en traag gegaard op d
 - Officieel brand kit (aangeleverd 16/08/2026, bron: `Tajine2Go_logo_full.zip`) is bindend: primary horizontal logo (tajine-op-wieltjes + wordmark), stacked, icon-only, wordmark, mono en dark-badge varianten. Web-assets staan in `public/brand/`; favicons/manifest in `public/` root; bronbestanden (print, masters, social) bewaart de eigenaar buiten de repo.
 - Kleurenpalet (beslissing eigenaar 16/08/2026, verfijnd op het drukwerk): accent is terracotta #D2691E (uit het zellige-patroon, gedempt t.o.v. kit-Spice-Orange), achtergrond warm papier #FBF2DC (zoals menukaart/poster i.p.v. kit-webwit #FFF8EA); Saffron Gold #F5A400, Tajine Dark Brown #3B1606 en Warm Brown #78320C blijven uit het kit. Site-tokens in `globals.css` @theme en CLAUDE.md §5.1 zijn de bron.
 - Logo-regels uit de usage guide: min. 180px breed (primary), 10% clearspace, nooit uitrekken of herkleuren buiten de meegeleverde varianten, dark badge op donkere ondergronden, favicon nooit als header-logo.
-- Eén letterfamilie: Geist (display én body), Geist Mono voor labels/prijzen/cijfers, Noto Sans Arabic voor ar.
+- Eén letterfamilie: Geist (display én body), Geist Mono voor labels/prijzen/cijfers.
 - Bindende design language: docs/redesign/design-language.md v3 "Op zacht vuur" (licht↔donker sectieritme, zellige/khatam-geometrie, GSAP-motion, Three.js tajine-hero).
 - Toon: warm, premium, toegankelijk, Belgisch-Marokkaans.
 
@@ -53,13 +53,12 @@ Huisgemaakt en beperkt: een klein wisselend weekmenu, vers en traag gegaard op d
 
 1. Schaarste eerlijk tonen: het beperkte weekmenu en resterende porties zijn een feature, geen gebrek.
 2. Vooruitbestellen frictieloos: guest checkout, geen account, cash blijft altijd mogelijk.
-3. Vier talen zijn gelijkwaardig; Arabisch RTL is volwaardig, geen bijzaak.
+3. Drie talen (nl, fr, en) zijn gelijkwaardig.
 4. De admin moet door één persoon naast een andere job te bedienen zijn.
 5. Nooit bewijs fabriceren: geen verzonnen reviews, foto's van andermans eten, of cijfers.
 
 ## Accessibility & Inclusion
 
-- Volwaardige RTL-ondersteuning voor Arabisch (gespiegelde layout, iconen, motion-x).
 - `prefers-reduced-motion` schakelt alle scrub/parallax/split-animaties uit; content blijft zonder JS zichtbaar (progressive enhancement, vastgelegd in de design language).
 
 <!-- Eigenaarschap: eigen zaak (familie); de gebruiker is de productbeslisser. -->

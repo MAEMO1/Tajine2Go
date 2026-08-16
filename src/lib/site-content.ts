@@ -23,7 +23,7 @@ import type {
   WebsiteTexts,
 } from "@/types/database";
 
-const LOCALES: Locale[] = ["nl", "fr", "en", "ar"];
+const LOCALES: Locale[] = ["nl", "fr", "en"];
 const DAY_ORDER: DayName[] = [
   "monday",
   "tuesday",
@@ -62,22 +62,12 @@ const DAY_LABELS: Record<Locale, Record<DayName, string>> = {
     saturday: "Saturday",
     sunday: "Sunday",
   },
-  ar: {
-    monday: "الاثنين",
-    tuesday: "الثلاثاء",
-    wednesday: "الأربعاء",
-    thursday: "الخميس",
-    friday: "الجمعة",
-    saturday: "السبت",
-    sunday: "الأحد",
-  },
 };
 
 const COUNTRY_FALLBACKS: Record<Locale, string> = {
   nl: "België",
   fr: "Belgique",
   en: "Belgium",
-  ar: "بلجيكا",
 };
 
 // Fallback zolang er geen uurrooster in de settings staat.
@@ -85,14 +75,12 @@ const CLOSED_LABELS: Record<Locale, string> = {
   nl: "6 dagen per week open — uren volgen binnenkort",
   fr: "Ouvert 6 jours sur 7 — horaires bientôt disponibles",
   en: "Open 6 days a week — opening hours coming soon",
-  ar: "مفتوح 6 أيام في الأسبوع — سنعلن عن الأوقات قريباً",
 };
 
 const EVERY_DAY_PREFIX: Record<Locale, string> = {
   nl: "Elke",
   fr: "Chaque",
   en: "Every",
-  ar: "كل",
 };
 
 const DEFAULT_BUSINESS_INFO: BusinessInfo = {
@@ -197,33 +185,6 @@ const DEFAULT_WEBSITE_TEXTS: Record<Locale, WebsiteLocaleTexts> = {
       notice: null,
     },
   },
-  ar: {
-    home: {
-      hero_subtitle: "محضّر بمحبة، مع احترام التقاليد",
-      story_text:
-        "يجلب Tajine2Go النكهات الأصيلة من المطبخ المغاربي إلى غنت. نحضّر أطباقنا بمحبة، مع احترام التقاليد، وبأفضل المكونات الطازجة كل أسبوع.",
-      catering_cta_title: "تموين لمناسبتك",
-      catering_cta_text:
-        "من حفلات الزفاف إلى فعاليات الشركات، نهتم بكل شيء بأطباق مغاربية أصيلة.",
-    },
-    notices: {
-      homepage_banner: null,
-      closed_message:
-        "للطلب اتصل بنا هاتفياً: 09 377 32 51 أو 0451 01 61 44.",
-      checkout_notice: null,
-    },
-    about: {
-      body_paragraphs: [
-        "يجلب Tajine2Go نكهات المطبخ المغاربي الأصيلة إلى غنت. كل أسبوع نحضّر طواجن طازجة وكسكس وأكثر وفق وصفات تقليدية وبأفضل المكونات.",
-        "مهمتنا بسيطة: أن نتيح للجميع الاستمتاع بأطباق مغاربية منزلية الصنع مع الدفء والضيافة المرتبطين بثقافتنا.",
-        "إلى جانب خدمة الطلبات الأسبوعية، نوفر أيضاً خدمات التموين للمناسبات، من الأعراس والعقيقة إلى فعاليات الشركات والإفطار.",
-      ],
-    },
-    catering: {
-      subtitle: "دعنا نهتم بمناسبتك بأطباق مغاربية أصيلة.",
-      notice: null,
-    },
-  },
 };
 
 const DEFAULT_LEGAL_PAGES: Record<Locale, LegalPages> = {
@@ -272,22 +233,6 @@ const DEFAULT_LEGAL_PAGES: Record<Locale, LegalPages> = {
       body_paragraphs: [
         "Orders and catering requests are subject to availability and confirmation.",
         "Specific arrangements around delivery, cancellation and payment may be confirmed separately for each order or quote.",
-      ],
-    },
-  },
-  ar: {
-    privacy: {
-      title: "سياسة الخصوصية",
-      body_paragraphs: [
-        "نقوم بمعالجة البيانات الشخصية اللازمة لإتمام الطلبات والتوصيل وطلبات التموين بشكل صحيح.",
-        "لأي استفسار حول الخصوصية أو معالجة البيانات، يمكنكم التواصل معنا عبر عنوان البريد الإلكتروني المذكور في هذا الموقع.",
-      ],
-    },
-    terms: {
-      title: "الشروط والأحكام",
-      body_paragraphs: [
-        "تخضع الطلبات وطلبات التموين للتوفر والتأكيد.",
-        "قد يتم تأكيد التفاصيل الخاصة بالتوصيل والإلغاء والدفع بشكل منفصل لكل طلب أو عرض سعر.",
       ],
     },
   },
@@ -455,61 +400,6 @@ const DEFAULT_FAQS: Record<Locale, FaqEntry[]> = {
       id: "faq-halal",
       question: "Are your dishes halal?",
       answer: "Yes, all our dishes are prepared with halal ingredients.",
-      sort_order: 6,
-      is_active: true,
-    },
-  ],
-  ar: [
-    {
-      id: "faq-ordering",
-      question: "متى يمكنني الطلب؟",
-      answer:
-        "نحن نستقبل الطلبات كل يوم سبت. اطلب قبل مساء الجمعة لحجز أطباقك المفضلة.",
-      sort_order: 0,
-      is_active: true,
-    },
-    {
-      id: "faq-minimum",
-      question: "ما هو الحد الأدنى للطلب؟",
-      answer: "الحد الأدنى للطلب هو 20.00 يورو.",
-      sort_order: 1,
-      is_active: true,
-    },
-    {
-      id: "faq-delivery",
-      question: "هل توصلون إلى منطقتي؟",
-      answer:
-        "نقوم بالتوصيل في غنت والمناطق المحيطة بها (الرموز البريدية 9000-9052). تحقق أثناء الطلب مما إذا كان رمزك البريدي متاحاً.",
-      sort_order: 2,
-      is_active: true,
-    },
-    {
-      id: "faq-cash",
-      question: "هل يمكنني الدفع نقداً؟",
-      answer:
-        "نعم. يمكنك الدفع عبر الإنترنت أو نقداً عند الاستلام أو التوصيل.",
-      sort_order: 3,
-      is_active: true,
-    },
-    {
-      id: "faq-catering",
-      question: "كيف تعمل خدمة التموين؟",
-      answer:
-        "أرسل إلينا طلباً عبر نموذج التموين. سنتواصل معك لمناقشة مناسبتك وإعداد عرض سعر مناسب.",
-      sort_order: 4,
-      is_active: true,
-    },
-    {
-      id: "faq-cancel",
-      question: "هل يمكنني إلغاء طلبي؟",
-      answer: "تواصل معنا وسنساعدك بكل سرور.",
-      sort_order: 5,
-      is_active: true,
-    },
-    {
-      id: "faq-halal",
-      question: "هل أطباقكم حلال؟",
-      answer: "نعم، جميع أطباقنا تُحضّر بمكونات حلال.",
       sort_order: 6,
       is_active: true,
     },

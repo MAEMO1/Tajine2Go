@@ -30,10 +30,8 @@ export default async function LocaleLayout({ children, params }: Props) {
   const content = await fetchPublicSiteContent(locale as DatabaseLocale);
   const tCommon = await getTranslations({ locale, namespace: "common" });
 
-  const isRtl = locale === "ar";
-
   return (
-    <div dir={isRtl ? "rtl" : "ltr"} lang={locale} className="flex min-h-full flex-col">
+    <div lang={locale} className="flex min-h-full flex-col">
       {/* Skip-link voor toetsenbordgebruikers */}
       <a
         href="#main"

@@ -48,7 +48,7 @@ export function DishRow({ dish, isActive }: Props) {
   return (
     <div className="group relative flex gap-4 border-b border-brand-warm2/70 px-3 py-5 transition-all duration-300 hover:bg-brand-warm/40 sm:gap-5">
       {/* Warm accent line slides in on hover */}
-      <div className="absolute inset-y-3 w-[3px] origin-top scale-y-0 rounded-full bg-brand-orange transition-transform duration-300 group-hover:scale-y-100 ltr:left-0 rtl:right-0" />
+      <div className="absolute inset-y-3 w-[3px] origin-top scale-y-0 rounded-full bg-brand-orange transition-transform duration-300 group-hover:scale-y-100 left-0" />
 
       {/* Image */}
       {dish.image_url ? (

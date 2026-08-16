@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useLocale } from "next-intl";
 import { gsap, SplitText } from "@/lib/motion/gsap";
 
 /* ------------------------------------------------------------------ */
@@ -54,7 +53,6 @@ export function Reveal({ children, className, delay = 0, y = 28 }: RevealProps) 
 
 /* ------------------------------------------------------------------ */
 /* SplitHeading — masked line (or char) reveal via SplitText           */
-/* Arabic gets a whole-element fade: splitting breaks RTL ligatures.   */
 /* ------------------------------------------------------------------ */
 
 type SplitHeadingProps = {
@@ -74,32 +72,12 @@ export function SplitHeading({
   split = "lines",
 }: SplitHeadingProps) {
   const ref = useRef<HTMLElement | null>(null);
-  const locale = useLocale();
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
     const mm = gsap.matchMedia();
     mm.add("(prefers-reduced-motion: no-preference)", () => {
-      if (locale === "ar") {
-        const tween = gsap.fromTo(
-          el,
-          { autoAlpha: 0, y: 26 },
-          {
-            autoAlpha: 1,
-            y: 0,
-            duration: 1,
-            delay,
-            ease: "power3.out",
-            scrollTrigger: { trigger: el, start: "top 88%", once: true },
-          },
-        );
-        return () => {
-          tween.scrollTrigger?.kill();
-          tween.kill();
-        };
-      }
-
       const instance = SplitText.create(el, {
         type: split,
         mask: split,
@@ -119,7 +97,7 @@ export function SplitHeading({
       return () => instance.revert();
     });
     return () => mm.revert();
-  }, [locale, delay, split]);
+  }, [delay, split]);
 
   return (
     <Tag ref={ref as React.Ref<never>} className={className}>
