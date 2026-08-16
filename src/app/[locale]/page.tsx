@@ -109,7 +109,7 @@ function HeroSection({
         </Reveal>
 
         <Reveal delay={0.15}>
-          <div className="mt-6 flex items-center justify-center gap-3 text-[#FFC24A] md:mt-10 md:gap-4">
+          <div className="mt-6 flex items-center justify-center gap-3 text-[#F6E9D2] md:mt-10 md:gap-4">
             <span className="hidden h-px bg-brand-gold/60 sm:block sm:w-8 md:w-14" aria-hidden="true" />
             <p className="max-w-[26ch] text-balance font-display text-[12px] font-semibold uppercase leading-[1.9] tracking-[0.24em] sm:max-w-none md:text-[15px] md:tracking-[0.32em]">
               {t("heroKicker")}
@@ -128,7 +128,7 @@ function HeroSection({
         </SplitHeading>
 
         <Reveal delay={0.35}>
-          <p className="mt-5 text-balance font-script text-[clamp(22px,6vw,34px)] leading-normal text-[#FFC24A] [text-shadow:0_2px_12px_rgba(0,0,0,0.45)] md:mt-7">
+          <p className="mt-5 text-balance font-script text-[clamp(22px,6vw,34px)] leading-normal text-[#F6E9D2] [text-shadow:0_2px_10px_rgba(0,0,0,0.5)] md:mt-7">
             {heroSubtitle}
           </p>
         </Reveal>
