@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { AnimatePresence, motion } from "framer-motion";
+import { ORDER_PHONE_NUMBERS } from "@/lib/phone";
 
 // Bestellen gaat telefonisch: één knop die een popover met beide nummers opent.
 // Wordt gebruikt in de hero; de header heeft (nog) zijn eigen variant.
@@ -68,20 +69,18 @@ export function PhoneOrderButton({ label, className }: { label: string; classNam
             <p className="px-4 pb-1 pt-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-brown-s">
               {t("orderByPhone")}
             </p>
-            <a
-              href="tel:+3293773251"
-              className="flex min-h-11 items-center px-4 py-2 transition-colors hover:bg-brand-warm"
-              onClick={() => setOpen(false)}
-            >
-              <span className="text-base font-semibold text-brand-brown">09 377 32 51</span>
-            </a>
-            <a
-              href="tel:+32451016144"
-              className="flex min-h-11 items-center border-t border-brand-warm2/60 px-4 py-2 transition-colors hover:bg-brand-warm"
-              onClick={() => setOpen(false)}
-            >
-              <span className="text-base font-semibold text-brand-brown">0451 01 61 44</span>
-            </a>
+            {ORDER_PHONE_NUMBERS.map((phone, index) => (
+              <a
+                key={phone.tel}
+                href={`tel:${phone.tel}`}
+                className={`flex min-h-11 items-center px-4 py-2 transition-colors hover:bg-brand-warm ${
+                  index > 0 ? "border-t border-brand-warm2/60" : ""
+                }`}
+                onClick={() => setOpen(false)}
+              >
+                <span className="text-base font-semibold text-brand-brown">{phone.display}</span>
+              </a>
+            ))}
             <a
               href="#menu"
               className="flex min-h-11 items-center gap-2 border-t border-brand-warm2/60 bg-brand-warm/50 px-4 py-2 transition-colors hover:bg-brand-warm"

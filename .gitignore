@@ -48,3 +48,6 @@ next-env.d.ts
 
 # Claude Code lokale permissies
 .claude/settings.local.json
+
+# Impeccable-hook lokale state
+.impeccable/

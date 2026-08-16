@@ -1,11 +1,4 @@
 {
-  "validation": {
-    "required": "Ce champ est obligatoire",
-    "email": "Saisissez une adresse e-mail valide",
-    "postalCode": "Saisissez un code postal valide",
-    "minItems": "Ajoutez au moins un plat",
-    "deliveryAddressRequired": "L'adresse de livraison est obligatoire pour la livraison"
-  },
   "common": {
     "siteName": "Tajine2Go",
     "tagline": "Cuisine maghrébine à emporter à Gand",
@@ -43,10 +36,11 @@
     "cateringEmail": "Nous contacter",
     "storyTitle": "Notre histoire",
     "storyLink": "En savoir plus",
-    "closed": "Commandez par téléphone : appelez le 09 377 32 51 ou le 0451 01 61 44.",
+    "closed": "Commandez par téléphone : appelez le {phone1} ou le {phone2}.",
     "heroKicker": "Plats marocains à emporter et traiteur",
     "heroLine1": "Saveurs authentiques",
-    "heroCateringCta": "Demander un devis traiteur"
+    "heroCateringCta": "Demander un devis traiteur",
+    "storyImageAlt": "Le magasin Tajine2Go à Gand"
   },
   "menu": {
     "title": "Menu",
@@ -65,16 +59,6 @@
       "sweet": "Douceurs",
       "drink": "Boissons"
     }
-  },
-  "cart": {
-    "title": "Panier",
-    "empty": "Votre panier est vide",
-    "subtotal": "Sous-total",
-    "deliveryFee": "Frais de livraison",
-    "total": "Total",
-    "checkout": "Passer la commande",
-    "remove": "Supprimer",
-    "itemCount": "{count, plural, one {# article} other {# articles}}"
   },
   "checkout": {
     "title": "Passer commande",
@@ -116,24 +100,6 @@
     "pickupSlotOptional": "Pas de préférence",
     "paymentMethodUnavailable": "Le mode de paiement sélectionné n'est pas disponible actuellement.",
     "paymentMethodSingle": "Un seul mode de paiement est disponible actuellement."
-  },
-  "order": {
-    "title": "Statut de la commande",
-    "orderNumber": "Numéro de commande",
-    "status": "Statut",
-    "fulfillment": "Type",
-    "pickupSlot": "Créneau de retrait",
-    "total": "Total",
-    "statuses": {
-      "pending": "En attente",
-      "confirmed": "Confirmé",
-      "preparing": "En préparation",
-      "ready": "Prêt",
-      "out_for_delivery": "En livraison",
-      "completed": "Terminé",
-      "cancelled": "Annulé"
-    },
-    "notFound": "Commande non trouvée."
   },
   "catering": {
     "title": "Traiteur",

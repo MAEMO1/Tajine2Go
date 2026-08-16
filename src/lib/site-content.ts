@@ -3,6 +3,7 @@
 import { cache } from "react";
 import { canUsePublicSupabaseFallback, createAdminClient } from "@/lib/supabase/admin";
 import { normalizeTakeawaySchedule } from "@/lib/menu-data";
+import { ORDER_PHONE_NUMBERS, ORDER_PHONE_SUMMARY } from "@/lib/phone";
 import type {
   AdminContentSettings,
   BrandAssets,
@@ -87,7 +88,7 @@ const DEFAULT_BUSINESS_INFO: BusinessInfo = {
   name: "Tajine2Go",
   legal_name: "Tajine2Go",
   email: "info@tajine2go.be",
-  phone: "09 377 32 51 · 0451 01 61 44",
+  phone: ORDER_PHONE_SUMMARY,
   address_line: "Brusselsesteenweg 455",
   address_locality: "9050 Gentbrugge",
   address_country: "België",
@@ -115,8 +116,7 @@ const DEFAULT_WEBSITE_TEXTS: Record<Locale, WebsiteLocaleTexts> = {
     },
     notices: {
       homepage_banner: null,
-      closed_message:
-        "Bestellen doe je telefonisch: bel 09 377 32 51 of 0451 01 61 44.",
+      closed_message: `Bestellen doe je telefonisch: bel ${ORDER_PHONE_NUMBERS[0].display} of ${ORDER_PHONE_NUMBERS[1].display}.`,
       checkout_notice: null,
     },
     about: {
@@ -142,8 +142,7 @@ const DEFAULT_WEBSITE_TEXTS: Record<Locale, WebsiteLocaleTexts> = {
     },
     notices: {
       homepage_banner: null,
-      closed_message:
-        "Commandez par téléphone : appelez le 09 377 32 51 ou le 0451 01 61 44.",
+      closed_message: `Commandez par téléphone : appelez le ${ORDER_PHONE_NUMBERS[0].display} ou le ${ORDER_PHONE_NUMBERS[1].display}.`,
       checkout_notice: null,
     },
     about: {
@@ -169,8 +168,7 @@ const DEFAULT_WEBSITE_TEXTS: Record<Locale, WebsiteLocaleTexts> = {
     },
     notices: {
       homepage_banner: null,
-      closed_message:
-        "Order by phone: call 09 377 32 51 or 0451 01 61 44.",
+      closed_message: `Order by phone: call ${ORDER_PHONE_NUMBERS[0].display} or ${ORDER_PHONE_NUMBERS[1].display}.`,
       checkout_notice: null,
     },
     about: {

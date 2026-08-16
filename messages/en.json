@@ -1,11 +1,4 @@
 {
-  "validation": {
-    "required": "This field is required",
-    "email": "Enter a valid email address",
-    "postalCode": "Enter a valid postal code",
-    "minItems": "Add at least one dish",
-    "deliveryAddressRequired": "Delivery address is required for delivery"
-  },
   "common": {
     "siteName": "Tajine2Go",
     "tagline": "Moroccan takeaway in Ghent",
@@ -43,10 +36,11 @@
     "cateringEmail": "Contact us",
     "storyTitle": "Our story",
     "storyLink": "Read more about us",
-    "closed": "Order by phone: call 09 377 32 51 or 0451 01 61 44.",
+    "closed": "Order by phone: call {phone1} or {phone2}.",
     "heroKicker": "Moroccan takeaway and catering",
     "heroLine1": "Authentic flavours",
-    "heroCateringCta": "Request catering"
+    "heroCateringCta": "Request catering",
+    "storyImageAlt": "The Tajine2Go shop in Ghent"
   },
   "menu": {
     "title": "Menu",
@@ -65,16 +59,6 @@
       "sweet": "Sweets",
       "drink": "Drinks"
     }
-  },
-  "cart": {
-    "title": "Cart",
-    "empty": "Your cart is empty",
-    "subtotal": "Subtotal",
-    "deliveryFee": "Delivery fee",
-    "total": "Total",
-    "checkout": "Checkout",
-    "remove": "Remove",
-    "itemCount": "{count, plural, one {# item} other {# items}}"
   },
   "checkout": {
     "title": "Place order",
@@ -116,24 +100,6 @@
     "pickupSlotOptional": "No preference",
     "paymentMethodUnavailable": "The selected payment method is currently unavailable.",
     "paymentMethodSingle": "Only one payment method is currently available."
-  },
-  "order": {
-    "title": "Order status",
-    "orderNumber": "Order number",
-    "status": "Status",
-    "fulfillment": "Type",
-    "pickupSlot": "Pickup time",
-    "total": "Total",
-    "statuses": {
-      "pending": "Pending",
-      "confirmed": "Confirmed",
-      "preparing": "Preparing",
-      "ready": "Ready",
-      "out_for_delivery": "Out for delivery",
-      "completed": "Completed",
-      "cancelled": "Cancelled"
-    },
-    "notFound": "Order not found."
   },
   "catering": {
     "title": "Catering",

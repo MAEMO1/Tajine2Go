@@ -5,8 +5,7 @@ import Script from "next/script";
 import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import { Reveal, SplitHeading } from "@/components/motion/reveal";
-import { Magnetic } from "@/components/motion/magnetic";
-import { Khatam, KhatamSolid, ZelligeOverlay } from "@/components/decor/khatam";
+import { Khatam, KhatamSolid } from "@/components/decor/khatam";
 
 type FormData = {
   first_name: string;

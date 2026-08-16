@@ -211,7 +211,7 @@ function StorySection({ storyText }: { storyText: string }) {
           <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border-4 border-brand-cream shadow-[0_25px_60px_-25px_rgba(59,22,6,0.45)]">
             <Image
               src="/hero-storefront.jpg"
-              alt="Tajine2Go winkel in Gent"
+              alt={t("storyImageAlt")}
               fill
               sizes="(min-width: 768px) 45vw, 100vw"
               className="object-cover object-[center_30%]"

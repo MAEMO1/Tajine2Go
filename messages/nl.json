@@ -1,11 +1,4 @@
 {
-  "validation": {
-    "required": "Dit veld is verplicht",
-    "email": "Vul een geldig e-mailadres in",
-    "postalCode": "Vul een geldige postcode in",
-    "minItems": "Voeg minstens één gerecht toe",
-    "deliveryAddressRequired": "Leveradres is verplicht bij levering"
-  },
   "common": {
     "siteName": "Tajine2Go",
     "tagline": "Marokkaanse takeaway in Gent",
@@ -46,7 +39,8 @@
     "cateringEmail": "Contact opnemen",
     "storyTitle": "Ons verhaal",
     "storyLink": "Lees meer over ons",
-    "closed": "Bestellen doe je telefonisch: bel 09 377 32 51 of 0451 01 61 44."
+    "closed": "Bestellen doe je telefonisch: bel {phone1} of {phone2}.",
+    "storyImageAlt": "Tajine2Go winkel in Gent"
   },
   "menu": {
     "title": "Menu",
@@ -65,16 +59,6 @@
       "sweet": "Zoet",
       "drink": "Dranken"
     }
-  },
-  "cart": {
-    "title": "Winkelwagen",
-    "empty": "Je winkelwagen is leeg",
-    "subtotal": "Subtotaal",
-    "deliveryFee": "Leveringskosten",
-    "total": "Totaal",
-    "checkout": "Afrekenen",
-    "remove": "Verwijderen",
-    "itemCount": "{count, plural, one {# item} other {# items}}"
   },
   "checkout": {
     "title": "Bestelling plaatsen",
@@ -116,24 +100,6 @@
     "pickupSlotOptional": "Geen voorkeur",
     "paymentMethodUnavailable": "De gekozen betaalmethode is momenteel niet beschikbaar.",
     "paymentMethodSingle": "Slechts één betaalmethode is momenteel beschikbaar."
-  },
-  "order": {
-    "title": "Bestellingsstatus",
-    "orderNumber": "Bestelnummer",
-    "status": "Status",
-    "fulfillment": "Type",
-    "pickupSlot": "Afhaaltijdstip",
-    "total": "Totaal",
-    "statuses": {
-      "pending": "In afwachting",
-      "confirmed": "Bevestigd",
-      "preparing": "In bereiding",
-      "ready": "Klaar",
-      "out_for_delivery": "Onderweg",
-      "completed": "Afgerond",
-      "cancelled": "Geannuleerd"
-    },
-    "notFound": "Bestelling niet gevonden."
   },
   "catering": {
     "title": "Catering",

@@ -23,5 +23,7 @@ export function smoothScrollTo(target: HTMLElement | number, offset = 0) {
     typeof target === "number"
       ? target + offset
       : target.getBoundingClientRect().top + window.scrollY + offset;
-  window.scrollTo({ top, behavior: "smooth" });
+  // Lenis staat uit bij prefers-reduced-motion; spring dan ook zonder animatie.
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  window.scrollTo({ top, behavior: reduced ? "auto" : "smooth" });
 }

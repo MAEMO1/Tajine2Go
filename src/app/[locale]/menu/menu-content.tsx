@@ -1,11 +1,12 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { DishRow } from "@/components/dish-row";
 import { Reveal } from "@/components/motion/reveal";
 import { Khatam } from "@/components/decor/khatam";
 import { PageHeader } from "@/components/page-header";
+import { ORDER_PHONE_NUMBERS } from "@/lib/phone";
 import { smoothScrollTo } from "@/lib/motion/lenis-store";
 import type { MenuResponse, MenuDish } from "@/types/database";
 
@@ -19,7 +20,6 @@ const CATEGORY_ORDER = ["tajine", "couscous", "bstilla", "main", "side", "desser
 export function MenuContent({ menu, closedMessage }: Props) {
   const t = useTranslations("menu");
   const tHome = useTranslations("home");
-  const locale = useLocale();
   const [activeCategory, setActiveCategory] = useState<string>("");
   const categoryRefs = useRef<Map<string, HTMLElement>>(new Map());
 
@@ -93,7 +93,11 @@ export function MenuContent({ menu, closedMessage }: Props) {
           {!menu.is_active && (
             <Reveal>
               <div className="mb-8 rounded-[24px] border border-brand-warm2 bg-brand-warm p-6 text-center text-brand-brown-m">
-                {closedMessage ?? tHome("closed")}
+                {closedMessage ??
+                  tHome("closed", {
+                    phone1: ORDER_PHONE_NUMBERS[0].display,
+                    phone2: ORDER_PHONE_NUMBERS[1].display,
+                  })}
               </div>
             </Reveal>
           )}

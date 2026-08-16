@@ -1,8 +1,9 @@
 "use client";
 
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { useRef, useState, useEffect, useCallback } from "react";
 import { DishRow } from "@/components/dish-row";
+import { ORDER_PHONE_NUMBERS } from "@/lib/phone";
 import { Reveal } from "@/components/motion/reveal";
 import { smoothScrollTo } from "@/lib/motion/lenis-store";
 import type { MenuResponse, MenuDish } from "@/types/database";
@@ -17,7 +18,6 @@ const CATEGORY_ORDER = ["tajine", "couscous", "bstilla", "main", "side", "desser
 export function HomepageMenu({ menu, closedMessage }: Props) {
   const t = useTranslations("menu");
   const tHome = useTranslations("home");
-  const locale = useLocale();
   const [activeCategory, setActiveCategory] = useState<string>("");
   const categoryRefs = useRef<Map<string, HTMLElement>>(new Map());
 
@@ -94,7 +94,11 @@ export function HomepageMenu({ menu, closedMessage }: Props) {
       <div className="mx-auto max-w-3xl px-4 pt-10 md:px-6">
         {!menu.is_active && (
           <div className="mb-6 rounded-2xl bg-brand-warm p-6 text-center text-brand-brown-m">
-            {closedMessage ?? tHome("closed")}
+            {closedMessage ??
+              tHome("closed", {
+                phone1: ORDER_PHONE_NUMBERS[0].display,
+                phone2: ORDER_PHONE_NUMBERS[1].display,
+              })}
           </div>
         )}
 
