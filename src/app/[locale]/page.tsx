@@ -156,7 +156,7 @@ function HeroSection({
         className="absolute bottom-7 left-1/2 flex h-11 w-11 -translate-x-1/2 items-center justify-center rounded-full text-[#F6E9D2]/80 transition-colors hover:text-[#F6E9D2]"
       >
         <svg
-          className="h-7 w-7 motion-safe:animate-bounce"
+          className="h-7 w-7 motion-safe:animate-float"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
