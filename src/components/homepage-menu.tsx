@@ -65,7 +65,7 @@ export function HomepageMenu({ menu, closedMessage }: Props) {
           <path d="M10,54 Q10,30 40,25 C68,20 82,16 100,4 C118,16 132,20 160,25 Q190,30 190,54" fill="none" stroke="currentColor" strokeWidth="2.5" />
           <path d="M22,54 Q22,36 48,31 C72,27 86,22 100,13 C114,22 128,27 152,31 Q178,36 178,54" fill="none" stroke="#F5A400" strokeWidth="1.4" />
         </svg>
-        <h2 className="mt-3 font-display text-[clamp(30px,4.5vw,48px)] font-medium leading-tight text-brand-brown">
+        <h2 className="type-h2 mt-3">
           {tHome("menuTitle")}
         </h2>
       </div>
@@ -114,7 +114,7 @@ export function HomepageMenu({ menu, closedMessage }: Props) {
               {/* Categoriekop: gecentreerd met ornamenten, zoals de gedrukte kaart */}
               <div className="mb-4 flex items-center justify-center gap-4">
                 <span className="text-[11px] text-brand-gold" aria-hidden="true">&#10022;</span>
-                <h3 className="whitespace-nowrap font-display text-xl font-semibold uppercase tracking-[0.14em] text-brand-bronze">
+                <h3 className="type-h3 whitespace-nowrap">
                   {t(`categories.${category}` as Parameters<typeof t>[0])}
                 </h3>
                 <span className="text-[11px] text-brand-gold" aria-hidden="true">&#10022;</span>

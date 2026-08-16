@@ -299,7 +299,7 @@ function SectionLabel({ label }: { label: string }) {
   return (
     <div className="flex items-center gap-2.5">
       <span className="text-[10px] text-brand-gold" aria-hidden="true">&#10022;</span>
-      <span className="font-display text-lg font-semibold text-brand-bronze">{label}</span>
+      <span className="type-label">{label}</span>
     </div>
   );
 }

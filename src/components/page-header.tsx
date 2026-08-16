@@ -19,10 +19,7 @@ export function PageHeader({ title, subtitle }: { title: string; subtitle?: stri
           strokeWidth="1.4"
         />
       </svg>
-      <SplitHeading
-        as="h1"
-        className="mt-3 font-display text-[clamp(34px,5vw,56px)] font-medium leading-tight text-brand-brown"
-      >
+      <SplitHeading as="h1" className="type-h1 mt-3">
         {title}
       </SplitHeading>
       {subtitle && (

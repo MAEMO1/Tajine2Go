@@ -21,13 +21,13 @@ export default async function ContactPage({ params }: Props) {
         <div className="mx-auto grid max-w-4xl gap-6 sm:grid-cols-2">
           <Reveal className="h-full">
             <div className="flex h-full flex-col rounded-2xl border border-brand-warm2/70 bg-brand-cream p-7 shadow-[0_25px_60px_-30px_rgba(45,27,10,0.35)]">
-              <h2 className="font-mono text-[11px] font-bold uppercase tracking-[0.28em] text-brand-brown">
+              <h2 className="type-h3">
                 {t("reachUs")}
               </h2>
               <span className="mt-3 block h-px w-12 bg-brand-orange" aria-hidden="true" />
               <dl className="mt-6 space-y-5 text-sm">
                 <div>
-                  <dt className="font-mono text-[10px] font-bold uppercase tracking-[0.24em] text-brand-brown-s">
+                  <dt className="text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-brown-s">
                     {t("emailLabel")}
                   </dt>
                   <dd className="mt-1.5 text-[15px] text-brand-brown">
@@ -35,7 +35,7 @@ export default async function ContactPage({ params }: Props) {
                   </dd>
                 </div>
                 <div>
-                  <dt className="font-mono text-[10px] font-bold uppercase tracking-[0.24em] text-brand-brown-s">
+                  <dt className="text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-brown-s">
                     {t("phoneLabel")}
                   </dt>
                   <dd className="mt-1.5 text-[15px] text-brand-brown">
@@ -43,7 +43,7 @@ export default async function ContactPage({ params }: Props) {
                   </dd>
                 </div>
                 <div>
-                  <dt className="font-mono text-[10px] font-bold uppercase tracking-[0.24em] text-brand-brown-s">
+                  <dt className="text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-brown-s">
                     {t("locationLabel")}
                   </dt>
                   <dd className="mt-1.5 text-[15px] leading-relaxed text-brand-brown">
@@ -57,7 +57,7 @@ export default async function ContactPage({ params }: Props) {
                   </dd>
                 </div>
                 <div>
-                  <dt className="font-mono text-[10px] font-bold uppercase tracking-[0.24em] text-brand-brown-s">
+                  <dt className="text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-brown-s">
                     Instagram
                   </dt>
                   <dd className="mt-1.5 text-[15px] text-brand-brown">
@@ -77,7 +77,7 @@ export default async function ContactPage({ params }: Props) {
 
           <Reveal delay={0.12} className="h-full">
             <div className="flex h-full flex-col rounded-2xl border border-brand-warm2/70 bg-brand-cream p-7 shadow-[0_25px_60px_-30px_rgba(45,27,10,0.35)]">
-              <h2 className="font-mono text-[11px] font-bold uppercase tracking-[0.28em] text-brand-brown">
+              <h2 className="type-h3">
                 {t("hoursLabel")}
               </h2>
               <span className="mt-3 block h-px w-12 bg-brand-orange" aria-hidden="true" />

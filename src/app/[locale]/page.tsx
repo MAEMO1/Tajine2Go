@@ -170,10 +170,7 @@ function StorySection({ storyText }: { storyText: string }) {
             <span className="h-px w-10 bg-brand-gold/70" aria-hidden="true" />
           </div>
 
-          <SplitHeading
-            as="h2"
-            className="mt-5 font-display text-[clamp(34px,4.6vw,56px)] font-medium leading-[1.12] text-brand-brown"
-          >
+          <SplitHeading as="h2" className="type-h2 mt-5">
             {t("storyTitle")}
           </SplitHeading>
 
@@ -235,10 +232,7 @@ function CateringSection({ title, text }: { title: string; text: string }) {
             </p>
           </Reveal>
 
-          <SplitHeading
-            as="h2"
-            className="mt-4 font-display text-[clamp(32px,4.2vw,52px)] font-medium leading-[1.12] text-brand-brown"
-          >
+          <SplitHeading as="h2" className="type-h2 mt-4">
             {title}
           </SplitHeading>
 

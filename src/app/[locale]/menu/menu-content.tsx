@@ -120,7 +120,7 @@ export function MenuContent({ menu, closedMessage }: Props) {
                 {/* Categoriekop: gecentreerd met ornamenten, zoals de gedrukte kaart */}
                 <div className="mb-4 flex items-center justify-center gap-4">
                   <span className="text-[11px] text-brand-gold" aria-hidden="true">&#10022;</span>
-                  <h2 className="whitespace-nowrap font-display text-xl font-semibold uppercase tracking-[0.14em] text-brand-bronze">
+                  <h2 className="type-h3 whitespace-nowrap">
                     {t(`categories.${category}` as Parameters<typeof t>[0])}
                   </h2>
                   <span className="text-[11px] text-brand-gold" aria-hidden="true">&#10022;</span>

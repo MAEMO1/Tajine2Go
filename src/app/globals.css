@@ -101,6 +101,40 @@ body::after {
   letter-spacing: 0.08em;
 }
 
+/* ── Typografische schaal (consistent per kopniveau, site-breed) ──
+   H1 paginatitels · H2 sectietitels · H3 categorie/kaart-koppen · label formulierblokken */
+@utility type-h1 {
+  font-family: var(--font-display);
+  font-size: clamp(34px, 5vw, 56px);
+  font-weight: 500;
+  line-height: 1.15;
+  color: var(--color-brand-brown);
+}
+
+@utility type-h2 {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 500;
+  line-height: 1.15;
+  color: var(--color-brand-brown);
+}
+
+@utility type-h3 {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-brand-bronze);
+}
+
+@utility type-label {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-brand-bronze);
+}
+
 
 /* ── Selection color ── */
 ::selection {

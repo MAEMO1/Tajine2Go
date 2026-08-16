@@ -47,7 +47,7 @@ export function OrderStatusContent({ order }: Props) {
 
         <SplitHeading
           as="h1"
-          className="mt-6 font-display text-[clamp(34px,5vw,56px)] font-medium leading-tight text-brand-brown"
+          className="type-h1 mt-6"
         >
           {t("title")}
         </SplitHeading>
