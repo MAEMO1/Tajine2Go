@@ -32,7 +32,7 @@ export async function InfoStrip() {
 
 function InfoItem({ icon, label }: { icon: React.ReactNode; label: string }) {
   return (
-    <div className="flex items-center gap-2.5 font-mono text-xs font-bold uppercase tracking-[0.14em] text-brand-brown-m">
+    <div className="flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.14em] text-brand-brown-m">
       <span className="text-brand-orange">{icon}</span>
       <span>{label}</span>
     </div>

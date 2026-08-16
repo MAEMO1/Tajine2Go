@@ -89,7 +89,7 @@ export default async function ContactPage({ params }: Props) {
                       className="flex justify-between gap-6 border-b border-brand-warm2/50 pb-2.5 last:border-0 last:pb-0"
                     >
                       <dt className="capitalize text-brand-brown-s">{line.label}</dt>
-                      <dd className="font-mono text-[13px] font-bold text-brand-brown">
+                      <dd className="text-[13px] font-bold text-brand-brown">
                         {line.window}
                       </dd>
                     </div>

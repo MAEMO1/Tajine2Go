@@ -179,14 +179,14 @@ export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
                       className="flex min-h-11 items-center gap-3 px-4 py-2 transition-colors hover:bg-brand-warm"
                       onClick={() => setPhoneOpen(false)}
                     >
-                      <span className="font-display text-lg font-semibold text-brand-brown">09 377 32 51</span>
+                      <span className="text-base font-semibold text-brand-brown">09 377 32 51</span>
                     </a>
                     <a
                       href="tel:+32451016144"
                       className="flex min-h-11 items-center gap-3 border-t border-brand-warm2/60 px-4 py-2 transition-colors hover:bg-brand-warm"
                       onClick={() => setPhoneOpen(false)}
                     >
-                      <span className="font-display text-lg font-semibold text-brand-brown">0451 01 61 44</span>
+                      <span className="text-base font-semibold text-brand-brown">0451 01 61 44</span>
                     </a>
                     <Link
                       href="/menu"
