@@ -70,13 +70,7 @@ export function DishRow({ dish, isActive }: Props) {
             stroke="currentColor"
             strokeWidth={1.5}
           >
-            <path
-              d="M8 36h32M10 36c0-12 4-20 14-20s14 8 14 20"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <path d="M24 16V8" strokeLinecap="round" />
-            <circle cx="24" cy="6" r="2" fill="currentColor" stroke="none" />
+            <PlaceholderIcon category={dish.category} />
           </svg>
         </div>
       )}
@@ -160,4 +154,59 @@ export function DishRow({ dish, isActive }: Props) {
       </div>
     </div>
   );
+}
+
+// Placeholder-icoon per categorie, tot er echte foodfoto's zijn.
+function PlaceholderIcon({ category }: { category: string }) {
+  switch (category) {
+    case "couscous":
+      // Kom met een berg couscous
+      return (
+        <>
+          <path d="M8 30h32M10 30c0 6 6 10 14 10s14-4 14-10" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M13 30c1-8 5-13 11-13s10 5 11 13" strokeLinecap="round" strokeLinejoin="round" />
+          <circle cx="20" cy="24" r="1" fill="currentColor" stroke="none" />
+          <circle cx="25" cy="21" r="1" fill="currentColor" stroke="none" />
+          <circle cx="28" cy="26" r="1" fill="currentColor" stroke="none" />
+        </>
+      );
+    case "bstilla":
+      // Ronde bstilla van bovenaf
+      return (
+        <>
+          <circle cx="24" cy="24" r="14" />
+          <circle cx="24" cy="24" r="8" strokeDasharray="3 3.5" />
+          <circle cx="24" cy="24" r="1.2" fill="currentColor" stroke="none" />
+        </>
+      );
+    case "drink":
+      // Marokkaans theeglas met stoom
+      return (
+        <>
+          <path d="M16 18l2 20h12l2-20z" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M17 24h14" strokeLinecap="round" />
+          <path d="M21 12c0-2 2-2 2-4M27 12c0-2 2-2 2-4" strokeLinecap="round" />
+        </>
+      );
+    case "sweet":
+      // Koekje
+      return (
+        <>
+          <circle cx="24" cy="25" r="13" />
+          <circle cx="19" cy="21" r="1.4" fill="currentColor" stroke="none" />
+          <circle cx="28" cy="22" r="1.4" fill="currentColor" stroke="none" />
+          <circle cx="22" cy="29" r="1.4" fill="currentColor" stroke="none" />
+          <circle cx="29" cy="29" r="1.4" fill="currentColor" stroke="none" />
+        </>
+      );
+    default:
+      // Tajine
+      return (
+        <>
+          <path d="M8 36h32M10 36c0-12 4-20 14-20s14 8 14 20" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M24 16V8" strokeLinecap="round" />
+          <circle cx="24" cy="6" r="2" fill="currentColor" stroke="none" />
+        </>
+      );
+  }
 }
