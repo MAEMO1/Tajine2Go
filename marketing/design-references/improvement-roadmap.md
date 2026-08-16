@@ -22,7 +22,7 @@ rest of the site (chrome, menu, checkout, secondary pages) hasn't caught up to y
 | Homepage hero | **6/10** | Correct editorial type (Gloock + Instrument Serif italic "Marokkaanse" + IBM Plex Mono), real art-directed photo, asymmetric split. Missing the make-or-break status row + orange CTA. |
 | Menu & cart | **6/10** | True row layout, orange prices, good sold-out/scarcity UX, real motion. But **no mobile cart drawer** and **no add-to-cart feedback**. |
 | Checkout | **5/10** | Functionally the most complete & spec-faithful surface. But off-brand type, weak payment clarity, raw English validation errors, and a `country_code` bug. |
-| Design system / chrome | **6/10** | Brand tokens + RTL plumbing solid; hero nails the brief. But header/footer/sticky-bar still run on **Bebas Neue** — two font systems loaded in parallel. |
+| Design system / chrome | **6/10** | Brand tokens solid; hero nails the brief. But header/footer/sticky-bar still run on **Bebas Neue** — two font systems loaded in parallel. |
 | Secondary pages | **3/10** | Weakest. Catering/over-ons/faq/contact are a bare skeleton that ignores the homepage editorial system. Over-ons has no storytelling; catering has no quote framing. |
 
 ### Two meta-observations
@@ -62,7 +62,7 @@ opening-info from the schedule instead of a separate hand-typed text field). Con
 
 #### P0-2 · Consolidate on ONE modern grotesk (Geist) — remove BOTH Bebas Neue AND the editorial set `[A][C]` · see [ADR 0002](../../docs/adr/0002-lettertype-een-moderne-grotesk-geist.md)
 **Decision (2026-05-29): no editorial / no serif.** Make the *whole* site speak one clean voice — **Geist** for titles + body
-(hierarchy via weight/size/tracking), **Geist Mono** for labels/prices/order codes, Noto Sans Arabic for `ar`. Delete
+(hierarchy via weight/size/tracking), **Geist Mono** for labels/prices/order codes. Delete
 **both** legacy stacks (Bebas Neue/Source Sans 3 *and* Gloock/Instrument Serif/IBM Plex Mono) currently loaded in
 parallel in `layout.tsx` — cuts payload and ends the split-brain. The hero's italic-serif accent on "Marokkaanse" is
 re-expressed within Geist (weight/colour, not a serif italic).
@@ -116,8 +116,8 @@ fake it when `null`). Carry the cutoff countdown into the cart, and give the rea
 (`payment_expires_at`) a UI home: *"Je porties zijn 15 min gereserveerd."* (`dish-row.tsx:77`)
 
 #### P1-4 · Rebuild the secondary pages (weakest area, 3/10) `[A][C]`
-- **Over-ons** → asymmetric two-column story: `hero-storefront.jpg` photo, Gloock dropcap, one **NL + AR
-  pull-quote** (Arabic smaller, in olive — quiet companion). (`over-ons/page.tsx:17`)
+- **Over-ons** → asymmetric two-column story: `hero-storefront.jpg` photo, Gloock dropcap, one
+  pull-quote. (`over-ons/page.tsx:17`)
 - **Catering** → quote framing: free-quote promise + **24h response SLA**, event-type as **icon cards** (incl.
   aqiqa/iftar), guest-count buckets, optional budget field (`budget_cents` exists), and a **customer auto-ack
   email** after submit. Mirror the terracotta catering block. (`catering-form.tsx:101`)
@@ -135,15 +135,11 @@ fake it when `null`). Carry the cutoff countdown into the cart, and give the rea
 - **P2-2 · Push the hero further** `[A]` — H1 toward `clamp(64px,10vw,150px)`, leading `0.92`; add the
   **steam-rise** animation + an **ingredient marquee** (brief's missing motion). Make the primary hero CTA the
   **solid orange pill** + secondary an underlined text link (currently both brown). (`page.tsx:98,117`)
-- **P2-3 · Bilingual dish names** `[A][C]` — surface `name_ar` on `MenuDish` and render as a quiet secondary
-  line (*Dajaj b'Zaytun*) under the NL name. (`menu-data.ts:177`)
 - **P2-4 · Section rhythm + canvas token** `[A]` — increase desktop section spacing toward `py-32` (128px),
   standardize a `1320px` max width, and warm the cream toward `#FBF6EC` (retire the one-off `#F4F0E8`). (`globals.css:9`)
 - **P2-5 · Order-status page as a branded moment** `[C][M]` — multi-step tracker (Bevestigd → In bereiding →
   Klaar → Afgehaald) on the token-gated `/order/[id]`, restating the pickup slot — using only the minimal fields
   the spec allows.
-- **P2-6 · RTL hardening** `[A][C]` — Arabic needs its own type scale (≈18–20px, line-height ≥1.8, **no**
-  letter-spacing), logical properties site-wide, and `<bdi>` around embedded Latin (email, `T2G-0001`, prices).
 - **P2-7 · Email-based reorder** `[C]` — one-tap "Opnieuw bestellen" for weekly regulars (high retention value;
   datamodel is auth-ready).
 
