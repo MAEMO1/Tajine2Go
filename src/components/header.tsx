@@ -121,14 +121,15 @@ export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
           <div className="flex items-center gap-2">
             <LanguageSwitcher />
 
-            {/* Bestellen gaat telefonisch: desktop toont een popover met beide nummers */}
-            <div className="relative hidden md:block" data-phone-popover>
+            {/* Bestellen gaat telefonisch: knop toont een popover met beide nummers */}
+            <div className="relative" data-phone-popover>
+              {/* Desktop: tekstknop */}
               <button
                 type="button"
                 onClick={() => setPhoneOpen(!phoneOpen)}
                 aria-expanded={phoneOpen}
                 aria-haspopup="true"
-                className="inline-flex min-h-11 items-center gap-2 rounded-md bg-brand-orange-hover px-6 py-2.5 font-display text-base font-semibold text-white shadow-[0_2px_10px_rgba(181,84,15,0.20)] transition-all duration-200 hover:bg-brand-orange-deep hover:shadow-[0_4px_20px_rgba(181,84,15,0.30)] active:scale-[0.98]"
+                className="hidden min-h-11 items-center gap-2 rounded-md bg-brand-orange-hover px-6 py-2.5 font-display text-base font-semibold text-white shadow-[0_2px_10px_rgba(181,84,15,0.20)] transition-all duration-200 hover:bg-brand-orange-deep hover:shadow-[0_4px_20px_rgba(181,84,15,0.30)] active:scale-[0.98] md:inline-flex"
               >
                 <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h2.28a1 1 0 01.95.68l1.1 3.29a1 1 0 01-.45 1.17l-1.4.84a12.04 12.04 0 005.54 5.54l.84-1.4a1 1 0 011.17-.45l3.29 1.1a1 1 0 01.68.95V19a2 2 0 01-2 2h-1C9.72 21 3 14.28 3 6V5z" />
@@ -143,6 +144,20 @@ export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
                   aria-hidden="true"
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+
+              {/* Mobiel: icoonknop, zelfde popover (klant kiest welk nummer) */}
+              <button
+                type="button"
+                onClick={() => setPhoneOpen(!phoneOpen)}
+                aria-expanded={phoneOpen}
+                aria-haspopup="true"
+                aria-label={t("orderByPhone")}
+                className="flex min-h-11 min-w-11 items-center justify-center rounded-full p-2 text-brand-brown-m transition-all duration-200 hover:bg-brand-warm hover:text-brand-orange md:hidden"
+              >
+                <svg className="h-[22px] w-[22px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h2.28a1 1 0 01.95.68l1.1 3.29a1 1 0 01-.45 1.17l-1.4.84a12.04 12.04 0 005.54 5.54l.84-1.4a1 1 0 011.17-.45l3.29 1.1a1 1 0 01.68.95V19a2 2 0 01-2 2h-1C9.72 21 3 14.28 3 6V5z" />
                 </svg>
               </button>
 
@@ -176,17 +191,6 @@ export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
                 )}
               </AnimatePresence>
             </div>
-
-            {/* Bel-knop voor mobiel */}
-            <a
-              href="tel:+3293773251"
-              className="flex min-h-11 min-w-11 items-center justify-center rounded-full p-2 text-brand-brown-m transition-all duration-200 hover:bg-brand-warm hover:text-brand-orange md:hidden"
-              aria-label={`${t("order")}: 09 377 32 51`}
-            >
-              <svg className="h-[22px] w-[22px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h2.28a1 1 0 01.95.68l1.1 3.29a1 1 0 01-.45 1.17l-1.4.84a12.04 12.04 0 005.54 5.54l.84-1.4a1 1 0 011.17-.45l3.29 1.1a1 1 0 01.68.95V19a2 2 0 01-2 2h-1C9.72 21 3 14.28 3 6V5z" />
-              </svg>
-            </a>
 
             <button
               type="button"
