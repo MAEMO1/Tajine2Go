@@ -1,23 +1,14 @@
 import { getLocale, getTranslations } from "next-intl/server";
 import { fetchPublicSiteContent } from "@/lib/site-content";
-import { resolvePublicOrderConfig } from "@/lib/menu-data";
 import type { Locale } from "@/types/database";
 
 export async function InfoStrip() {
   const locale = (await getLocale()) as Locale;
   const t = await getTranslations({ locale, namespace: "home" });
-  const [content, config] = await Promise.all([
-    fetchPublicSiteContent(locale),
-    resolvePublicOrderConfig(),
-  ]);
+  const content = await fetchPublicSiteContent(locale);
 
-  // Openingsuren afgeleid uit het schema (één bron van waarheid); val terug op de
-  // handmatige samenvatting als er geen actief service-venster is.
-  const openingLabel = config.open_window
-    ? `${new Intl.DateTimeFormat(locale, { weekday: "long" }).format(
-        new Date(`${config.date}T12:00:00`),
-      )} ${config.open_window}`
-    : content.opening_hours_summary;
+  // Zelfde bron als de footer, zodat de uren nergens uit elkaar lopen.
+  const openingLabel = content.opening_hours_summary;
 
   return (
     <section className="border-y border-brand-warm2 bg-brand-warm px-4 py-7">
