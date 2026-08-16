@@ -56,6 +56,21 @@ export default async function ContactPage({ params }: Props) {
                     {content.location_text}
                   </dd>
                 </div>
+                <div>
+                  <dt className="font-mono text-[10px] font-bold uppercase tracking-[0.24em] text-brand-brown-s">
+                    Instagram
+                  </dt>
+                  <dd className="mt-1.5 text-[15px] text-brand-brown">
+                    <a
+                      href="https://www.instagram.com/tajine2go.gent"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="transition-colors duration-200 hover:text-brand-orange"
+                    >
+                      @tajine2go.gent
+                    </a>
+                  </dd>
+                </div>
               </dl>
             </div>
           </Reveal>

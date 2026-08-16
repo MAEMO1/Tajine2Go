@@ -66,9 +66,18 @@ export async function Footer() {
             </h3>
             <div className="mt-2 mb-4 h-px w-8 bg-brand-orange/60" />
             <div className="flex flex-col gap-2.5 text-[15px] text-brand-cream/70">
+              {content.business_info.address_line && <p>{content.business_info.address_line}</p>}
               <p>{content.location_text}</p>
               <p>{content.business_info.email}</p>
               <p>{content.business_info.phone}</p>
+              <a
+                href="https://www.instagram.com/tajine2go.gent"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-fit transition-colors duration-200 hover:text-brand-orange"
+              >
+                Instagram: @tajine2go.gent
+              </a>
               <p className="mt-2 font-medium text-brand-cream">{t("openingHoursLabel")}</p>
               {content.opening_hours_lines.length > 0 ? (
                 content.opening_hours_lines.map((line) => (

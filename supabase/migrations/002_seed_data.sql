@@ -33,10 +33,12 @@ INSERT INTO settings (key, value) VALUES
   '{
     "name": "Tajine2Go",
     "legal_name": "Tajine2Go",
-    "address": "Gent, België",
-    "phone": "+32 XXX XX XX XX",
+    "address_line": "Brusselsesteenweg 455",
+    "address_locality": "9050 Gentbrugge",
+    "address_country": "België",
+    "phone": "09 377 32 51 · 0451 01 61 44",
     "email": "info@tajine2go.be",
-    "vat_number": "BE 0XXX.XXX.XXX",
+    "vat_number": "BE 1019936687",
     "bank_account": "BE00 0000 0000 0000"
   }'::jsonb
 ),
