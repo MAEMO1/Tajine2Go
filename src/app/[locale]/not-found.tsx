@@ -1,7 +1,5 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { Magnetic } from "@/components/motion/magnetic";
-import { Khatam } from "@/components/decor/khatam";
 
 /** Wandering tajine — pot, conical lid, knob and rising steam strokes. */
 function TajineIllustration({ className }: { className?: string }) {
@@ -30,15 +28,13 @@ export default function NotFound() {
 
   return (
     <div className="relative flex flex-1 flex-col items-center justify-center overflow-hidden px-4 py-16 text-center">
-      <Khatam className="pointer-events-none absolute left-1/2 top-1/2 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 text-brand-orange/[0.05]" />
-
       <div className="animate-fade-up relative">
         <div className="animate-float text-brand-bronze">
           <TajineIllustration className="h-28 w-28 md:h-32 md:w-32" />
         </div>
       </div>
 
-      <h1 className="animate-fade-up-delay-1 relative mt-2 text-[clamp(96px,20vw,200px)] font-bold uppercase leading-[0.9] tracking-[-0.04em] text-brand-orange">
+      <h1 className="animate-fade-up-delay-1 relative mt-2 font-display text-[clamp(90px,18vw,180px)] font-medium leading-[0.9] text-brand-orange">
         404
       </h1>
 
@@ -47,23 +43,12 @@ export default function NotFound() {
       </p>
 
       <div className="animate-fade-up-delay-3 relative mt-9">
-        <Magnetic>
-          <Link
-            href="/"
-            className="group inline-flex items-center gap-3 rounded-full bg-brand-orange px-8 py-4 font-mono text-[11px] font-bold uppercase tracking-[0.28em] text-white shadow-[0_8px_30px_rgba(217,123,26,0.35)] transition-colors duration-300 hover:bg-brand-orange-hover active:scale-[0.98]"
-          >
-            {t("back")}
-            <svg
-              className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1 rtl:rotate-180 rtl:group-hover:-translate-x-1"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2.2}
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
-          </Link>
-        </Magnetic>
+        <Link
+          href="/"
+          className="inline-flex items-center justify-center rounded-md bg-brand-orange px-8 py-3 font-display text-lg font-semibold text-white shadow-[0_6px_20px_rgba(199,90,10,0.3)] transition-colors duration-300 hover:bg-brand-orange-hover active:scale-[0.98]"
+        >
+          {t("back")}
+        </Link>
       </div>
     </div>
   );

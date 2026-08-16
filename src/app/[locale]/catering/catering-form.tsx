@@ -31,7 +31,6 @@ const inputClasses =
 export function CateringForm({ subtitle, notice }: Props) {
   const t = useTranslations("catering");
   const tCheckout = useTranslations("checkout");
-  const tCommon = useTranslations("common");
   const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY?.trim() ?? "";
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -117,7 +116,7 @@ export function CateringForm({ subtitle, notice }: Props) {
           </Reveal>
           <SplitHeading
             as="h1"
-            className="mt-7 text-[clamp(40px,6vw,84px)] font-bold uppercase leading-[0.95] tracking-[-0.03em] text-brand-brown"
+            className="mt-7 font-display text-[clamp(34px,5vw,56px)] font-medium leading-tight text-brand-brown"
           >
             {t("title")}
           </SplitHeading>
@@ -138,26 +137,23 @@ export function CateringForm({ subtitle, notice }: Props) {
         />
       )}
 
-      {/* === Page-hero band === */}
-      <section className="relative overflow-hidden px-4 py-16 md:py-24">
-        <Khatam className="pointer-events-none absolute -top-14 h-72 w-72 text-brand-orange/[0.06] ltr:-right-14 rtl:-left-14" />
-        <div className="relative mx-auto max-w-6xl">
-          <Reveal>
-            <div className="flex items-center gap-3 font-mono text-[11px] font-bold uppercase tracking-[0.32em] text-brand-orange">
-              <span className="h-px w-12 bg-brand-orange/60" aria-hidden="true" />
-              <span>{tCommon("siteName")}</span>
-            </div>
-          </Reveal>
+      {/* === Menukaart-kop === */}
+      <section className="relative overflow-hidden px-4 pt-14 md:pt-20">
+        <div className="relative mx-auto max-w-3xl text-center">
+          <svg className="mx-auto w-36 text-brand-bronze" viewBox="0 0 200 54" aria-hidden="true">
+            <path d="M10,54 Q10,30 40,25 C68,20 82,16 100,4 C118,16 132,20 160,25 Q190,30 190,54" fill="none" stroke="currentColor" strokeWidth="2.5" />
+            <path d="M22,54 Q22,36 48,31 C72,27 86,22 100,13 C114,22 128,27 152,31 Q178,36 178,54" fill="none" stroke="#F5A400" strokeWidth="1.4" />
+          </svg>
 
           <SplitHeading
             as="h1"
-            className="mt-6 text-[clamp(40px,6vw,84px)] font-bold uppercase leading-[0.95] tracking-[-0.03em] text-brand-brown"
+            className="mt-3 font-display text-[clamp(34px,5vw,56px)] font-medium leading-tight text-brand-brown"
           >
             {t("title")}
           </SplitHeading>
 
           <Reveal delay={0.25}>
-            <p className="mt-5 max-w-2xl text-[clamp(16px,1.3vw,19px)] leading-[1.7] text-brand-brown-m">
+            <p className="mx-auto mt-4 max-w-2xl text-[clamp(16px,1.3vw,19px)] leading-[1.7] text-brand-brown-m">
               {subtitle ?? t("subtitle")}
             </p>
           </Reveal>

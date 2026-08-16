@@ -1,6 +1,7 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
-import { Reveal, SplitHeading } from "@/components/motion/reveal";
+import { Reveal } from "@/components/motion/reveal";
 import { Khatam } from "@/components/decor/khatam";
+import { PageHeader } from "@/components/page-header";
 import { fetchPublicSiteContent } from "@/lib/site-content";
 import type { Locale } from "@/types/database";
 
@@ -10,30 +11,11 @@ export default async function AboutPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "about" });
-  const tCommon = await getTranslations({ locale, namespace: "common" });
   const content = await fetchPublicSiteContent(locale as Locale);
 
   return (
     <>
-      {/* === Page hero === */}
-      <section className="relative overflow-hidden">
-        <Khatam className="pointer-events-none absolute -top-12 h-56 w-56 text-brand-orange/[0.07] ltr:-right-10 rtl:-left-10" />
-        <div className="relative mx-auto max-w-4xl px-4 py-16 md:py-24">
-          <Reveal>
-            <div className="flex items-center gap-3 font-mono text-[11px] font-bold uppercase tracking-[0.32em] text-brand-orange">
-              <span className="h-px w-12 bg-brand-orange/60" aria-hidden="true" />
-              <span>{tCommon("siteName")}</span>
-            </div>
-          </Reveal>
-
-          <SplitHeading
-            as="h1"
-            className="mt-6 text-[clamp(40px,6vw,84px)] font-bold uppercase leading-[0.95] tracking-[-0.03em] text-brand-brown"
-          >
-            {t("title")}
-          </SplitHeading>
-        </div>
-      </section>
+      <PageHeader title={t("title")} />
 
       {/* === Khatam divider + editorial body === */}
       <section className="bg-brand-cream px-4 pb-20 md:pb-28">
