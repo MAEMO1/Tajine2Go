@@ -34,7 +34,7 @@ export default function NotFound() {
         </div>
       </div>
 
-      <h1 className="animate-fade-up-delay-1 relative mt-2 font-display text-[clamp(90px,18vw,180px)] font-medium leading-[0.9] text-brand-orange">
+      <h1 className="animate-fade-up-delay-1 relative mt-2 text-[clamp(80px,16vw,160px)] font-bold leading-[0.9] text-brand-orange">
         404
       </h1>
 

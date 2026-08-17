@@ -271,7 +271,7 @@ Cormorant Garamond als displayletter (zoals het gedrukte brandmateriaal), Geist 
 
 ### 5.3 Componentregels
 
-- Primaire knop MUST `bg-brand-orange`, `text-white`, `rounded-lg` gebruiken.
+- Primaire knop MUST `bg-brand-orange-hover` (#B5540F, contrast met wit 4,95:1) als basiskleur, `text-white` en `rounded-md` gebruiken; hover is `brand-orange-deep`. (Beslissing eigenaar bij het paletwerk: het accent #D2691E haalt zelf geen AA op wit.)
 - Secundaire knop MUST een bruine outlinevariant gebruiken.
 - Kaarten MUST `bg-brand-cream`, `shadow-sm`, `rounded-xl` gebruiken.
 - Inputs MUST `border-brand-brown-s`, `rounded-lg`, `text-sm` gebruiken.
@@ -280,7 +280,7 @@ Cormorant Garamond als displayletter (zoals het gedrukte brandmateriaal), Geist 
 
 ### 5.4 Responsive
 
-- Desktop boven 900px MUST hero en admin in 2-kolom layout tonen.
+- Desktop boven 900px MUST admin in 2-kolom layout tonen; de publieke hero is bewust gecentreerd (familiekeuken-redesign, augustus 2026).
 - Mobile onder 600px MUST cart als bottom sheet of drawer tonen (slapend zolang bestellen telefonisch gaat, zie §1.1).
 
 ---
