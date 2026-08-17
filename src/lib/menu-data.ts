@@ -512,28 +512,14 @@ export async function fetchMenuData(
   locale: Locale,
   options: { date?: string } = {},
 ): Promise<MenuResponse> {
-  const config = await resolvePublicOrderConfig(options);
-
-  if (canUsePublicSupabaseFallback()) {
-    return {
-      ...config,
-      dishes: mapWeeklyMenuItems(getFallbackWeeklyMenuItems(config.date), locale),
-    };
-  }
-
-  const supabase = createAdminClient();
-
-  const { data: menuItems } = await supabase
-    .from("weekly_menu")
-    .select("*, dishes(*)")
-    .eq("available_date", config.date)
-    .eq("dishes.is_active", true)
-    .order("created_at");
-
-  const dishes = mapWeeklyMenuItems((menuItems ?? []) as WeeklyMenuWithDish[], locale);
+  // De publieke site toont altijd de vaste menukaart uit de code — bestellen
+  // gaat telefonisch (CLAUDE.md 1.1). De weekly_menu-tabel doet pas weer mee
+  // wanneer de online bestelflow terugkeert; tot dan mag een gekoppelde
+  // database (zoals op Vercel) de kaart niet leeg maken.
+  const config = await resolveFallbackPublicOrderConfig(options);
 
   return {
     ...config,
-    dishes,
+    dishes: mapWeeklyMenuItems(getFallbackWeeklyMenuItems(config.date), locale),
   };
 }

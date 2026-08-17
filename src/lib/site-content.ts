@@ -1,7 +1,7 @@
 ﻿import "server-only";
 
 import { cache } from "react";
-import { canUsePublicSupabaseFallback, createAdminClient } from "@/lib/supabase/admin";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { normalizeTakeawaySchedule } from "@/lib/menu-data";
 import { ORDER_PHONE_NUMBERS, ORDER_PHONE_SUMMARY } from "@/lib/phone";
 import type {
@@ -933,12 +933,12 @@ export async function fetchAdminContentSettings(
 export async function fetchPublicSiteContent(
   locale: Locale,
 ): Promise<LocalizedSiteContent> {
-  if (canUsePublicSupabaseFallback()) {
-    return buildPublicSiteContent(locale);
-  }
-
-  const settings = await fetchContentRows();
-  return buildPublicSiteContent(locale, settings);
+  // De publieke site draait volledig op de content in code: de gekoppelde
+  // database bevat nog oude gegevens (zaterdag-uurrooster, oud adres) uit een
+  // eerdere fase. De admin-contentmodule leest/schrijft de database wel; die
+  // gaat pas weer de publieke site voeden zodra de database is bijgewerkt
+  // (beslissing eigenaar 17/08/2026).
+  return buildPublicSiteContent(locale);
 }
 
 export async function updateContentSettings(
