@@ -508,18 +508,49 @@ export async function resolvePublicOrderConfig(
   };
 }
 
-export async function fetchMenuData(
+// Publieke pagina's: altijd de vaste menukaart uit de code — bestellen gaat
+// telefonisch (CLAUDE.md 1.1). Een gekoppelde database (zoals op Vercel) mag
+// de kaart niet leeg maken.
+export async function fetchStaticMenuData(
   locale: Locale,
   options: { date?: string } = {},
 ): Promise<MenuResponse> {
-  // De publieke site toont altijd de vaste menukaart uit de code — bestellen
-  // gaat telefonisch (CLAUDE.md 1.1). De weekly_menu-tabel doet pas weer mee
-  // wanneer de online bestelflow terugkeert; tot dan mag een gekoppelde
-  // database (zoals op Vercel) de kaart niet leeg maken.
   const config = await resolveFallbackPublicOrderConfig(options);
 
   return {
     ...config,
     dishes: mapWeeklyMenuItems(getFallbackWeeklyMenuItems(config.date), locale),
+  };
+}
+
+// Slapende bestel-API (GET /api/menu): databasegestuurd, zodat het contract
+// met checkout (echte weekly_menu-ID's) intact blijft (CLAUDE.md 9.4).
+export async function fetchMenuData(
+  locale: Locale,
+  options: { date?: string } = {},
+): Promise<MenuResponse> {
+  const config = await resolvePublicOrderConfig(options);
+
+  if (canUsePublicSupabaseFallback()) {
+    return {
+      ...config,
+      dishes: mapWeeklyMenuItems(getFallbackWeeklyMenuItems(config.date), locale),
+    };
+  }
+
+  const supabase = createAdminClient();
+
+  const { data: menuItems } = await supabase
+    .from("weekly_menu")
+    .select("*, dishes(*)")
+    .eq("available_date", config.date)
+    .eq("dishes.is_active", true)
+    .order("created_at");
+
+  const dishes = mapWeeklyMenuItems((menuItems ?? []) as WeeklyMenuWithDish[], locale);
+
+  return {
+    ...config,
+    dishes,
   };
 }

@@ -7,7 +7,7 @@ import { HomepageMenu } from "@/components/homepage-menu";
 import { PhoneOrderButton } from "@/components/phone-order-button";
 import { Reveal, SplitHeading } from "@/components/motion/reveal";
 import { Khatam } from "@/components/decor/khatam";
-import { fetchMenuData } from "@/lib/menu-data";
+import { fetchStaticMenuData } from "@/lib/menu-data";
 import { fetchPublicSiteContent } from "@/lib/site-content";
 import type { Locale } from "@/types/database";
 
@@ -21,7 +21,7 @@ export default async function HomePage({ params }: Props) {
 
   const currentLocale = (await getLocale()) as Locale;
   const [menuData, content] = await Promise.all([
-    fetchMenuData(currentLocale),
+    fetchStaticMenuData(currentLocale),
     fetchPublicSiteContent(currentLocale),
   ]);
 
