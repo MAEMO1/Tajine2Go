@@ -174,12 +174,18 @@ export function ContentManager({ initialContent }: Props) {
       {error && <p className="text-sm text-red-600">{error}</p>}
       {status && <p className="text-sm text-green-700">{status}</p>}
 
+      <div className="rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
+        Let op: de publieke site toont momenteel de vaste content uit de code, niet de
+        database. Wijzigingen hier worden wel bewaard, maar zijn pas zichtbaar op de site
+        zodra de database is bijgewerkt en de koppeling weer aanstaat.
+      </div>
+
       <section className="rounded-xl bg-white p-6 shadow-sm">
         <div className="flex items-start justify-between gap-4">
           <div>
             <h2 className="font-heading text-xl text-brand-bronze">Business</h2>
             <p className="mt-1 text-sm text-brand-brown-s">
-              Deze gegevens voeden info strip, footer, contactpagina en JSON-LD.
+              Deze gegevens worden bewaard in de database; de publieke site gebruikt ze pas weer na de herkoppeling.
             </p>
           </div>
           <button

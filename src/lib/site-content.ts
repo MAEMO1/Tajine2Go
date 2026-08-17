@@ -1,7 +1,7 @@
 ﻿import "server-only";
 
 import { cache } from "react";
-import { canUsePublicSupabaseFallback, createAdminClient } from "@/lib/supabase/admin";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { normalizeTakeawaySchedule } from "@/lib/menu-data";
 import { ORDER_PHONE_NUMBERS, ORDER_PHONE_SUMMARY } from "@/lib/phone";
 import type {
@@ -96,7 +96,7 @@ const DEFAULT_BUSINESS_INFO: BusinessInfo = {
   bank_account: "BE00 0000 0000 0000",
   serves_cuisine: ["Moroccan", "North African"],
   price_range: "€€",
-  payment_copy: "Bancontact · Cash · Online",
+  payment_copy: "Bancontact · Cash",
 };
 
 const DEFAULT_BRAND_ASSETS: BrandAssets = {
@@ -240,33 +240,23 @@ const DEFAULT_FAQS: Record<Locale, FaqEntry[]> = {
   nl: [
     {
       id: "faq-ordering",
-      question: "Wanneer kan ik bestellen?",
-      answer:
-        "We zijn elke zaterdag open voor bestellingen. Bestel vóór vrijdagavond om je favoriete gerechten te reserveren.",
+      question: "Hoe kan ik bestellen?",
+      answer: `Bestellen doe je telefonisch: bel ${ORDER_PHONE_NUMBERS[0].display} of ${ORDER_PHONE_NUMBERS[1].display}. We zijn 6 dagen per week open; de exacte openingsuren volgen binnenkort.`,
       sort_order: 0,
       is_active: true,
     },
     {
-      id: "faq-minimum",
-      question: "Wat is het minimale bestelbedrag?",
-      answer: "Het minimale bestelbedrag is €20,00.",
+      id: "faq-pickup",
+      question: "Waar kan ik afhalen?",
+      answer: "Je haalt je bestelling af op Brusselsesteenweg 455, 9050 Gentbrugge.",
       sort_order: 1,
       is_active: true,
     },
     {
-      id: "faq-delivery",
-      question: "Leveren jullie in mijn buurt?",
-      answer:
-        "We leveren in Gent en omgeving (postcodes 9000-9052). Bekijk tijdens het bestellen of jouw postcode beschikbaar is.",
+      id: "faq-payment",
+      question: "Hoe kan ik betalen?",
+      answer: "Bij afhaling betaal je ter plaatse met Bancontact of cash.",
       sort_order: 2,
-      is_active: true,
-    },
-    {
-      id: "faq-cash",
-      question: "Kan ik cash betalen?",
-      answer:
-        "Ja. Je kunt zowel online betalen als cash bij afhaling of levering.",
-      sort_order: 3,
       is_active: true,
     },
     {
@@ -295,33 +285,23 @@ const DEFAULT_FAQS: Record<Locale, FaqEntry[]> = {
   fr: [
     {
       id: "faq-ordering",
-      question: "Quand puis-je commander?",
-      answer:
-        "Nous sommes ouverts aux commandes chaque samedi. Commandez avant vendredi soir pour réserver vos plats préférés.",
+      question: "Comment puis-je commander?",
+      answer: `Les commandes se font par téléphone : appelez le ${ORDER_PHONE_NUMBERS[0].display} ou le ${ORDER_PHONE_NUMBERS[1].display}. Nous sommes ouverts 6 jours sur 7 ; les horaires exacts suivront bientôt.`,
       sort_order: 0,
       is_active: true,
     },
     {
-      id: "faq-minimum",
-      question: "Quel est le montant minimum de commande?",
-      answer: "Le montant minimum de commande est de 20,00 €.",
+      id: "faq-pickup",
+      question: "Où puis-je retirer ma commande?",
+      answer: "Vous retirez votre commande au Brusselsesteenweg 455, 9050 Gentbrugge.",
       sort_order: 1,
       is_active: true,
     },
     {
-      id: "faq-delivery",
-      question: "Livrez-vous dans mon quartier?",
-      answer:
-        "Nous livrons à Gand et dans les environs (codes postaux 9000-9052). Vérifiez pendant la commande si votre code postal est disponible.",
+      id: "faq-payment",
+      question: "Comment puis-je payer?",
+      answer: "Au retrait, vous payez sur place par Bancontact ou en espèces.",
       sort_order: 2,
-      is_active: true,
-    },
-    {
-      id: "faq-cash",
-      question: "Puis-je payer en espèces?",
-      answer:
-        "Oui. Vous pouvez payer en ligne ou en espèces lors du retrait ou de la livraison.",
-      sort_order: 3,
       is_active: true,
     },
     {
@@ -350,33 +330,23 @@ const DEFAULT_FAQS: Record<Locale, FaqEntry[]> = {
   en: [
     {
       id: "faq-ordering",
-      question: "When can I order?",
-      answer:
-        "We accept orders every Saturday. Order before Friday evening to reserve your favourite dishes.",
+      question: "How can I order?",
+      answer: `Ordering is done by phone: call ${ORDER_PHONE_NUMBERS[0].display} or ${ORDER_PHONE_NUMBERS[1].display}. We are open 6 days a week; exact opening hours will follow soon.`,
       sort_order: 0,
       is_active: true,
     },
     {
-      id: "faq-minimum",
-      question: "What is the minimum order amount?",
-      answer: "The minimum order amount is €20.00.",
+      id: "faq-pickup",
+      question: "Where do I pick up my order?",
+      answer: "You pick up your order at Brusselsesteenweg 455, 9050 Gentbrugge.",
       sort_order: 1,
       is_active: true,
     },
     {
-      id: "faq-delivery",
-      question: "Do you deliver to my area?",
-      answer:
-        "We deliver in Ghent and nearby areas (postal codes 9000-9052). Check during checkout whether your postal code is available.",
+      id: "faq-payment",
+      question: "How can I pay?",
+      answer: "At pickup you pay on the spot with Bancontact or cash.",
       sort_order: 2,
-      is_active: true,
-    },
-    {
-      id: "faq-cash",
-      question: "Can I pay cash?",
-      answer:
-        "Yes. You can pay online or in cash on pickup or delivery.",
-      sort_order: 3,
       is_active: true,
     },
     {
@@ -933,12 +903,12 @@ export async function fetchAdminContentSettings(
 export async function fetchPublicSiteContent(
   locale: Locale,
 ): Promise<LocalizedSiteContent> {
-  if (canUsePublicSupabaseFallback()) {
-    return buildPublicSiteContent(locale);
-  }
-
-  const settings = await fetchContentRows();
-  return buildPublicSiteContent(locale, settings);
+  // De publieke site draait volledig op de content in code: de gekoppelde
+  // database bevat nog oude gegevens (zaterdag-uurrooster, oud adres) uit een
+  // eerdere fase. De admin-contentmodule leest/schrijft de database wel; die
+  // gaat pas weer de publieke site voeden zodra de database is bijgewerkt
+  // (beslissing eigenaar 17/08/2026).
+  return buildPublicSiteContent(locale);
 }
 
 export async function updateContentSettings(

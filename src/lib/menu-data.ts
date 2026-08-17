@@ -508,6 +508,23 @@ export async function resolvePublicOrderConfig(
   };
 }
 
+// Publieke pagina's: altijd de vaste menukaart uit de code — bestellen gaat
+// telefonisch (CLAUDE.md 1.1). Een gekoppelde database (zoals op Vercel) mag
+// de kaart niet leeg maken.
+export async function fetchStaticMenuData(
+  locale: Locale,
+  options: { date?: string } = {},
+): Promise<MenuResponse> {
+  const config = await resolveFallbackPublicOrderConfig(options);
+
+  return {
+    ...config,
+    dishes: mapWeeklyMenuItems(getFallbackWeeklyMenuItems(config.date), locale),
+  };
+}
+
+// Slapende bestel-API (GET /api/menu): databasegestuurd, zodat het contract
+// met checkout (echte weekly_menu-ID's) intact blijft (CLAUDE.md 9.4).
 export async function fetchMenuData(
   locale: Locale,
   options: { date?: string } = {},
