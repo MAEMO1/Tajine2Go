@@ -2,26 +2,29 @@
 
 @theme inline {
   /* Brand colors */
-  --color-brand-orange: #D97B1A;
-  --color-brand-orange-hover: #BF6A10;
-  --color-brand-gold: #EDAC2A;
-  --color-brand-bronze: #8C4E10;
-  --color-brand-cream: #FFFCF5;
-  --color-brand-warm: #FFF3E0;
-  --color-brand-warm2: #FFE8C8;
-  --color-brand-brown: #2D1B0A;
-  --color-brand-brown-m: #5C4023;
-  --color-brand-brown-s: #9C8468;
+  --color-brand-orange: #D2691E;
+  --color-brand-orange-hover: #B5540F;
+  --color-brand-orange-deep: #93430B;
+  --color-brand-gold: #F5A400;
+  --color-brand-bronze: #78320C;
+  --color-brand-cream: #FBF2DC;
+  --color-brand-warm: #F6E8C9;
+  --color-brand-warm2: #F6E3B1;
+  --color-brand-brown: #3B1606;
+  --color-brand-brown-m: #6B3E1E;
+  --color-brand-brown-s: #A18059;
 
   /* Type system — één familie: Geist (+ Geist Mono). Zie docs/adr/0002. */
   --font-sans:    var(--font-geist), system-ui, sans-serif;
   --font-mono:    var(--font-geist-mono), ui-monospace, monospace;
-  --font-arabic:  var(--font-noto-sans-arabic), sans-serif;
+
+  /* Redesign 2026 "familiekeuken": klassieke serif + script (hero e.a.) */
+  --font-display: var(--font-cormorant), Georgia, serif;
+  --font-script:  var(--font-cormorant), serif;
 
   /* Legacy aliases → Geist (migreer classes mettertijd naar font-sans/font-mono) */
   --font-heading: var(--font-geist), system-ui, sans-serif;
   --font-body:    var(--font-geist), system-ui, sans-serif;
-  --font-display: var(--font-geist), system-ui, sans-serif;
   --font-italic:  var(--font-geist), system-ui, sans-serif;
 }
 
@@ -98,16 +101,117 @@ body::after {
   letter-spacing: 0.08em;
 }
 
+/* ── Typografische schaal (consistent per kopniveau, site-breed) ──
+   H1 paginatitels · H2 sectietitels · H3 categorie/kaart-koppen · label formulierblokken */
+@utility type-h1 {
+  font-family: var(--font-display);
+  font-size: clamp(34px, 5vw, 56px);
+  font-weight: 500;
+  line-height: 1.15;
+  color: var(--color-brand-brown);
+}
+
+@utility type-h2 {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 500;
+  line-height: 1.15;
+  color: var(--color-brand-brown);
+}
+
+@utility type-h3 {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-brand-bronze);
+}
+
+@utility type-label {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-brand-bronze);
+}
+
 
 /* ── Selection color ── */
 ::selection {
-  background-color: #FFE8C8;
-  color: #2D1B0A;
+  background-color: var(--color-brand-warm2);
+  color: var(--color-brand-brown);
 }
 
-/* ── Smooth scrolling ── */
-html {
+/* ── Smooth scrolling ──
+   Lenis drives wheel/anchor smoothing site-wide (see MotionProvider).
+   Native smooth behavior only applies when Lenis is off (reduced motion). */
+html:not(.lenis) {
   scroll-behavior: smooth;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* ── FAQ accordion: animate native <details> without JavaScript ── */
+.faq-details > .faq-answer {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition:
+    grid-template-rows 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.35s ease;
+}
+
+.faq-details[open] > .faq-answer {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.faq-details .faq-answer-inner {
+  overflow: hidden;
+}
+
+.faq-details summary {
+  list-style: none;
+}
+
+.faq-details summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-details .faq-chevron {
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.faq-details[open] .faq-chevron {
+  transform: rotate(45deg);
+}
+
+/* ── Focus visibility (custom cursor must never hide keyboard focus) ── */
+:focus-visible {
+  outline: 2px solid var(--color-brand-orange);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ── Selection on ember (dark) sections ── */
+.section-ember ::selection {
+  background-color: var(--color-brand-orange);
+  color: var(--color-brand-cream);
 }
 
 /* ── Custom scrollbar ── */

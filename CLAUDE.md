@@ -40,7 +40,7 @@ De sleutelwoorden `MUST`, `MUST NOT`, `SHOULD`, `SHOULD NOT` en `MAY` zijn binde
 | Concept | Marokkaanse takeaway met wekelijkse service (1 of meer service-dagen per week), later opschaalbaar |
 | Extra aanbod | Catering |
 | Regio | Gent, Belgie |
-| Publieke talen | `nl`, `fr`, `en`, `ar` |
+| Publieke talen | `nl`, `fr`, `en` (Arabisch geschrapt, beslissing eigenaar 17/08/2026) |
 | Admin taal | `nl` only |
 | Domein | `tajine2go.be` |
 | Primaire doelgroep | Klanten in en rond Gent |
@@ -51,8 +51,9 @@ De sleutelwoorden `MUST`, `MUST NOT`, `SHOULD`, `SHOULD NOT` en `MAY` zijn binde
 Deze keuzes zijn vastgezet en mogen niet meer door de implementer worden ingevuld:
 
 - v1 MUST minstens 1 service-dag per week ondersteunen. Beschikbaarheid = basis weekpatroon + datum-uitzonderingen + globale pauze met voorrang `globale pauze > datum-uitzondering > basis weekpatroon`; er kunnen dus 0 of meer service-dagen per week zijn (zie `docs/adr/0001-beschikbaarheid-weekpatroon-en-datum-uitzonderingen.md` en `CONTEXT.md`).
-- De publieke site MUST live werken in `nl`, `fr`, `en` en `ar`.
+- De publieke site MUST live werken in `nl`, `fr` en `en`. Arabisch is geschrapt (beslissing eigenaar 17/08/2026); er is geen RTL-ondersteuning meer nodig.
 - De adminomgeving MUST altijd Nederlands blijven.
+- Bestellen verloopt in de huidige release telefonisch (beslissing eigenaar, augustus 2026). De publieke bestel-UI (cart, checkout, orderstatuspagina) is verwijderd en MUST NOT herbouwd worden zolang deze beslissing staat. De checkout/order-API's, het datamodel en de bijhorende secties in dit document (o.a. §9.1, §9.2, §10) blijven het bindende contract voor een latere online-bestelrelease en zijn tot dan slapend.
 - Checkout MUST guest checkout ondersteunen; een klantaccount is geen v1-feature.
 - Het datamodel MUST wel auth-ready zijn voor een later klantenportaal.
 - Cashbetalingen MUST toegestaan zijn voor zowel `pickup` als `delivery`.
@@ -71,7 +72,7 @@ Deze keuzes zijn vastgezet en mogen niet meer door de implementer worden ingevul
 | Database | Supabase PostgreSQL | MUST |
 | Auth | Supabase Auth | MUST |
 | Styling | Tailwind CSS | MUST |
-| State | Zustand | MUST |
+| State | Zustand | MUST bij herinvoering van de online bestelflow; nu niet in gebruik |
 | i18n | next-intl | MUST |
 | Betalingen | Mollie | MUST |
 | E-mail | Resend | MUST |
@@ -159,8 +160,7 @@ tajine2go/
 ├── messages/
 │   ├── nl.json
 │   ├── fr.json
-│   ├── en.json
-│   └── ar.json
+│   └── en.json
 ├── supabase/
 │   ├── migrations/
 │   │   ├── 001_initial_schema.sql
@@ -172,8 +172,6 @@ tajine2go/
 │   │   │   ├── layout.tsx
 │   │   │   ├── page.tsx
 │   │   │   ├── menu/page.tsx
-│   │   │   ├── bestellen/page.tsx
-│   │   │   ├── order/[id]/page.tsx
 │   │   │   ├── catering/page.tsx
 │   │   │   ├── over-ons/page.tsx
 │   │   │   ├── faq/page.tsx
@@ -245,16 +243,16 @@ Gebruik deze custom colors in `tailwind.config.ts`:
 ```ts
 colors: {
   brand: {
-    orange: '#D97B1A',
-    'orange-hover': '#BF6A10',
-    gold: '#EDAC2A',
-    bronze: '#8C4E10',
-    cream: '#FFFCF5',
-    warm: '#FFF3E0',
-    warm2: '#FFE8C8',
-    brown: '#2D1B0A',
-    'brown-m': '#5C4023',
-    'brown-s': '#9C8468',
+    orange: '#D2691E',        // Terracotta (zellige-patroon; gedempt t.o.v. kit-Spice-Orange, beslissing eigenaar 16/08/2026)
+    'orange-hover': '#B5540F',
+    gold: '#F5A400',          // Saffron Gold (brand kit)
+    bronze: '#78320C',        // Warm Brown (brand kit)
+    cream: '#FBF2DC',         // Warm papier (drukwerk; warmer dan kit-web-achtergrond, beslissing eigenaar)
+    warm: '#F6E8C9',
+    warm2: '#F6E3B1',         // Cream (brand kit, wordmark fill)
+    brown: '#3B1606',         // Tajine Dark Brown (brand kit)
+    'brown-m': '#6B3E1E',
+    'brown-s': '#A18059',
   }
 }
 ```
@@ -263,29 +261,27 @@ colors: {
 
 ```ts
 fontFamily: {
-  sans: ['Geist', 'system-ui', 'sans-serif'],        // titels én body
-  mono: ['Geist Mono', 'ui-monospace', 'monospace'], // labels, prijzen, codes
-  arabic: ['Noto Sans Arabic', 'sans-serif'],         // Arabisch (RTL)
+  display: ['Cormorant Garamond', 'Georgia', 'serif'], // koppen en display; italic voor de hero-traditiezin
+  sans: ['Geist', 'system-ui', 'sans-serif'],          // body én alle cijfers (prijzen, telefoonnummers, uren)
+  mono: ['Geist Mono', 'ui-monospace', 'monospace'],   // legacy-restgebruik; geen nieuwe toepassingen
 }
 ```
 
-Eén familie (Geist) voor zowel display als body — hiërarchie via gewicht, grootte en tracking; géén aparte displayletter en géén serif. Geist Mono voor labels, prijzen/cijfers en codes. Laad fonts via `next/font`. Zie `docs/adr/0002-lettertype-een-moderne-grotesk-geist.md` (vervangt zowel Bebas Neue/Source Sans 3 als de editorial-set Gloock/Instrument Serif/IBM Plex Mono).
+Cormorant Garamond als displayletter (zoals het gedrukte brandmateriaal), Geist voor body — en alle cijfers MUST in Geist staan, ook prijzen en telefoonnummers. Vaste schaal via de utilities `type-h1/h2/h3/type-label` in `globals.css`. Laad fonts via `next/font`. Zie `docs/adr/0003-displayletter-cormorant-garamond.md` (vervangt ADR 0002 "één familie Geist").
 
 ### 5.3 Componentregels
 
-- Primaire knop MUST `bg-brand-orange`, `text-white`, `rounded-lg` gebruiken.
+- Primaire knop MUST `bg-brand-orange-hover` (#B5540F, contrast met wit 4,95:1) als basiskleur, `text-white` en `rounded-md` gebruiken; hover is `brand-orange-deep`. (Beslissing eigenaar bij het paletwerk: het accent #D2691E haalt zelf geen AA op wit.)
 - Secundaire knop MUST een bruine outlinevariant gebruiken.
 - Kaarten MUST `bg-brand-cream`, `shadow-sm`, `rounded-xl` gebruiken.
 - Inputs MUST `border-brand-brown-s`, `rounded-lg`, `text-sm` gebruiken.
 - Dish cards MUST rij-layout gebruiken, geen uniforme card-grid.
-- Prijzen MUST prominent getoond worden in een zwaar Geist-gewicht (of Geist Mono voor cijfers) en brand orange.
+- Prijzen MUST prominent getoond worden in een zwaar Geist-gewicht en brand orange.
 
-### 5.4 Responsive en RTL
+### 5.4 Responsive
 
-- Desktop boven 900px MUST hero en admin in 2-kolom layout tonen.
-- Mobile onder 600px MUST cart als bottom sheet of drawer tonen.
-- Bij `locale === 'ar'` MUST `<html dir="rtl">` gezet worden.
-- RTL padding, alignment en icon richting MUST gespiegeld worden.
+- Desktop boven 900px MUST admin in 2-kolom layout tonen; de publieke hero is bewust gecentreerd (familiekeuken-redesign, augustus 2026).
+- Mobile onder 600px MUST cart als bottom sheet of drawer tonen (slapend zolang bestellen telefonisch gaat, zie §1.1).
 
 ---
 
@@ -313,11 +309,9 @@ De database MUST minimaal deze enums bevatten:
 - `name_nl TEXT NOT NULL`
 - `name_fr TEXT`
 - `name_en TEXT`
-- `name_ar TEXT`
 - `description_nl TEXT`
 - `description_fr TEXT`
 - `description_en TEXT`
-- `description_ar TEXT`
 - `price_cents INTEGER NOT NULL`
 - `image_url TEXT`
 - `category TEXT NOT NULL DEFAULT 'main'`
@@ -432,8 +426,7 @@ Regels:
 {
   "nl": "string",
   "fr": "string | null",
-  "en": "string | null",
-  "ar": "string | null"
+  "en": "string | null"
 }
 ```
 
@@ -659,7 +652,7 @@ Alle inputvalidatie MUST via Zod gebeuren, zowel client als server.
 
 ```ts
 type CheckoutRequest = {
-  locale: 'nl' | 'fr' | 'en' | 'ar'
+  locale: 'nl' | 'fr' | 'en'
   items: {
     weekly_menu_id: string
     quantity: number
@@ -994,8 +987,7 @@ Regels:
 
 ### 13.1 i18n
 
-- `messages/nl.json`, `fr.json`, `en.json`, `ar.json` MUST dezelfde sleutelstructuur delen.
-- `ar` MUST RTL renderen.
+- `messages/nl.json`, `fr.json`, `en.json` MUST dezelfde sleutelstructuur delen.
 - Admin copy MUST Nederlands blijven.
 
 ### 13.2 SEO
@@ -1105,8 +1097,7 @@ Werk in deze volgorde. Elke stap MUST functioneel zijn voor je doorgaat.
 
 ### 15.4 i18n en UI
 
-- Publieke site werkt in `nl`, `fr`, `en`, `ar`.
-- Marokkaans rendert rechts-naar-links correct.
+- Publieke site werkt in `nl`, `fr`, `en`.
 - Admin blijft Nederlands.
 - Dish list gebruikt row layout, geen generieke card-grid.
 

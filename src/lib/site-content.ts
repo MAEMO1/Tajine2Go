@@ -1,8 +1,9 @@
-import "server-only";
+﻿import "server-only";
 
 import { cache } from "react";
-import { createAdminClient } from "@/lib/supabase/admin";
+import { canUsePublicSupabaseFallback, createAdminClient } from "@/lib/supabase/admin";
 import { normalizeTakeawaySchedule } from "@/lib/menu-data";
+import { ORDER_PHONE_NUMBERS, ORDER_PHONE_SUMMARY } from "@/lib/phone";
 import type {
   AdminContentSettings,
   BrandAssets,
@@ -23,7 +24,7 @@ import type {
   WebsiteTexts,
 } from "@/types/database";
 
-const LOCALES: Locale[] = ["nl", "fr", "en", "ar"];
+const LOCALES: Locale[] = ["nl", "fr", "en"];
 const DAY_ORDER: DayName[] = [
   "monday",
   "tuesday",
@@ -62,47 +63,36 @@ const DAY_LABELS: Record<Locale, Record<DayName, string>> = {
     saturday: "Saturday",
     sunday: "Sunday",
   },
-  ar: {
-    monday: "الاثنين",
-    tuesday: "الثلاثاء",
-    wednesday: "الأربعاء",
-    thursday: "الخميس",
-    friday: "الجمعة",
-    saturday: "السبت",
-    sunday: "الأحد",
-  },
 };
 
 const COUNTRY_FALLBACKS: Record<Locale, string> = {
   nl: "België",
   fr: "Belgique",
   en: "Belgium",
-  ar: "بلجيكا",
 };
 
+// Fallback zolang er geen uurrooster in de settings staat.
 const CLOSED_LABELS: Record<Locale, string> = {
-  nl: "Momenteel gesloten",
-  fr: "Actuellement fermé",
-  en: "Currently closed",
-  ar: "مغلق حالياً",
+  nl: "6 dagen per week open — uren volgen binnenkort",
+  fr: "Ouvert 6 jours sur 7 — horaires bientôt disponibles",
+  en: "Open 6 days a week — opening hours coming soon",
 };
 
 const EVERY_DAY_PREFIX: Record<Locale, string> = {
   nl: "Elke",
   fr: "Chaque",
   en: "Every",
-  ar: "كل",
 };
 
 const DEFAULT_BUSINESS_INFO: BusinessInfo = {
   name: "Tajine2Go",
   legal_name: "Tajine2Go",
   email: "info@tajine2go.be",
-  phone: "+32 XXX XX XX XX",
-  address_line: "",
-  address_locality: "Gent",
+  phone: ORDER_PHONE_SUMMARY,
+  address_line: "Brusselsesteenweg 455",
+  address_locality: "9050 Gentbrugge",
   address_country: "België",
-  vat_number: "BE 0XXX.XXX.XXX",
+  vat_number: "BE 1019936687",
   bank_account: "BE00 0000 0000 0000",
   serves_cuisine: ["Moroccan", "North African"],
   price_range: "€€",
@@ -117,7 +107,7 @@ const DEFAULT_BRAND_ASSETS: BrandAssets = {
 const DEFAULT_WEBSITE_TEXTS: Record<Locale, WebsiteLocaleTexts> = {
   nl: {
     home: {
-      hero_subtitle: "Snel, gezond en vol traditionele smaak. Bereid met liefde. Voor jou.",
+      hero_subtitle: "Met liefde bereid, met respect voor traditie",
       story_text:
         "Tajine2Go brengt de authentieke smaken van Marokko naar Gent. Met liefde bereid, met respect voor traditie, en met de beste verse ingrediënten. Elke week opnieuw.",
       catering_cta_title: "Catering voor uw evenement",
@@ -126,8 +116,7 @@ const DEFAULT_WEBSITE_TEXTS: Record<Locale, WebsiteLocaleTexts> = {
     },
     notices: {
       homepage_banner: null,
-      closed_message:
-        "We zijn momenteel gesloten. Bekijk ons menu voor de volgende besteldag.",
+      closed_message: `Bestellen doe je telefonisch: bel ${ORDER_PHONE_NUMBERS[0].display} of ${ORDER_PHONE_NUMBERS[1].display}.`,
       checkout_notice: null,
     },
     about: {
@@ -144,7 +133,7 @@ const DEFAULT_WEBSITE_TEXTS: Record<Locale, WebsiteLocaleTexts> = {
   },
   fr: {
     home: {
-      hero_subtitle: "Rapide, sain et plein de saveurs traditionnelles. Préparé avec amour. Pour vous.",
+      hero_subtitle: "Préparé avec amour, dans le respect de la tradition",
       story_text:
         "Tajine2Go apporte les saveurs authentiques du Maroc à Gand. Préparé avec amour, dans le respect de la tradition et avec les meilleurs ingrédients frais, chaque semaine.",
       catering_cta_title: "Traiteur pour votre événement",
@@ -153,8 +142,7 @@ const DEFAULT_WEBSITE_TEXTS: Record<Locale, WebsiteLocaleTexts> = {
     },
     notices: {
       homepage_banner: null,
-      closed_message:
-        "Nous sommes actuellement fermés. Consultez notre menu pour le prochain jour de commande.",
+      closed_message: `Commandez par téléphone : appelez le ${ORDER_PHONE_NUMBERS[0].display} ou le ${ORDER_PHONE_NUMBERS[1].display}.`,
       checkout_notice: null,
     },
     about: {
@@ -171,7 +159,7 @@ const DEFAULT_WEBSITE_TEXTS: Record<Locale, WebsiteLocaleTexts> = {
   },
   en: {
     home: {
-      hero_subtitle: "Fast, healthy and full of traditional flavour. Made with love. Just for you.",
+      hero_subtitle: "Prepared with love, with respect for tradition",
       story_text:
         "Tajine2Go brings the authentic flavours of Morocco to Ghent. Prepared with love, with respect for tradition, and with the best fresh ingredients every single week.",
       catering_cta_title: "Catering for your event",
@@ -180,8 +168,7 @@ const DEFAULT_WEBSITE_TEXTS: Record<Locale, WebsiteLocaleTexts> = {
     },
     notices: {
       homepage_banner: null,
-      closed_message:
-        "We are currently closed. Check our menu for the next order day.",
+      closed_message: `Order by phone: call ${ORDER_PHONE_NUMBERS[0].display} or ${ORDER_PHONE_NUMBERS[1].display}.`,
       checkout_notice: null,
     },
     about: {
@@ -193,33 +180,6 @@ const DEFAULT_WEBSITE_TEXTS: Record<Locale, WebsiteLocaleTexts> = {
     },
     catering: {
       subtitle: "Let us take care of your event with authentic Moroccan dishes.",
-      notice: null,
-    },
-  },
-  ar: {
-    home: {
-      hero_subtitle: "طاجين طازج والمزيد كل أسبوع، مباشرة من مطبخنا في غنت.",
-      story_text:
-        "يجلب Tajine2Go النكهات الأصيلة من المطبخ المغاربي إلى غنت. نحضّر أطباقنا بمحبة، مع احترام التقاليد، وبأفضل المكونات الطازجة كل أسبوع.",
-      catering_cta_title: "تموين لمناسبتك",
-      catering_cta_text:
-        "من حفلات الزفاف إلى فعاليات الشركات، نهتم بكل شيء بأطباق مغاربية أصيلة.",
-    },
-    notices: {
-      homepage_banner: null,
-      closed_message:
-        "نحن مغلقون حالياً. اطلع على قائمتنا ليوم الطلب التالي.",
-      checkout_notice: null,
-    },
-    about: {
-      body_paragraphs: [
-        "يجلب Tajine2Go نكهات المطبخ المغاربي الأصيلة إلى غنت. كل أسبوع نحضّر طواجن طازجة وكسكس وأكثر وفق وصفات تقليدية وبأفضل المكونات.",
-        "مهمتنا بسيطة: أن نتيح للجميع الاستمتاع بأطباق مغاربية منزلية الصنع مع الدفء والضيافة المرتبطين بثقافتنا.",
-        "إلى جانب خدمة الطلبات الأسبوعية، نوفر أيضاً خدمات التموين للمناسبات، من الأعراس والعقيقة إلى فعاليات الشركات والإفطار.",
-      ],
-    },
-    catering: {
-      subtitle: "دعنا نهتم بمناسبتك بأطباق مغاربية أصيلة.",
       notice: null,
     },
   },
@@ -271,22 +231,6 @@ const DEFAULT_LEGAL_PAGES: Record<Locale, LegalPages> = {
       body_paragraphs: [
         "Orders and catering requests are subject to availability and confirmation.",
         "Specific arrangements around delivery, cancellation and payment may be confirmed separately for each order or quote.",
-      ],
-    },
-  },
-  ar: {
-    privacy: {
-      title: "سياسة الخصوصية",
-      body_paragraphs: [
-        "نقوم بمعالجة البيانات الشخصية اللازمة لإتمام الطلبات والتوصيل وطلبات التموين بشكل صحيح.",
-        "لأي استفسار حول الخصوصية أو معالجة البيانات، يمكنكم التواصل معنا عبر عنوان البريد الإلكتروني المذكور في هذا الموقع.",
-      ],
-    },
-    terms: {
-      title: "الشروط والأحكام",
-      body_paragraphs: [
-        "تخضع الطلبات وطلبات التموين للتوفر والتأكيد.",
-        "قد يتم تأكيد التفاصيل الخاصة بالتوصيل والإلغاء والدفع بشكل منفصل لكل طلب أو عرض سعر.",
       ],
     },
   },
@@ -454,61 +398,6 @@ const DEFAULT_FAQS: Record<Locale, FaqEntry[]> = {
       id: "faq-halal",
       question: "Are your dishes halal?",
       answer: "Yes, all our dishes are prepared with halal ingredients.",
-      sort_order: 6,
-      is_active: true,
-    },
-  ],
-  ar: [
-    {
-      id: "faq-ordering",
-      question: "متى يمكنني الطلب؟",
-      answer:
-        "نحن نستقبل الطلبات كل يوم سبت. اطلب قبل مساء الجمعة لحجز أطباقك المفضلة.",
-      sort_order: 0,
-      is_active: true,
-    },
-    {
-      id: "faq-minimum",
-      question: "ما هو الحد الأدنى للطلب؟",
-      answer: "الحد الأدنى للطلب هو 20.00 يورو.",
-      sort_order: 1,
-      is_active: true,
-    },
-    {
-      id: "faq-delivery",
-      question: "هل توصلون إلى منطقتي؟",
-      answer:
-        "نقوم بالتوصيل في غنت والمناطق المحيطة بها (الرموز البريدية 9000-9052). تحقق أثناء الطلب مما إذا كان رمزك البريدي متاحاً.",
-      sort_order: 2,
-      is_active: true,
-    },
-    {
-      id: "faq-cash",
-      question: "هل يمكنني الدفع نقداً؟",
-      answer:
-        "نعم. يمكنك الدفع عبر الإنترنت أو نقداً عند الاستلام أو التوصيل.",
-      sort_order: 3,
-      is_active: true,
-    },
-    {
-      id: "faq-catering",
-      question: "كيف تعمل خدمة التموين؟",
-      answer:
-        "أرسل إلينا طلباً عبر نموذج التموين. سنتواصل معك لمناقشة مناسبتك وإعداد عرض سعر مناسب.",
-      sort_order: 4,
-      is_active: true,
-    },
-    {
-      id: "faq-cancel",
-      question: "هل يمكنني إلغاء طلبي؟",
-      answer: "تواصل معنا وسنساعدك بكل سرور.",
-      sort_order: 5,
-      is_active: true,
-    },
-    {
-      id: "faq-halal",
-      question: "هل أطباقكم حلال؟",
-      answer: "نعم، جميع أطباقنا تُحضّر بمكونات حلال.",
       sort_order: 6,
       is_active: true,
     },
@@ -987,6 +876,36 @@ async function fetchContentRowsUncached() {
 
 const fetchContentRows = cache(fetchContentRowsUncached);
 
+function buildPublicSiteContent(
+  locale: Locale,
+  settings: Record<string, unknown> = {},
+): LocalizedSiteContent {
+  const businessInfo = normalizeBusinessInfo(settings.business_info);
+  const websiteTexts = mergeWebsiteLocaleTexts(
+    DEFAULT_WEBSITE_TEXTS[locale],
+    normalizeWebsiteTexts(settings.website_texts)[locale],
+  );
+  const faqEntries = sortFaqEntries(
+    normalizeFaqEntries(settings.faq_entries)[locale].filter((entry) => entry.is_active),
+  );
+  const brandAssets = normalizeBrandAssets(settings.brand_assets);
+  const legalPages = normalizeLegalPages(settings.legal_pages)[locale];
+  const schedule = normalizeTakeawaySchedule(settings.takeaway_schedule);
+  const openingHoursLines = buildOpeningHoursLines(schedule, locale);
+
+  return {
+    business_info: businessInfo,
+    website_texts: websiteTexts,
+    faq_entries: faqEntries,
+    brand_assets: brandAssets,
+    legal_pages: legalPages,
+    opening_hours_lines: openingHoursLines,
+    opening_hours_summary: buildOpeningHoursSummary(openingHoursLines, locale),
+    location_text: formatBusinessLocation(businessInfo, locale),
+    opening_hours_specification: buildOpeningHoursSpecification(schedule),
+  };
+}
+
 export async function fetchAdminContentSettings(
   options: { fresh?: boolean } = {},
 ): Promise<AdminContentSettings> {
@@ -1014,31 +933,12 @@ export async function fetchAdminContentSettings(
 export async function fetchPublicSiteContent(
   locale: Locale,
 ): Promise<LocalizedSiteContent> {
-  const settings = await fetchContentRows();
-  const businessInfo = normalizeBusinessInfo(settings.business_info);
-  const websiteTexts = mergeWebsiteLocaleTexts(
-    DEFAULT_WEBSITE_TEXTS[locale],
-    normalizeWebsiteTexts(settings.website_texts)[locale],
-  );
-  const faqEntries = sortFaqEntries(
-    normalizeFaqEntries(settings.faq_entries)[locale].filter((entry) => entry.is_active),
-  );
-  const brandAssets = normalizeBrandAssets(settings.brand_assets);
-  const legalPages = normalizeLegalPages(settings.legal_pages)[locale];
-  const schedule = normalizeTakeawaySchedule(settings.takeaway_schedule);
-  const openingHoursLines = buildOpeningHoursLines(schedule, locale);
+  if (canUsePublicSupabaseFallback()) {
+    return buildPublicSiteContent(locale);
+  }
 
-  return {
-    business_info: businessInfo,
-    website_texts: websiteTexts,
-    faq_entries: faqEntries,
-    brand_assets: brandAssets,
-    legal_pages: legalPages,
-    opening_hours_lines: openingHoursLines,
-    opening_hours_summary: buildOpeningHoursSummary(openingHoursLines, locale),
-    location_text: formatBusinessLocation(businessInfo, locale),
-    opening_hours_specification: buildOpeningHoursSpecification(schedule),
-  };
+  const settings = await fetchContentRows();
+  return buildPublicSiteContent(locale, settings);
 }
 
 export async function updateContentSettings(

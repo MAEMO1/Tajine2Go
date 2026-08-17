@@ -1,4 +1,6 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
+import { Reveal } from "@/components/motion/reveal";
+import { PageHeader } from "@/components/page-header";
 import { fetchPublicSiteContent } from "@/lib/site-content";
 import type { Locale } from "@/types/database";
 
@@ -11,51 +13,101 @@ export default async function ContactPage({ params }: Props) {
   const content = await fetchPublicSiteContent(locale as Locale);
 
   return (
-    <div className="mx-auto max-w-2xl px-4 py-8">
-      <h1 className="font-heading text-3xl text-brand-brown">{t("title")}</h1>
+    <>
+      <PageHeader title={t("title")} />
 
-      <div className="mt-6 grid gap-6 sm:grid-cols-2">
-        <div className="rounded-xl bg-brand-cream p-6 shadow-sm">
-          <h2 className="font-heading text-xl text-brand-bronze">{t("reachUs")}</h2>
-          <dl className="mt-4 space-y-3 text-sm">
-            <div>
-              <dt className="text-brand-brown-s">{t("emailLabel")}</dt>
-              <dd className="mt-1 text-brand-brown">{content.business_info.email}</dd>
-            </div>
-            <div>
-              <dt className="text-brand-brown-s">{t("phoneLabel")}</dt>
-              <dd className="mt-1 text-brand-brown">{content.business_info.phone}</dd>
-            </div>
-            <div>
-              <dt className="text-brand-brown-s">{t("locationLabel")}</dt>
-              <dd className="mt-1 text-brand-brown">
-                {content.business_info.address_line && <span>{content.business_info.address_line}<br /></span>}
-                {content.location_text}
-              </dd>
-            </div>
-          </dl>
-        </div>
-
-        <div className="rounded-xl bg-brand-cream p-6 shadow-sm">
-          <h2 className="font-heading text-xl text-brand-bronze">{t("hoursLabel")}</h2>
-          {content.opening_hours_lines.length > 0 ? (
-            <dl className="mt-4 space-y-2 text-sm">
-              {content.opening_hours_lines.map((line) => (
-                <div key={line.day} className="flex justify-between gap-6">
-                  <dt className="text-brand-brown-s capitalize">{line.label}</dt>
-                  <dd className="text-brand-brown">{line.window}</dd>
+      {/* === Contact cards === */}
+      <section className="bg-brand-cream px-4 pb-20 pt-12 md:pb-28 md:pt-16">
+        <div className="mx-auto grid max-w-4xl gap-6 sm:grid-cols-2">
+          <Reveal className="h-full">
+            <div className="flex h-full flex-col rounded-2xl border border-brand-warm2/70 bg-brand-cream p-7 shadow-[0_25px_60px_-30px_rgba(45,27,10,0.35)]">
+              <h2 className="type-h3">
+                {t("reachUs")}
+              </h2>
+              <span className="mt-3 block h-px w-12 bg-brand-orange" aria-hidden="true" />
+              <dl className="mt-6 space-y-5 text-sm">
+                <div>
+                  <dt className="text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-brown-s">
+                    {t("emailLabel")}
+                  </dt>
+                  <dd className="mt-1.5 text-[15px] text-brand-brown">
+                    {content.business_info.email}
+                  </dd>
                 </div>
-              ))}
-            </dl>
-          ) : (
-            <p className="mt-4 text-sm text-brand-brown-s">{content.opening_hours_summary}</p>
-          )}
-          <p className="mt-4 text-xs text-brand-brown-s">
-            {t("cateringNote")}
-          </p>
+                <div>
+                  <dt className="text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-brown-s">
+                    {t("phoneLabel")}
+                  </dt>
+                  <dd className="mt-1.5 text-[15px] text-brand-brown">
+                    {content.business_info.phone}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-brown-s">
+                    {t("locationLabel")}
+                  </dt>
+                  <dd className="mt-1.5 text-[15px] leading-relaxed text-brand-brown">
+                    {content.business_info.address_line && (
+                      <span>
+                        {content.business_info.address_line}
+                        <br />
+                      </span>
+                    )}
+                    {content.location_text}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-brown-s">
+                    Instagram
+                  </dt>
+                  <dd className="mt-1.5 text-[15px] text-brand-brown">
+                    <a
+                      href="https://www.instagram.com/tajine2go.gent"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="transition-colors duration-200 hover:text-brand-orange"
+                    >
+                      @tajine2go.gent
+                    </a>
+                  </dd>
+                </div>
+              </dl>
+            </div>
+          </Reveal>
+
+          <Reveal delay={0.12} className="h-full">
+            <div className="flex h-full flex-col rounded-2xl border border-brand-warm2/70 bg-brand-cream p-7 shadow-[0_25px_60px_-30px_rgba(45,27,10,0.35)]">
+              <h2 className="type-h3">
+                {t("hoursLabel")}
+              </h2>
+              <span className="mt-3 block h-px w-12 bg-brand-orange" aria-hidden="true" />
+              {content.opening_hours_lines.length > 0 ? (
+                <dl className="mt-6 space-y-2.5 text-sm">
+                  {content.opening_hours_lines.map((line) => (
+                    <div
+                      key={line.day}
+                      className="flex justify-between gap-6 border-b border-brand-warm2/50 pb-2.5 last:border-0 last:pb-0"
+                    >
+                      <dt className="capitalize text-brand-brown-s">{line.label}</dt>
+                      <dd className="text-[13px] font-bold text-brand-brown">
+                        {line.window}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              ) : (
+                <p className="mt-6 text-sm leading-relaxed text-brand-brown-s">
+                  {content.opening_hours_summary}
+                </p>
+              )}
+              <p className="mt-auto pt-5 text-xs leading-relaxed text-brand-brown-s">
+                {t("cateringNote")}
+              </p>
+            </div>
+          </Reveal>
         </div>
-      </div>
-    </div>
+      </section>
+    </>
   );
 }
 

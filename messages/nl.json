@@ -1,11 +1,4 @@
 {
-  "validation": {
-    "required": "Dit veld is verplicht",
-    "email": "Vul een geldig e-mailadres in",
-    "postalCode": "Vul een geldige postcode in",
-    "minItems": "Voeg minstens één gerecht toe",
-    "deliveryAddressRequired": "Leveradres is verplicht bij levering"
-  },
   "common": {
     "siteName": "Tajine2Go",
     "tagline": "Marokkaanse takeaway in Gent",
@@ -20,7 +13,8 @@
     "confirm": "Bevestigen",
     "yes": "Ja",
     "no": "Nee",
-    "or": "of"
+    "or": "of",
+    "skipToContent": "Naar de inhoud"
   },
   "nav": {
     "menu": "Menu",
@@ -28,69 +22,43 @@
     "catering": "Catering",
     "about": "Over ons",
     "faq": "FAQ",
-    "contact": "Contact"
+    "contact": "Contact",
+    "orderByPhone": "Bestel telefonisch"
   },
   "home": {
-    "heroTitle": "Authentieke Marokkaanse smaken, vers geserveerd",
-    "heroTitleA": "Authentieke",
-    "heroTitleAccent": "Marokkaanse",
-    "heroTitleB": "smaken, vers geserveerd.",
-    "heroSubtitle": "Snel, gezond en vol traditionele smaak. Bereid met liefde. Voor jou.",
+    "heroKicker": "Marokkaanse afhaalgerechten en catering",
+    "heroLine1": "Authentieke smaken",
+    "heroCateringCta": "Catering aanvragen",
     "orderNow": "Bestel nu",
     "viewMenu": "Bekijk menu",
-    "cateringCta": "Catering voor uw evenement",
-    "cateringCtaText": "Van bruiloften tot bedrijfsevenementen — wij verzorgen het met authentieke Marokkaanse gerechten.",
-    "uspFresh": "Verse ingrediënten",
-    "uspFreshShort": "Dagelijks bereid",
-    "uspFreshText": "Elke week bereid met traditionele recepten en de beste ingrediënten.",
-    "uspRecipes": "Traditionele recepten",
-    "uspRecipesShort": "Authentieke smaak",
-    "uspFast": "Snel & makkelijk",
-    "uspFastShort": "Binnen enkele minuten",
-    "uspDelivery": "Afhalen of levering",
-    "uspDeliveryText": "Haal je bestelling op of laat het thuisbezorgen in Gent.",
-    "uspCatering": "Catering",
-    "uspCateringText": "Van bruiloften tot bedrijfsevenementen — wij verzorgen het.",
-    "infoStripTitle": "Authentiek Marokkaans, vers tot bij jou",
-    "infoHours": "Elke zaterdag 12:00 – 19:00",
     "infoAddress": "Gent, België",
-    "nextService": "Volgende service",
-    "orderBy": "bestel voor {time}",
     "infoPayment": "Bancontact · Cash · Online",
-    "menuTitle": "Menu van deze",
+    "menuTitle": "Onze menukaart",
     "scrollToMenu": "Bekijk het menu",
     "cateringPhone": "Aanvraag indienen",
     "cateringEmail": "Contact opnemen",
     "storyTitle": "Ons verhaal",
-    "storyText": "Tajine2Go brengt de authentieke smaken van Marokko naar Gent. Met liefde bereid, met respect voor traditie, en met de beste verse ingrediënten. Elke week opnieuw.",
     "storyLink": "Lees meer over ons",
-    "closed": "We zijn momenteel gesloten. Bekijk ons menu voor de volgende besteldag."
+    "closed": "Bestellen doe je telefonisch: bel {phone1} of {phone2}.",
+    "storyImageAlt": "Tajine2Go winkel in Gent"
   },
   "menu": {
     "title": "Menu",
     "noItems": "Momenteel geen gerechten beschikbaar.",
     "soldOut": "Uitverkocht",
     "portionsLeft": "{count, plural, one {# portie over} other {# porties over}}",
-    "addToCart": "Toevoegen",
-    "added": "Toegevoegd",
     "ingredients": "Ingrediënten",
     "allergens": "Allergenen",
     "categories": {
+      "tajine": "Tajines",
+      "couscous": "Couscous",
+      "bstilla": "Bstilla & soep",
       "main": "Hoofdgerechten",
       "side": "Bijgerechten",
       "dessert": "Desserts",
+      "sweet": "Zoet",
       "drink": "Dranken"
     }
-  },
-  "cart": {
-    "title": "Winkelwagen",
-    "empty": "Je winkelwagen is leeg",
-    "subtotal": "Subtotaal",
-    "deliveryFee": "Leveringskosten",
-    "total": "Totaal",
-    "checkout": "Afrekenen",
-    "remove": "Verwijderen",
-    "itemCount": "{count, plural, one {# item} other {# items}}"
   },
   "checkout": {
     "title": "Bestelling plaatsen",
@@ -132,24 +100,6 @@
     "pickupSlotOptional": "Geen voorkeur",
     "paymentMethodUnavailable": "De gekozen betaalmethode is momenteel niet beschikbaar.",
     "paymentMethodSingle": "Slechts één betaalmethode is momenteel beschikbaar."
-  },
-  "order": {
-    "title": "Bestellingsstatus",
-    "orderNumber": "Bestelnummer",
-    "status": "Status",
-    "fulfillment": "Type",
-    "pickupSlot": "Afhaaltijdstip",
-    "total": "Totaal",
-    "statuses": {
-      "pending": "In afwachting",
-      "confirmed": "Bevestigd",
-      "preparing": "In bereiding",
-      "ready": "Klaar",
-      "out_for_delivery": "Onderweg",
-      "completed": "Afgerond",
-      "cancelled": "Geannuleerd"
-    },
-    "notFound": "Bestelling niet gevonden."
   },
   "catering": {
     "title": "Catering",

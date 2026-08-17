@@ -6,7 +6,6 @@ import { routing } from "@/i18n/routing";
 const PUBLIC_LOCALE_ROUTE_SUFFIXES = [
   "",
   "/menu",
-  "/bestellen",
   "/contact",
   "/catering",
   "/faq",

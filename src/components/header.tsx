@@ -3,9 +3,10 @@
 import { useTranslations, useLocale } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { LanguageSwitcher } from "./language-switcher";
-import { useCartStore } from "@/stores/cart";
+import { smoothScrollTo } from "@/lib/motion/lenis-store";
 import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { ORDER_PHONE_NUMBERS } from "@/lib/phone";
 
 type Props = {
   logoUrl?: string | null;
@@ -15,13 +16,13 @@ type Props = {
 
 export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
   const t = useTranslations("nav");
+  const tHome = useTranslations("home");
   const locale = useLocale();
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [phoneOpen, setPhoneOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const itemCount = useCartStore((s) => s.itemCount);
-  const count = itemCount();
-  const logoSrc = logoUrl || "/logo-brand.png";
+  const logoSrc = logoUrl || "/brand/logo/Tajine2Go_logo_primary_transparent_640w.png";
   const logoText = logoAlt || brandName;
 
   const isHomepage = pathname === "/";
@@ -34,6 +35,25 @@ export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Popover sluit bij klik erbuiten of Escape
+  useEffect(() => {
+    if (!phoneOpen) return;
+    function onPointerDown(event: PointerEvent) {
+      if (!(event.target as HTMLElement).closest("[data-phone-popover]")) {
+        setPhoneOpen(false);
+      }
+    }
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") setPhoneOpen(false);
+    }
+    window.addEventListener("pointerdown", onPointerDown);
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      window.removeEventListener("pointerdown", onPointerDown);
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [phoneOpen]);
+
   const navLinks = [
     { href: "/menu" as const, label: t("menu"), scrollTarget: "#menu" },
     { href: "/catering" as const, label: t("catering"), scrollTarget: null },
@@ -44,9 +64,9 @@ export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
 
   function handleScrollOrNavigate(scrollTarget: string | null) {
     if (scrollTarget && isHomepage) {
-      const el = document.querySelector(scrollTarget);
+      const el = document.querySelector<HTMLElement>(scrollTarget);
       if (el) {
-        el.scrollIntoView({ behavior: "smooth" });
+        smoothScrollTo(el, -90);
         setMobileOpen(false);
         return true;
       }
@@ -57,19 +77,30 @@ export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
   return (
     <>
       <header
-        className={`sticky top-0 z-50 transition-all duration-300 ${
+        className={`z-50 bg-brand-cream transition-all duration-300 ${
+          isHomepage ? "fixed inset-x-0 top-0" : "sticky top-0"
+        } ${
+          isHomepage && !scrolled ? "pointer-events-none -translate-y-full opacity-0" : ""
+        } ${
           scrolled
-            ? "border-b border-brand-warm2/80 bg-brand-cream/90 shadow-[0_1px_20px_rgba(45,27,10,0.06)] backdrop-blur-md"
-            : "bg-brand-cream"
+            ? "border-b border-brand-warm2/80 bg-brand-cream/90 shadow-[0_1px_20px_rgba(59,22,6,0.06)] backdrop-blur-md"
+            : ""
         }`}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2.5 md:px-6">
-          <Link href="/" className="transition-transform duration-200 hover:scale-[1.02]">
+          <Link href="/" className="shrink-0 transition-transform duration-200 hover:scale-[1.02]">
+            {/* Mobiel: icon-only merkteken (brand usage guide); desktop: primary horizontal */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={logoUrl || "/brand/logo/Tajine2Go_icon_128.png"}
+              alt={logoText}
+              className="h-11 w-auto object-contain md:hidden"
+            />
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={logoSrc}
               alt={logoText}
-              className="h-14 w-auto object-contain md:h-[72px]"
+              className="hidden h-[72px] w-auto object-contain md:block"
             />
           </Link>
 
@@ -92,57 +123,88 @@ export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
           <div className="flex items-center gap-2">
             <LanguageSwitcher />
 
-            <Link
-              href="/bestellen"
-              className="group relative hidden items-center gap-2 rounded-full bg-brand-orange px-5 py-2.5 font-heading text-sm uppercase tracking-[0.12em] text-white shadow-[0_2px_10px_rgba(217,123,26,0.20)] transition-all duration-200 hover:bg-brand-orange-hover hover:shadow-[0_4px_20px_rgba(217,123,26,0.30)] active:scale-[0.98] md:inline-flex"
-              aria-label={t("order")}
-            >
-              <span>{t("order")}</span>
-              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M16 11V7a4 4 0 00-8 0v4M5 9h14l-1.5 11A2 2 0 0115.5 22h-7a2 2 0 01-2-2L5 9z"
-                />
-              </svg>
-              {count > 0 && (
-                <motion.span
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  className="absolute -end-1 -top-1 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-brand-brown px-1 text-[10px] font-bold text-white"
+            {/* Bestellen gaat telefonisch: knop toont een popover met beide nummers */}
+            <div className="relative" data-phone-popover>
+              {/* Desktop: tekstknop */}
+              <button
+                type="button"
+                onClick={() => setPhoneOpen(!phoneOpen)}
+                aria-expanded={phoneOpen}
+                aria-haspopup="true"
+                className="hidden min-h-11 items-center gap-2 rounded-md bg-brand-orange-hover px-6 py-2.5 font-display text-base font-semibold text-white shadow-[0_2px_10px_rgba(181,84,15,0.20)] transition-all duration-200 hover:bg-brand-orange-deep hover:shadow-[0_4px_20px_rgba(181,84,15,0.30)] active:scale-[0.98] md:inline-flex"
+              >
+                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h2.28a1 1 0 01.95.68l1.1 3.29a1 1 0 01-.45 1.17l-1.4.84a12.04 12.04 0 005.54 5.54l.84-1.4a1 1 0 011.17-.45l3.29 1.1a1 1 0 01.68.95V19a2 2 0 01-2 2h-1C9.72 21 3 14.28 3 6V5z" />
+                </svg>
+                <span>{t("order")}</span>
+                <svg
+                  className={`h-3.5 w-3.5 transition-transform duration-200 ${phoneOpen ? "rotate-180" : ""}`}
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2.2}
+                  aria-hidden="true"
                 >
-                  {count}
-                </motion.span>
-              )}
-            </Link>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
 
-            {/* Cart icon for mobile only */}
-            <Link
-              href="/bestellen"
-              className="group relative flex items-center rounded-full p-2 text-brand-brown-m transition-all duration-200 hover:bg-brand-warm hover:text-brand-orange md:hidden"
-              aria-label={t("order")}
-            >
-              <svg className="h-[22px] w-[22px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M16 11V7a4 4 0 00-8 0v4M5 9h14l-1.5 11A2 2 0 0115.5 22h-7a2 2 0 01-2-2L5 9z"
-                />
-              </svg>
-              {count > 0 && (
-                <motion.span
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  className="absolute -end-0.5 -top-0.5 flex h-[18px] w-[18px] items-center justify-center rounded-full bg-brand-orange text-[10px] font-bold text-white"
-                >
-                  {count}
-                </motion.span>
-              )}
-            </Link>
+              {/* Mobiel: icoonknop, zelfde popover (klant kiest welk nummer) */}
+              <button
+                type="button"
+                onClick={() => setPhoneOpen(!phoneOpen)}
+                aria-expanded={phoneOpen}
+                aria-haspopup="true"
+                aria-label={t("orderByPhone")}
+                className="flex min-h-11 min-w-11 items-center justify-center rounded-full p-2 text-brand-brown-m transition-all duration-200 hover:bg-brand-warm hover:text-brand-orange md:hidden"
+              >
+                <svg className="h-[22px] w-[22px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h2.28a1 1 0 01.95.68l1.1 3.29a1 1 0 01-.45 1.17l-1.4.84a12.04 12.04 0 005.54 5.54l.84-1.4a1 1 0 011.17-.45l3.29 1.1a1 1 0 01.68.95V19a2 2 0 01-2 2h-1C9.72 21 3 14.28 3 6V5z" />
+                </svg>
+              </button>
+
+              <AnimatePresence>
+                {phoneOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -6 }}
+                    transition={{ duration: 0.18, ease: "easeOut" }}
+                    className="absolute end-0 top-full z-50 mt-2 w-64 overflow-hidden rounded-xl border border-brand-warm2 bg-brand-cream shadow-[0_16px_40px_-12px_rgba(59,22,6,0.3)]"
+                  >
+                    <p className="px-4 pb-1 pt-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-brown-s">
+                      {t("orderByPhone")}
+                    </p>
+                    {ORDER_PHONE_NUMBERS.map((phone, index) => (
+                      <a
+                        key={phone.tel}
+                        href={`tel:${phone.tel}`}
+                        className={`flex min-h-11 items-center gap-3 px-4 py-2 transition-colors hover:bg-brand-warm ${
+                          index > 0 ? "border-t border-brand-warm2/60" : ""
+                        }`}
+                        onClick={() => setPhoneOpen(false)}
+                      >
+                        <span className="text-base font-semibold text-brand-brown">{phone.display}</span>
+                      </a>
+                    ))}
+                    <Link
+                      href="/menu"
+                      className="flex min-h-11 items-center gap-2 border-t border-brand-warm2/60 bg-brand-warm/50 px-4 py-2 transition-colors hover:bg-brand-warm"
+                      onClick={() => setPhoneOpen(false)}
+                    >
+                      <span className="font-display text-base font-semibold text-brand-brown-m">{tHome("viewMenu")}</span>
+                      <svg className="h-3.5 w-3.5 text-brand-brown-m" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2} aria-hidden="true">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                      </svg>
+                    </Link>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
 
             <button
               type="button"
-              className="rounded-full p-2 text-brand-brown-m transition-colors hover:bg-brand-warm hover:text-brand-brown lg:hidden"
+              className="flex min-h-11 min-w-11 items-center justify-center rounded-full p-2 text-brand-brown-m transition-colors hover:bg-brand-warm hover:text-brand-brown lg:hidden"
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-label="Menu"
             >
@@ -180,10 +242,10 @@ export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 28, stiffness: 280 }}
-            className="fixed inset-y-0 z-50 flex w-[280px] flex-col border-brand-warm2 bg-brand-cream shadow-[-8px_0_30px_rgba(45,27,10,0.08)] ltr:right-0 ltr:border-l rtl:left-0 rtl:border-r lg:hidden"
+            className="fixed inset-y-0 z-50 flex w-[280px] flex-col border-brand-warm2 bg-brand-cream shadow-[-8px_0_30px_rgba(45,27,10,0.08)] right-0 border-l lg:hidden"
           >
             <div className="flex items-center justify-between px-6 py-5">
-              <span className="font-heading text-xl uppercase tracking-[0.15em] text-brand-brown">
+              <span className="font-display text-xl font-semibold text-brand-brown">
                 Menu
               </span>
               <button
@@ -215,7 +277,7 @@ export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
                       {...motionProps}
                       type="button"
                       onClick={() => handleScrollOrNavigate(link.scrollTarget)}
-                      className="rounded-lg px-4 py-3 text-start font-heading text-lg uppercase tracking-[0.12em] text-brand-brown-m transition-colors hover:bg-brand-warm hover:text-brand-brown"
+                      className="rounded-lg px-4 py-3 text-start font-display text-lg font-semibold text-brand-brown-m transition-colors hover:bg-brand-warm hover:text-brand-brown"
                     >
                       {link.label}
                     </motion.button>
@@ -225,7 +287,7 @@ export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
                   <motion.div key={link.href} {...motionProps}>
                     <Link
                       href={link.href}
-                      className="block rounded-lg px-4 py-3 font-heading text-lg uppercase tracking-[0.12em] text-brand-brown-m transition-colors hover:bg-brand-warm hover:text-brand-brown"
+                      className="block rounded-lg px-4 py-3 font-display text-lg font-semibold text-brand-brown-m transition-colors hover:bg-brand-warm hover:text-brand-brown"
                       onClick={() => setMobileOpen(false)}
                     >
                       {link.label}
@@ -238,7 +300,7 @@ export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
             {/* Bottom decorative accent */}
             <div className="px-6 pb-8">
               <div className="h-px bg-gradient-to-r from-transparent via-brand-warm2 to-transparent" />
-              <p className="mt-4 text-center font-heading text-xs uppercase tracking-[0.2em] text-brand-brown-s/50">
+              <p className="mt-4 text-center font-display text-xs uppercase tracking-[0.2em] text-brand-brown-s/50">
                 {brandName}
               </p>
             </div>
@@ -270,10 +332,10 @@ function SmartNavLink({
   const isActive = pathname === href;
 
   const baseClass =
-    "relative rounded-full px-4 py-2 font-heading text-[15px] uppercase tracking-[0.12em] transition-all duration-200";
-  const activeClass = "bg-brand-warm text-brand-brown";
+    "relative px-4 py-2 font-display text-[17px] font-semibold transition-all duration-200 after:absolute after:bottom-0.5 after:left-1/2 after:h-px after:w-0 after:-translate-x-1/2 after:bg-brand-orange after:transition-all after:duration-300";
+  const activeClass = "text-brand-brown after:w-1/2";
   const inactiveClass =
-    "text-brand-brown-s hover:bg-brand-warm/60 hover:text-brand-brown";
+    "text-brand-brown-s hover:text-brand-brown hover:after:w-1/2";
 
   if (scrollTarget && isHomepage) {
     return (

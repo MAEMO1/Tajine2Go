@@ -29,15 +29,12 @@ export function DishEditor({ dish }: Props) {
       name_nl: form.get("name_nl"),
       name_fr: form.get("name_fr") || null,
       name_en: form.get("name_en") || null,
-      name_ar: form.get("name_ar") || null,
       description_nl: form.get("description_nl") || null,
       description_fr: form.get("description_fr") || null,
       description_en: form.get("description_en") || null,
-      description_ar: form.get("description_ar") || null,
       ingredients_nl: parseListField(form, "ingredients_nl"),
       ingredients_fr: parseListField(form, "ingredients_fr"),
       ingredients_en: parseListField(form, "ingredients_en"),
-      ingredients_ar: parseListField(form, "ingredients_ar"),
       price_cents: parseInt(form.get("price_cents") as string),
       image_url: form.get("image_url") || null,
       category: form.get("category"),
@@ -73,21 +70,18 @@ export function DishEditor({ dish }: Props) {
           <Field name="name_nl" label="Naam NL" defaultValue={dish.name_nl} required />
           <Field name="name_fr" label="Naam FR" defaultValue={dish.name_fr ?? ""} />
           <Field name="name_en" label="Naam EN" defaultValue={dish.name_en ?? ""} />
-          <Field name="name_ar" label="Naam AR" defaultValue={dish.name_ar ?? ""} />
         </div>
 
         <div className="mt-4 grid gap-4 sm:grid-cols-2">
           <TA name="description_nl" label="Beschrijving NL" defaultValue={dish.description_nl ?? ""} />
           <TA name="description_fr" label="Beschrijving FR" defaultValue={dish.description_fr ?? ""} />
           <TA name="description_en" label="Beschrijving EN" defaultValue={dish.description_en ?? ""} />
-          <TA name="description_ar" label="Beschrijving AR" defaultValue={dish.description_ar ?? ""} />
         </div>
 
         <div className="mt-4 grid gap-4 sm:grid-cols-2">
           <Field name="ingredients_nl" label="Ingrediënten NL" defaultValue={dish.ingredients_nl.join(", ")} />
           <Field name="ingredients_fr" label="Ingrediënten FR" defaultValue={dish.ingredients_fr.join(", ")} />
           <Field name="ingredients_en" label="Ingrediënten EN" defaultValue={dish.ingredients_en.join(", ")} />
-          <Field name="ingredients_ar" label="Ingrediënten AR" defaultValue={dish.ingredients_ar.join(", ")} />
         </div>
 
         <div className="mt-4">

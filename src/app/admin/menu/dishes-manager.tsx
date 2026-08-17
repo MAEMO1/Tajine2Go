@@ -152,15 +152,12 @@ function DishForm({ onSaved }: { onSaved: () => void }) {
       name_nl: form.get("name_nl"),
       name_fr: form.get("name_fr") || null,
       name_en: form.get("name_en") || null,
-      name_ar: form.get("name_ar") || null,
       description_nl: form.get("description_nl") || null,
       description_fr: form.get("description_fr") || null,
       description_en: form.get("description_en") || null,
-      description_ar: form.get("description_ar") || null,
       ingredients_nl: parseListField(form, "ingredients_nl"),
       ingredients_fr: parseListField(form, "ingredients_fr"),
       ingredients_en: parseListField(form, "ingredients_en"),
-      ingredients_ar: parseListField(form, "ingredients_ar"),
       price_cents: parseInt(form.get("price_cents") as string),
       image_url: form.get("image_url") || null,
       category: form.get("category"),
@@ -192,21 +189,18 @@ function DishForm({ onSaved }: { onSaved: () => void }) {
         <Input name="name_nl" label="Naam NL" required />
         <Input name="name_fr" label="Naam FR" />
         <Input name="name_en" label="Naam EN" />
-        <Input name="name_ar" label="Naam AR" />
       </div>
 
       <div className="mt-4 grid gap-4 sm:grid-cols-2">
         <TextArea name="description_nl" label="Beschrijving NL" />
         <TextArea name="description_fr" label="Beschrijving FR" />
         <TextArea name="description_en" label="Beschrijving EN" />
-        <TextArea name="description_ar" label="Beschrijving AR" />
       </div>
 
       <div className="mt-4 grid gap-4 sm:grid-cols-2">
         <Input name="ingredients_nl" label="Ingrediënten NL (komma-gescheiden)" />
         <Input name="ingredients_fr" label="Ingrediënten FR (komma-gescheiden)" />
         <Input name="ingredients_en" label="Ingrediënten EN (komma-gescheiden)" />
-        <Input name="ingredients_ar" label="Ingrediënten AR (komma-gescheiden)" />
       </div>
 
       <div className="mt-4">

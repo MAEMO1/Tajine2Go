@@ -1,11 +1,4 @@
 {
-  "validation": {
-    "required": "This field is required",
-    "email": "Enter a valid email address",
-    "postalCode": "Enter a valid postal code",
-    "minItems": "Add at least one dish",
-    "deliveryAddressRequired": "Delivery address is required for delivery"
-  },
   "common": {
     "siteName": "Tajine2Go",
     "tagline": "Moroccan takeaway in Ghent",
@@ -20,7 +13,8 @@
     "confirm": "Confirm",
     "yes": "Yes",
     "no": "No",
-    "or": "or"
+    "or": "or",
+    "skipToContent": "Skip to content"
   },
   "nav": {
     "menu": "Menu",
@@ -28,69 +22,43 @@
     "catering": "Catering",
     "about": "About us",
     "faq": "FAQ",
-    "contact": "Contact"
+    "contact": "Contact",
+    "orderByPhone": "Order by phone"
   },
   "home": {
-    "heroTitle": "Authentic Moroccan flavours, freshly served",
-    "heroSubtitle": "Fast, healthy and full of traditional flavour. Made with love. Just for you.",
     "orderNow": "Order now",
     "viewMenu": "View menu",
-    "cateringCta": "Catering for your event",
-    "cateringCtaText": "From weddings to corporate events — we take care of it with authentic Moroccan dishes.",
-    "uspFresh": "Fresh ingredients",
-    "uspFreshText": "Prepared every week with traditional recipes and the finest ingredients.",
-    "uspDelivery": "Pickup or delivery",
-    "uspDeliveryText": "Pick up your order or have it delivered in Ghent.",
-    "uspCatering": "Catering",
-    "uspCateringText": "From weddings to corporate events — we take care of it.",
-    "infoStripTitle": "Authentic Moroccan, fresh to your door",
-    "infoHours": "Every Saturday 12:00 – 19:00",
     "infoAddress": "Ghent, Belgium",
-    "nextService": "Next service",
-    "orderBy": "order by {time}",
     "infoPayment": "Bancontact · Cash · Online",
-    "menuTitle": "This week's",
+    "menuTitle": "Our menu",
     "scrollToMenu": "View the menu",
     "cateringPhone": "Submit request",
     "cateringEmail": "Contact us",
     "storyTitle": "Our story",
-    "storyText": "Tajine2Go brings the authentic flavours of Morocco to Ghent. Prepared with love, with respect for tradition, and with the best fresh ingredients. Every week.",
     "storyLink": "Read more about us",
-    "closed": "We are currently closed. Check our menu for the next order day.",
-    "heroTitleA": "Authentic",
-    "heroTitleAccent": "Moroccan",
-    "heroTitleB": "flavours, freshly served.",
-    "uspFreshShort": "Prepared daily",
-    "uspRecipes": "Traditional recipes",
-    "uspRecipesShort": "Authentic flavour",
-    "uspFast": "Fast & easy",
-    "uspFastShort": "Ready in minutes"
+    "closed": "Order by phone: call {phone1} or {phone2}.",
+    "heroKicker": "Moroccan takeaway and catering",
+    "heroLine1": "Authentic flavours",
+    "heroCateringCta": "Request catering",
+    "storyImageAlt": "The Tajine2Go shop in Ghent"
   },
   "menu": {
     "title": "Menu",
     "noItems": "No dishes available at the moment.",
     "soldOut": "Sold out",
     "portionsLeft": "{count, plural, one {# portion left} other {# portions left}}",
-    "addToCart": "Add",
-    "added": "Added",
     "ingredients": "Ingredients",
     "allergens": "Allergens",
     "categories": {
+      "tajine": "Tagines",
+      "couscous": "Couscous",
+      "bstilla": "Bstilla & soup",
       "main": "Main dishes",
       "side": "Side dishes",
       "dessert": "Desserts",
+      "sweet": "Sweets",
       "drink": "Drinks"
     }
-  },
-  "cart": {
-    "title": "Cart",
-    "empty": "Your cart is empty",
-    "subtotal": "Subtotal",
-    "deliveryFee": "Delivery fee",
-    "total": "Total",
-    "checkout": "Checkout",
-    "remove": "Remove",
-    "itemCount": "{count, plural, one {# item} other {# items}}"
   },
   "checkout": {
     "title": "Place order",
@@ -132,24 +100,6 @@
     "pickupSlotOptional": "No preference",
     "paymentMethodUnavailable": "The selected payment method is currently unavailable.",
     "paymentMethodSingle": "Only one payment method is currently available."
-  },
-  "order": {
-    "title": "Order status",
-    "orderNumber": "Order number",
-    "status": "Status",
-    "fulfillment": "Type",
-    "pickupSlot": "Pickup time",
-    "total": "Total",
-    "statuses": {
-      "pending": "Pending",
-      "confirmed": "Confirmed",
-      "preparing": "Preparing",
-      "ready": "Ready",
-      "out_for_delivery": "Out for delivery",
-      "completed": "Completed",
-      "cancelled": "Cancelled"
-    },
-    "notFound": "Order not found."
   },
   "catering": {
     "title": "Catering",

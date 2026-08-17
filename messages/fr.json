@@ -1,11 +1,4 @@
 {
-  "validation": {
-    "required": "Ce champ est obligatoire",
-    "email": "Saisissez une adresse e-mail valide",
-    "postalCode": "Saisissez un code postal valide",
-    "minItems": "Ajoutez au moins un plat",
-    "deliveryAddressRequired": "L'adresse de livraison est obligatoire pour la livraison"
-  },
   "common": {
     "siteName": "Tajine2Go",
     "tagline": "Cuisine maghrébine à emporter à Gand",
@@ -20,7 +13,8 @@
     "confirm": "Confirmer",
     "yes": "Oui",
     "no": "Non",
-    "or": "ou"
+    "or": "ou",
+    "skipToContent": "Aller au contenu"
   },
   "nav": {
     "menu": "Menu",
@@ -28,69 +22,43 @@
     "catering": "Traiteur",
     "about": "À propos",
     "faq": "FAQ",
-    "contact": "Contact"
+    "contact": "Contact",
+    "orderByPhone": "Commandez par téléphone"
   },
   "home": {
-    "heroTitle": "Saveurs marocaines authentiques, fraîchement servies",
-    "heroSubtitle": "Rapide, sain et plein de saveurs traditionnelles. Préparé avec amour. Pour vous.",
     "orderNow": "Commander",
     "viewMenu": "Voir le menu",
-    "cateringCta": "Traiteur pour votre événement",
-    "cateringCtaText": "Des mariages aux événements d'entreprise — nous nous en occupons avec des plats maghrébins authentiques.",
-    "uspFresh": "Ingrédients frais",
-    "uspFreshText": "Chaque semaine préparé avec des recettes traditionnelles et les meilleurs ingrédients.",
-    "uspDelivery": "Retrait ou livraison",
-    "uspDeliveryText": "Retirez votre commande ou faites-la livrer à Gand.",
-    "uspCatering": "Traiteur",
-    "uspCateringText": "Des mariages aux événements d'entreprise — nous nous en occupons.",
-    "infoStripTitle": "Cuisine maghrébine authentique, fraîche chez vous",
-    "infoHours": "Chaque samedi 12h00 – 19h00",
     "infoAddress": "Gand, Belgique",
-    "nextService": "Prochain service",
-    "orderBy": "commandez avant {time}",
     "infoPayment": "Bancontact · Cash · En ligne",
-    "menuTitle": "Menu de cette",
+    "menuTitle": "Notre carte",
     "scrollToMenu": "Voir le menu",
     "cateringPhone": "Soumettre une demande",
     "cateringEmail": "Nous contacter",
     "storyTitle": "Notre histoire",
-    "storyText": "Tajine2Go apporte les saveurs authentiques du Maroc à Gand. Préparé avec amour, dans le respect de la tradition, et avec les meilleurs ingrédients frais. Chaque semaine.",
     "storyLink": "En savoir plus",
-    "closed": "Nous sommes actuellement fermés. Consultez notre menu pour le prochain jour de commande.",
-    "heroTitleA": "Saveurs",
-    "heroTitleAccent": "marocaines",
-    "heroTitleB": "authentiques, fraîchement servies.",
-    "uspFreshShort": "Préparés chaque jour",
-    "uspRecipes": "Recettes traditionnelles",
-    "uspRecipesShort": "Saveur authentique",
-    "uspFast": "Rapide & simple",
-    "uspFastShort": "En quelques minutes"
+    "closed": "Commandez par téléphone : appelez le {phone1} ou le {phone2}.",
+    "heroKicker": "Plats marocains à emporter et traiteur",
+    "heroLine1": "Saveurs authentiques",
+    "heroCateringCta": "Demander un devis traiteur",
+    "storyImageAlt": "Le magasin Tajine2Go à Gand"
   },
   "menu": {
     "title": "Menu",
     "noItems": "Aucun plat disponible pour le moment.",
     "soldOut": "Épuisé",
     "portionsLeft": "{count, plural, one {# portion restante} other {# portions restantes}}",
-    "addToCart": "Ajouter",
-    "added": "Ajouté",
     "ingredients": "Ingrédients",
     "allergens": "Allergènes",
     "categories": {
+      "tajine": "Tajines",
+      "couscous": "Couscous",
+      "bstilla": "Bstilla & soupe",
       "main": "Plats principaux",
       "side": "Accompagnements",
       "dessert": "Desserts",
+      "sweet": "Douceurs",
       "drink": "Boissons"
     }
-  },
-  "cart": {
-    "title": "Panier",
-    "empty": "Votre panier est vide",
-    "subtotal": "Sous-total",
-    "deliveryFee": "Frais de livraison",
-    "total": "Total",
-    "checkout": "Passer la commande",
-    "remove": "Supprimer",
-    "itemCount": "{count, plural, one {# article} other {# articles}}"
   },
   "checkout": {
     "title": "Passer commande",
@@ -132,24 +100,6 @@
     "pickupSlotOptional": "Pas de préférence",
     "paymentMethodUnavailable": "Le mode de paiement sélectionné n'est pas disponible actuellement.",
     "paymentMethodSingle": "Un seul mode de paiement est disponible actuellement."
-  },
-  "order": {
-    "title": "Statut de la commande",
-    "orderNumber": "Numéro de commande",
-    "status": "Statut",
-    "fulfillment": "Type",
-    "pickupSlot": "Créneau de retrait",
-    "total": "Total",
-    "statuses": {
-      "pending": "En attente",
-      "confirmed": "Confirmé",
-      "preparing": "En préparation",
-      "ready": "Prêt",
-      "out_for_delivery": "En livraison",
-      "completed": "Terminé",
-      "cancelled": "Annulé"
-    },
-    "notFound": "Commande non trouvée."
   },
   "catering": {
     "title": "Traiteur",

@@ -188,7 +188,6 @@ export async function POST(request: NextRequest) {
         nl: menu.dishes.name_nl,
         fr: menu.dishes.name_fr,
         en: menu.dishes.name_en,
-        ar: menu.dishes.name_ar,
       },
       quantity: item.quantity,
       unit_price_cents: menu.dishes.price_cents,

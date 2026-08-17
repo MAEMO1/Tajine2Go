@@ -1,9 +1,10 @@
 import "server-only";
 
-import { createAdminClient } from "@/lib/supabase/admin";
+import { canUsePublicSupabaseFallback, createAdminClient } from "@/lib/supabase/admin";
 import type {
   DayName,
   DeliveryConfig,
+  Dish,
   Locale,
   MenuDish,
   MenuResponse,
@@ -38,6 +39,80 @@ const DEFAULT_PAYMENT_METHODS: PaymentMethodsConfig = {
   online_enabled: true,
   cash_enabled: true,
 };
+
+const FALLBACK_TAKEAWAY_SCHEDULE: TakeawaySchedule = {
+  days: [
+    {
+      day: "saturday",
+      slot_mode: "slots",
+      slots: ["12:00-13:00", "13:00-14:00", "14:00-15:00", "17:00-18:00", "18:00-19:00"],
+      open_window: "12:00-19:00",
+    },
+  ],
+  cutoff: null,
+};
+
+const FALLBACK_DELIVERY_CONFIG: DeliveryConfig = {
+  enabled: true,
+  fee_cents: 500,
+  free_delivery_above_cents: 5000,
+  zip_codes: ["9000", "9030", "9032", "9040", "9041", "9042", "9050", "9051", "9052"],
+};
+
+const FALLBACK_TIMESTAMP = "2026-01-01T00:00:00.000Z";
+
+// De echte menukaart (gedrukte kaart, augustus 2026). Namen alleen — geen
+// verzonnen beschrijvingen of allergenen; die vult de eigenaar later in de admin aan.
+function fallbackDish(
+  slug: string,
+  names: [nl: string, fr: string, en: string],
+  category: string,
+  priceCents: number,
+  priceLCents: number | null = null,
+): Dish {
+  return {
+    id: `fallback-dish-${slug}`,
+    slug,
+    name_nl: names[0],
+    name_fr: names[1],
+    name_en: names[2],
+    description_nl: null,
+    description_fr: null,
+    description_en: null,
+    ingredients_nl: [],
+    ingredients_fr: [],
+    ingredients_en: [],
+    price_cents: priceCents,
+    price_l_cents: priceLCents,
+    image_url: null,
+    category,
+    allergens: [],
+    is_active: true,
+    created_at: FALLBACK_TIMESTAMP,
+    updated_at: FALLBACK_TIMESTAMP,
+  };
+}
+
+const FALLBACK_DISHES: Dish[] = [
+  fallbackDish("tajine-royal", ["Tajine Royal (runds)", "Tajine Royale (bœuf)", "Tajine Royal (beef)"], "tajine", 1700, 2200),
+  fallbackDish("tajine-kefta", ["Tajine Kefta", "Tajine Kefta", "Kefta tagine"], "tajine", 1300, 1800),
+  fallbackDish("tajine-kip-groenten", ["Tajine Kip en groenten", "Tajine Poulet et légumes", "Chicken & vegetable tagine"], "tajine", 1500, 2000),
+  fallbackDish("tajine-veggie", ["Tajine Veggie", "Tajine Végé", "Veggie tagine"], "tajine", 1300, 1800),
+  fallbackDish("tajine-kip-olijven-citroen", ["Tajine Kip, olijven en citroen", "Tajine Poulet, olives et citron", "Chicken tagine with olives & lemon"], "tajine", 1500, 2000),
+  fallbackDish("couscous-kip-merguez", ["Couscous Kip Merguez", "Couscous Poulet Merguez", "Chicken & merguez couscous"], "couscous", 1700, 2200),
+  fallbackDish("couscous-kip", ["Couscous Kip", "Couscous Poulet", "Chicken couscous"], "couscous", 1500, 2000),
+  fallbackDish("couscous-runds", ["Couscous Runds", "Couscous Bœuf", "Beef couscous"], "couscous", 1700, 2200),
+  fallbackDish("couscous-veggie", ["Couscous Veggie", "Couscous Végé", "Veggie couscous"], "couscous", 1300, 1800),
+  fallbackDish("bstilla-kip", ["Bstilla Kip", "Bstilla Poulet", "Chicken bstilla"], "bstilla", 900),
+  fallbackDish("bstilla-vis", ["Bstilla Vis", "Bstilla Poisson", "Fish bstilla"], "bstilla", 1200),
+  fallbackDish("bstilla-groenten", ["Bstilla Groenten", "Bstilla Légumes", "Vegetable bstilla"], "bstilla", 900),
+  fallbackDish("harira", ["Harira", "Harira", "Harira"], "bstilla", 500),
+  fallbackDish("thee", ["Thee", "Thé", "Mint tea"], "drink", 250),
+  fallbackDish("koffie", ["Koffie", "Café", "Coffee"], "drink", 300),
+  fallbackDish("frisdranken", ["Frisdranken", "Boissons fraîches", "Soft drinks"], "drink", 250),
+  fallbackDish("thee-koekjes", ["Thee + koekjes", "Thé + biscuits", "Tea + cookies"], "sweet", 550),
+  fallbackDish("koekje-pack", ["Koekje pack", "Pack de biscuits", "Cookie pack"], "sweet", 600),
+];
 
 function toIsoDate(value: Date): string {
   return value.toISOString().split("T")[0];
@@ -322,9 +397,81 @@ function getDishIngredients(dish: WeeklyMenuWithDish["dishes"], locale: Locale):
   return dish.ingredients_nl.filter((ingredient) => ingredient.trim().length > 0);
 }
 
+function cloneDeliveryConfig(config: DeliveryConfig): DeliveryConfig {
+  return {
+    ...config,
+    zip_codes: [...config.zip_codes],
+  };
+}
+
+function resolveFallbackPublicOrderConfig(
+  options: { date?: string } = {},
+): PublicOrderConfig {
+  const now = new Date();
+  const exceptions: TakeawayException[] = [];
+  const date = isIsoDate(options.date)
+    ? options.date
+    : getNextOrderableDate(FALLBACK_TAKEAWAY_SCHEDULE, exceptions, now);
+  const resolvedDay = resolveDayForDate(FALLBACK_TAKEAWAY_SCHEDULE, exceptions, date);
+  const cutoffAt = cutoffAtFor(date, FALLBACK_TAKEAWAY_SCHEDULE.cutoff);
+
+  return {
+    date,
+    is_active: false,
+    slot_mode: resolvedDay?.slot_mode ?? "open",
+    slots: [...(resolvedDay?.slots ?? [])],
+    open_window: resolvedDay?.open_window ?? "",
+    cutoff_at: cutoffAt ? cutoffAt.toISOString() : null,
+    min_order_cents: 2000,
+    delivery_config: cloneDeliveryConfig(FALLBACK_DELIVERY_CONFIG),
+    payment_methods: { ...DEFAULT_PAYMENT_METHODS },
+  };
+}
+
+function getFallbackWeeklyMenuItems(date: string): WeeklyMenuWithDish[] {
+  return FALLBACK_DISHES.map((dish) => ({
+    id: `fallback-weekly-${dish.slug}-${date}`,
+    dish_id: dish.id,
+    available_date: date,
+    max_portions: null,
+    portions_sold: 0,
+    is_soldout: false,
+    created_at: FALLBACK_TIMESTAMP,
+    updated_at: FALLBACK_TIMESTAMP,
+    dishes: dish,
+  }));
+}
+
+function mapWeeklyMenuItems(menuItems: WeeklyMenuWithDish[], locale: Locale): MenuDish[] {
+  return menuItems
+    .filter((item) => item.dishes !== null)
+    .map((item) => ({
+      id: item.dishes!.id,
+      weekly_menu_id: item.id,
+      slug: item.dishes!.slug,
+      name: getDishName(item.dishes, locale),
+      description: getDishDescription(item.dishes, locale),
+      ingredients: getDishIngredients(item.dishes, locale),
+      price_cents: item.dishes!.price_cents,
+      price_l_cents: item.dishes!.price_l_cents ?? null,
+      image_url: item.dishes!.image_url,
+      category: item.dishes!.category,
+      allergens: item.dishes!.allergens,
+      is_soldout: item.is_soldout,
+      portions_remaining:
+        item.max_portions !== null
+          ? Math.max(item.max_portions - item.portions_sold, 0)
+          : null,
+    }));
+}
+
 export async function resolvePublicOrderConfig(
   options: { date?: string } = {},
 ): Promise<PublicOrderConfig> {
+  if (canUsePublicSupabaseFallback()) {
+    return resolveFallbackPublicOrderConfig(options);
+  }
+
   const supabase = createAdminClient();
 
   const [activeRes, scheduleRes, minOrderRes, deliveryRes, paymentMethodsRes, exceptionsRes] =
@@ -366,6 +513,14 @@ export async function fetchMenuData(
   options: { date?: string } = {},
 ): Promise<MenuResponse> {
   const config = await resolvePublicOrderConfig(options);
+
+  if (canUsePublicSupabaseFallback()) {
+    return {
+      ...config,
+      dishes: mapWeeklyMenuItems(getFallbackWeeklyMenuItems(config.date), locale),
+    };
+  }
+
   const supabase = createAdminClient();
 
   const { data: menuItems } = await supabase
@@ -375,25 +530,7 @@ export async function fetchMenuData(
     .eq("dishes.is_active", true)
     .order("created_at");
 
-  const dishes: MenuDish[] = (menuItems ?? [])
-    .filter((item: WeeklyMenuWithDish) => item.dishes !== null)
-    .map((item: WeeklyMenuWithDish) => ({
-      id: item.dishes!.id,
-      weekly_menu_id: item.id,
-      slug: item.dishes!.slug,
-      name: getDishName(item.dishes, locale),
-      description: getDishDescription(item.dishes, locale),
-      ingredients: getDishIngredients(item.dishes, locale),
-      price_cents: item.dishes!.price_cents,
-      image_url: item.dishes!.image_url,
-      category: item.dishes!.category,
-      allergens: item.dishes!.allergens,
-      is_soldout: item.is_soldout,
-      portions_remaining:
-        item.max_portions !== null
-          ? Math.max(item.max_portions - item.portions_sold, 0)
-          : null,
-    }));
+  const dishes = mapWeeklyMenuItems((menuItems ?? []) as WeeklyMenuWithDish[], locale);
 
   return {
     ...config,
