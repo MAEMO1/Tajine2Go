@@ -247,7 +247,7 @@ colors: {
     'orange-hover': '#B5540F',
     gold: '#F5A400',          // Saffron Gold (brand kit)
     bronze: '#78320C',        // Warm Brown (brand kit)
-    cream: '#FBF2DC',         // Warm papier (drukwerk; warmer dan kit-web-achtergrond, beslissing eigenaar)
+    cream: '#FDF3E2',         // Warm papier (drukwerk; warmer dan kit-web-achtergrond, beslissing eigenaar)
     warm: '#F6E8C9',
     warm2: '#F6E3B1',         // Cream (brand kit, wordmark fill)
     brown: '#3B1606',         // Tajine Dark Brown (brand kit)

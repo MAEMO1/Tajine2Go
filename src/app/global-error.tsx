@@ -8,7 +8,7 @@ export default function GlobalError({
 }) {
   return (
     <html lang="nl">
-      <body className="flex min-h-screen flex-col items-center justify-center bg-[#FBF2DC] font-sans text-[#3B1606]">
+      <body className="flex min-h-screen flex-col items-center justify-center bg-[#FDF3E2] font-sans text-[#3B1606]">
         <h1 className="text-4xl font-bold text-[#D2691E]">Oops</h1>
         <p className="mt-4">Er is iets misgegaan.</p>
         <button
