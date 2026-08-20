@@ -106,11 +106,9 @@
     "subtitle": "Laat ons uw evenement verzorgen met authentieke Marokkaanse gerechten.",
     "eventType": "Type evenement",
     "eventTypes": {
-      "wedding": "Bruiloft",
-      "aqiqa": "Aqiqa",
-      "corporate": "Bedrijfsevenement",
-      "funeral": "Rouwplechtigheid",
-      "iftar": "Iftar",
+      "party": "Feesten",
+      "event": "Evenementen",
+      "reception": "Recepties",
       "other": "Anders"
     },
     "eventDate": "Datum evenement",

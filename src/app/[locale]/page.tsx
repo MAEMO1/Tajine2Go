@@ -232,11 +232,10 @@ function CateringSection({ title, text }: { title: string; text: string }) {
   const tCatering = useTranslations("catering");
 
   const eventTypes = [
-    tCatering("eventTypes.wedding"),
-    tCatering("eventTypes.aqiqa"),
-    tCatering("eventTypes.corporate"),
-    tCatering("eventTypes.funeral"),
-    tCatering("eventTypes.iftar"),
+    tCatering("eventTypes.party"),
+    tCatering("eventTypes.event"),
+    tCatering("eventTypes.reception"),
+    tCatering("eventTypes.other"),
   ];
 
   return (

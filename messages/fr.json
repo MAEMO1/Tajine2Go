@@ -106,11 +106,9 @@
     "subtitle": "Laissez-nous prendre en charge votre événement avec des plats maghrébins authentiques.",
     "eventType": "Type d'événement",
     "eventTypes": {
-      "wedding": "Mariage",
-      "aqiqa": "Aqiqa",
-      "corporate": "Événement d'entreprise",
-      "funeral": "Funérailles",
-      "iftar": "Iftar",
+      "party": "Fêtes",
+      "event": "Événements",
+      "reception": "Réceptions",
       "other": "Autre"
     },
     "eventDate": "Date de l'événement",

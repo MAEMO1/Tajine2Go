@@ -7,7 +7,7 @@ const cateringSchema = z.object({
   last_name: z.string().min(1).max(100),
   email: z.string().email(),
   phone: z.string().min(1),
-  event_type: z.enum(["wedding", "aqiqa", "corporate", "funeral", "iftar", "other"]),
+  event_type: z.enum(["party", "event", "reception", "other"]),
   event_date: z.string().min(1),
   guest_count: z.number().int().min(1),
   dietary_needs: z.string().optional(),

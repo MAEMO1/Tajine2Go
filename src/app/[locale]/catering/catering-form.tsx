@@ -86,11 +86,9 @@ export function CateringForm({ subtitle, notice }: Props) {
   }
 
   const eventTypeChips = [
-    t("eventTypes.wedding"),
-    t("eventTypes.aqiqa"),
-    t("eventTypes.corporate"),
-    t("eventTypes.funeral"),
-    t("eventTypes.iftar"),
+    t("eventTypes.party"),
+    t("eventTypes.event"),
+    t("eventTypes.reception"),
     t("eventTypes.other"),
   ];
 
@@ -207,11 +205,9 @@ export function CateringForm({ subtitle, notice }: Props) {
                   <InputField label={t("eventType")} error={errors.event_type} requiredLabel={t("required")}>
                     <select {...register("event_type", { required: true })} className={inputClasses}>
                       <option value="">{t("eventType")}</option>
-                      <option value="wedding">{t("eventTypes.wedding")}</option>
-                      <option value="aqiqa">{t("eventTypes.aqiqa")}</option>
-                      <option value="corporate">{t("eventTypes.corporate")}</option>
-                      <option value="funeral">{t("eventTypes.funeral")}</option>
-                      <option value="iftar">{t("eventTypes.iftar")}</option>
+                      <option value="party">{t("eventTypes.party")}</option>
+                      <option value="event">{t("eventTypes.event")}</option>
+                      <option value="reception">{t("eventTypes.reception")}</option>
                       <option value="other">{t("eventTypes.other")}</option>
                     </select>
                   </InputField>
