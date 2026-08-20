@@ -94,15 +94,16 @@ function fallbackDish(
 }
 
 const FALLBACK_DISHES: Dish[] = [
-  fallbackDish("tajine-royal", ["Tajine Royal (runds)", "Tajine Royale (bœuf)", "Tajine Royal (beef)"], "tajine", 1700, 2200),
+  fallbackDish("tajine-royal", ["Tajine Royal (Runds)", "Tajine Royale (bœuf)", "Tajine Royal (beef)"], "tajine", 1700, 2200),
   fallbackDish("tajine-kefta", ["Tajine Kefta", "Tajine Kefta", "Kefta tagine"], "tajine", 1300, 1800),
   fallbackDish("tajine-kip-groenten", ["Tajine Kip en groenten", "Tajine Poulet et légumes", "Chicken & vegetable tagine"], "tajine", 1500, 2000),
   fallbackDish("tajine-veggie", ["Tajine Veggie", "Tajine Végé", "Veggie tagine"], "tajine", 1300, 1800),
-  fallbackDish("tajine-kip-olijven-citroen", ["Tajine Kip, olijven en citroen", "Tajine Poulet, olives et citron", "Chicken tagine with olives & lemon"], "tajine", 1500, 2000),
+  fallbackDish("tajine-kip-olijven-citroen", ["Tajine Kip met citroen en olijven", "Tajine Poulet au citron et olives", "Chicken tagine with lemon & olives"], "tajine", 1500, 2000),
   fallbackDish("couscous-kip-merguez", ["Couscous Kip Merguez", "Couscous Poulet Merguez", "Chicken & merguez couscous"], "couscous", 1700, 2200),
   fallbackDish("couscous-kip", ["Couscous Kip", "Couscous Poulet", "Chicken couscous"], "couscous", 1500, 2000),
   fallbackDish("couscous-runds", ["Couscous Runds", "Couscous Bœuf", "Beef couscous"], "couscous", 1700, 2200),
   fallbackDish("couscous-veggie", ["Couscous Veggie", "Couscous Végé", "Veggie couscous"], "couscous", 1300, 1800),
+  fallbackDish("stoofpotje-lam", ["Lamsstoofpotje", "Mijoté d'agneau", "Lamb stew"], "stoofpotje", 2300),
   fallbackDish("bstilla-kip", ["Bstilla Kip", "Bstilla Poulet", "Chicken bstilla"], "bstilla", 900),
   fallbackDish("bstilla-vis", ["Bstilla Vis", "Bstilla Poisson", "Fish bstilla"], "bstilla", 1200),
   fallbackDish("bstilla-groenten", ["Bstilla Groenten", "Bstilla Légumes", "Vegetable bstilla"], "bstilla", 900),

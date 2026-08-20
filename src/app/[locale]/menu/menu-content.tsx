@@ -15,7 +15,7 @@ type Props = {
   closedMessage?: string | null;
 };
 
-const CATEGORY_ORDER = ["tajine", "couscous", "bstilla", "main", "side", "dessert", "sweet", "drink"];
+const CATEGORY_ORDER = ["tajine", "couscous", "stoofpotje", "bstilla", "main", "side", "dessert", "sweet", "drink"];
 
 export function MenuContent({ menu, closedMessage }: Props) {
   const t = useTranslations("menu");
