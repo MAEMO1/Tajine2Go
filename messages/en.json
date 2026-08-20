@@ -106,11 +106,9 @@
     "subtitle": "Let us take care of your event with authentic Moroccan dishes.",
     "eventType": "Event type",
     "eventTypes": {
-      "wedding": "Wedding",
-      "aqiqa": "Aqiqa",
-      "corporate": "Corporate event",
-      "funeral": "Funeral",
-      "iftar": "Iftar",
+      "party": "Parties",
+      "event": "Events",
+      "reception": "Receptions",
       "other": "Other"
     },
     "eventDate": "Event date",

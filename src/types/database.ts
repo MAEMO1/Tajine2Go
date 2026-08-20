@@ -24,11 +24,9 @@ export type CateringStatus =
   | "cancelled";
 
 export type EventType =
-  | "wedding"
-  | "aqiqa"
-  | "corporate"
-  | "funeral"
-  | "iftar"
+  | "party"
+  | "event"
+  | "reception"
   | "other";
 
 export type DayName =

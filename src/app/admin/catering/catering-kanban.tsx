@@ -20,11 +20,9 @@ const columns = [
 ] as const;
 
 const eventLabels: Record<string, string> = {
-  wedding: "Bruiloft",
-  aqiqa: "Aqiqa",
-  corporate: "Bedrijf",
-  funeral: "Rouwplechtigheid",
-  iftar: "Iftar",
+  party: "Feesten",
+  event: "Evenementen",
+  reception: "Recepties",
   other: "Anders",
 };
 
