@@ -107,7 +107,8 @@ const DEFAULT_BRAND_ASSETS: BrandAssets = {
 const DEFAULT_WEBSITE_TEXTS: Record<Locale, WebsiteLocaleTexts> = {
   nl: {
     home: {
-      hero_subtitle: "Met liefde bereid, met respect voor traditie",
+      hero_subtitle:
+        "Bel, wij zetten het klaar. Afhalen in Gentbrugge, of we brengen het in Gent.",
       story_text:
         "Tajine2Go brengt de authentieke smaken van Marokko naar Gent. Met liefde bereid, met respect voor traditie, en met de beste verse ingrediënten. Elke week opnieuw.",
       catering_cta_title: "Catering voor uw evenement",

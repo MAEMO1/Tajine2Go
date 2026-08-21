@@ -247,12 +247,13 @@ colors: {
     'orange-hover': '#B5540F',
     gold: '#F5A400',          // Saffron Gold (brand kit)
     bronze: '#78320C',        // Warm Brown (brand kit)
-    cream: '#FDF3E2',         // Warm papier (drukwerk; warmer dan kit-web-achtergrond, beslissing eigenaar)
+    cream: '#FBF2DC',         // Warm papier (Mr. Pops-herontwerp 21/08/2026; vervangt #FDF3E2)
     warm: '#F6E8C9',
     warm2: '#F6E3B1',         // Cream (brand kit, wordmark fill)
     brown: '#3B1606',         // Tajine Dark Brown (brand kit)
     'brown-m': '#6B3E1E',
     'brown-s': '#A18059',
+    blue: '#22456E',          // Zellige-blauw: enige koele accent, klein inzetten (Mr. Pops-herontwerp)
   }
 }
 ```
@@ -261,18 +262,28 @@ colors: {
 
 ```ts
 fontFamily: {
-  display: ['Cormorant Garamond', 'Georgia', 'serif'], // koppen en display; italic voor de hero-traditiezin
+  display: ['Geist', 'system-ui', 'sans-serif'],       // koppen en display: Geist 800-900, uppercase
   sans: ['Geist', 'system-ui', 'sans-serif'],          // body én alle cijfers (prijzen, telefoonnummers, uren)
   mono: ['Geist Mono', 'ui-monospace', 'monospace'],   // legacy-restgebruik; geen nieuwe toepassingen
 }
 ```
 
-Cormorant Garamond als displayletter (zoals het gedrukte brandmateriaal), Geist voor body — en alle cijfers MUST in Geist staan, ook prijzen en telefoonnummers. Vaste schaal via de utilities `type-h1/h2/h3/type-label` in `globals.css`. Laad fonts via `next/font`. Zie `docs/adr/0003-displayletter-cormorant-garamond.md` (vervangt ADR 0002 "één familie Geist").
+Eén familie: **Geist**, geladen als variabel font over de volle gewichtsas (100-900).
+Contrast maak je met gewicht en schaal, niet met een tweede lettertype.
+
+- Display MUST Geist 800-900 gebruiken, uppercase, tot 144px, `line-height` <= 0,90,
+  `letter-spacing` **+0,05em**. Negatieve tracking is verboden.
+- Body en **alle cijfers** MUST Geist 400 zijn; prijzen met `tabular-nums`.
+- Vaste schaal via de utilities `type-h1/h2/h3/type-label` in `globals.css`.
+- Laad fonts via `next/font`.
+
+Cormorant Garamond is verwijderd uit de publieke site.
+Zie `docs/adr/0005-een-familie-geist-over-de-volle-gewichtsas.md` (vervangt ADR 0003).
 
 ### 5.3 Componentregels
 
-- Primaire knop MUST `bg-brand-orange-hover` (#B5540F, contrast met wit 4,95:1) als basiskleur, `text-white` en `rounded-md` gebruiken; hover is `brand-orange-deep`. (Beslissing eigenaar bij het paletwerk: het accent #D2691E haalt zelf geen AA op wit.)
-- Secundaire knop MUST een bruine outlinevariant gebruiken.
+- Primaire knop MUST `bg-brand-orange-hover` (#B5540F, contrast met wit 4,95:1) als basiskleur, `text-white` en **`rounded-full`** (pil) gebruiken, zonder schaduw; hover is `brand-orange-deep`. (Beslissing eigenaar bij het paletwerk: het accent #D2691E haalt zelf geen AA op wit.)
+- Secundaire knop (ghost) MUST **`rounded-none`** en een rand van exact **1px** gebruiken. Het contrast gevulde-pil versus scherpe-ghost is een merkkenmerk; zie `docs/adr/0004-knopcontrast-gevulde-pil-versus-scherpe-ghost.md`.
 - Kaarten MUST `bg-brand-cream`, `shadow-sm`, `rounded-xl` gebruiken.
 - Inputs MUST `border-brand-brown-s`, `rounded-lg`, `text-sm` gebruiken.
 - Dish cards MUST rij-layout gebruiken, geen uniforme card-grid.

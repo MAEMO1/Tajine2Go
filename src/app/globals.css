@@ -7,20 +7,23 @@
   --color-brand-orange-deep: #93430B;
   --color-brand-gold: #F5A400;
   --color-brand-bronze: #78320C;
-  --color-brand-cream: #FDF3E2;
+  --color-brand-cream: #FBF2DC;
   --color-brand-warm: #F6E8C9;
   --color-brand-warm2: #F6E3B1;
   --color-brand-brown: #3B1606;
   --color-brand-brown-m: #6B3E1E;
   --color-brand-brown-s: #A18059;
+  --color-brand-blue: #22456E;   /* zellige-blauw: enige koele accent, klein inzetten */
 
-  /* Type system — één familie: Geist (+ Geist Mono). Zie docs/adr/0002. */
+  /* Type system — één familie: Geist over de volle gewichtsas (100-900).
+     Contrast maak je met gewicht en schaal, niet met een tweede lettertype.
+     Zie docs/adr/0005 (vervangt 0003). */
   --font-sans:    var(--font-geist), system-ui, sans-serif;
   --font-mono:    var(--font-geist-mono), ui-monospace, monospace;
 
-  /* Redesign 2026 "familiekeuken": klassieke serif + script (hero e.a.) */
-  --font-display: var(--font-cormorant), Georgia, serif;
-  --font-script:  var(--font-cormorant), serif;
+  /* Display is dezelfde familie; het verschil zit in gewicht, schaal en uppercase. */
+  --font-display: var(--font-geist), system-ui, sans-serif;
+  --font-script:  var(--font-geist), system-ui, sans-serif;
 
   /* Legacy aliases → Geist (migreer classes mettertijd naar font-sans/font-mono) */
   --font-heading: var(--font-geist), system-ui, sans-serif;
@@ -32,6 +35,7 @@ body {
   background: var(--color-brand-cream);
   color: var(--color-brand-brown);
   font-family: var(--font-body);
+  line-height: 1.4;              /* referentie: body 140% */
 }
 
 /* Subtle grain overlay for depth — applied to main surfaces */
@@ -105,33 +109,41 @@ body::after {
    H1 paginatitels · H2 sectietitels · H3 categorie/kaart-koppen · label formulierblokken */
 @utility type-h1 {
   font-family: var(--font-display);
-  font-size: clamp(34px, 5vw, 56px);
-  font-weight: 500;
-  line-height: 1.15;
+  font-size: clamp(40px, 10vw, 144px);   /* referentie h1: 144 / 94 / 40px */
+  font-weight: 900;
+  line-height: 0.90;                     /* referentie: 90% op de grote maten */
+  letter-spacing: 0.05em;                /* Tajine2Go-regel, zie spec 1.1 */
+  text-transform: uppercase;
   color: var(--color-brand-brown);
 }
 
 @utility type-h2 {
   font-family: var(--font-display);
-  font-size: clamp(28px, 4vw, 44px);
-  font-weight: 500;
-  line-height: 1.15;
+  font-size: clamp(40px, 5vw, 72px);     /* referentie h2: 72 / 56 / 40px */
+  font-weight: 900;
+  line-height: 0.92;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
   color: var(--color-brand-brown);
 }
 
 @utility type-h3 {
   font-family: var(--font-display);
-  font-size: 20px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
+  font-size: clamp(30px, 3.4vw, 64px);   /* referentie h3: 64 / 48 / 30px */
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: var(--color-brand-bronze);
+  color: var(--color-brand-brown);
 }
 
 @utility type-label {
   font-family: var(--font-display);
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 15px;                       /* referentie UI-maat: 15px / 130% */
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
   color: var(--color-brand-bronze);
 }
 
@@ -205,7 +217,8 @@ html.lenis body {
 :focus-visible {
   outline: 2px solid var(--color-brand-orange);
   outline-offset: 3px;
-  border-radius: 4px;
+  /* Geen eigen border-radius: de outline volgt de vorm van het element zelf.
+     Een vaste 4px maakte de pil-CTA vierkant zodra hij focus kreeg (ADR 0004). */
 }
 
 /* ── Selection on ember (dark) sections ── */

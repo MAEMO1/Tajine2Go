@@ -4,10 +4,10 @@ import { setRequestLocale, getTranslations, getLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { InfoStrip } from "@/components/info-strip";
 import { HomepageMenu } from "@/components/homepage-menu";
-import { PhoneOrderButton } from "@/components/phone-order-button";
 import { Reveal, SplitHeading } from "@/components/motion/reveal";
 import { Khatam } from "@/components/decor/khatam";
 import { fetchStaticMenuData } from "@/lib/menu-data";
+import { ORDER_PHONE_NUMBERS } from "@/lib/phone";
 import { fetchPublicSiteContent } from "@/lib/site-content";
 import type { Locale } from "@/types/database";
 
@@ -71,104 +71,70 @@ export default async function HomePage({ params }: Props) {
 }
 
 /* ------------------------------------------------------------------ */
-/* Hero — "Hero Final" comp: donker geblurd mozaïek, gouden kaderlijn, */
-/* gecentreerd logo, serif-kop in crème, script-traditieregel, 2 CTA's */
+/* Hero — eenheid 1. Mr. Pops-compositie: één full-bleed merkvlak,     */
+/* de displaykop staat er direct op (geen scrim, geen verloop), en     */
+/* twee CTA's waarvan de vórm het contrast draagt: gevulde pil tegen   */
+/* scherpe hoek met 1px rand.                                          */
 /* ------------------------------------------------------------------ */
 
-function HeroSection({
-  heroSubtitle,
-}: {
-  heroSubtitle: string;
-}) {
+function HeroSection({ heroSubtitle }: { heroSubtitle: string }) {
   const t = useTranslations("home");
+  const headingWords = t("heroLine1").split(/\s+/).filter(Boolean);
+  const primaryPhone = ORDER_PHONE_NUMBERS[0];
 
   return (
-    <section className="relative isolate overflow-hidden bg-[#4A1E08]">
-      {/* Zellige-patroon (beker/gevelplaat), licht geblurd + warme donkere waas voor leesbaarheid */}
+    <section
+      data-unit="hero"
+      data-section="hero"
+      className="relative isolate flex min-h-[100vh] flex-col justify-end overflow-hidden bg-brand-brown pt-[60px] pb-10 supports-[min-height:100svh]:min-h-[100svh] md:pt-[120px] md:pb-[54px]"
+    >
+      {/* Art direction: liggend, ooghoogte, de toog met dampende tajines; warm kunstlicht; ruimte links voor de kop. */}
       <div
-        className="absolute -inset-2 bg-[url('/brand/pattern-zellige.jpg')] bg-[length:300px_300px] blur-[4px]"
+        data-media-slot="hero"
         aria-hidden="true"
-      />
-      <div
-        className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(45,15,4,0.68)_0%,rgba(35,11,3,0.88)_100%)]"
-        aria-hidden="true"
-      />
-
-      {/* Dubbele gouden kaderlijn */}
-      <div className="pointer-events-none absolute inset-3 border border-brand-gold/45 md:inset-5" aria-hidden="true" />
-      <div className="pointer-events-none absolute inset-4 border border-brand-gold/25 md:inset-7" aria-hidden="true" />
-
-      {/* Mobile-first: compacte maten en verticale ritmes, vanaf md ruimer */}
-      <div className="relative mx-auto flex min-h-[100svh] max-w-4xl flex-col items-center justify-center px-7 py-14 text-center md:px-6 md:py-24">
-        <Reveal>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/brand/logo/Tajine2Go_logo_primary_transparent_640w.png"
-            alt="Tajine2Go"
-            className="h-[72px] w-auto drop-shadow-[0_6px_18px_rgba(0,0,0,0.45)] md:h-32"
-          />
-        </Reveal>
-
-        <Reveal delay={0.15}>
-          <div className="mt-6 flex items-center justify-center gap-3 text-[#F6E9D2] md:mt-10 md:gap-4">
-            <span className="hidden h-px bg-brand-gold/60 sm:block sm:w-8 md:w-14" aria-hidden="true" />
-            <p className="max-w-[26ch] text-balance font-display text-[12px] font-semibold uppercase leading-[1.9] tracking-[0.24em] sm:max-w-none md:text-[15px] md:tracking-[0.32em]">
-              {t("heroKicker")}
-            </p>
-            <span className="hidden h-px bg-brand-gold/60 sm:block sm:w-8 md:w-14" aria-hidden="true" />
-          </div>
-        </Reveal>
-
-        <SplitHeading
-          as="h1"
-          className="mt-5 text-balance font-display text-[clamp(38px,11vw,96px)] font-medium leading-[1.1] text-[#F6E9D2] md:mt-8 md:leading-[1.08]"
-        >
-          {t("heroLine1")}
-        </SplitHeading>
-
-        <Reveal delay={0.35}>
-          <p className="mt-5 text-balance font-display text-[clamp(20px,5vw,30px)] font-medium italic leading-normal text-[#F6E9D2] md:mt-7">
-            {heroSubtitle}
-          </p>
-        </Reveal>
-
-        <Reveal delay={0.5}>
-          <div className="mt-8 flex w-full max-w-xs flex-col items-stretch gap-3 sm:max-w-none sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-4 md:mt-10">
-            <PhoneOrderButton
-              label={t("orderNow")}
-              className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-brand-orange-hover px-8 py-3.5 font-display text-lg font-bold text-white shadow-[0_6px_24px_rgba(0,0,0,0.35)] transition-colors duration-300 hover:bg-brand-orange-deep active:scale-[0.98] sm:w-auto"
-            />
-            <Link
-              href="/catering"
-              className="inline-flex items-center justify-center rounded-md border border-[#F6E9D2]/70 px-8 py-3.5 font-display text-lg font-bold text-[#F6E9D2] transition-all duration-300 hover:bg-[#F6E9D2]/10 active:scale-[0.98]"
-            >
-              {t("heroCateringCta")}
-            </Link>
-          </div>
-        </Reveal>
+        className="absolute inset-y-0 left-0 -z-10 w-screen bg-brand-brown"
+      >
+        <div className="absolute inset-4 border border-brand-gold/30 md:inset-6" />
+        <span className="type-label absolute top-8 right-8 text-brand-gold md:top-12 md:right-12">
+          Beeldvlak — hero-foto volgt
+        </span>
       </div>
 
-      {/* Scroll-aanwijzing: hint dat het menu eronder staat */}
-      <a
-        href="#menu"
-        aria-label={t("scrollToMenu")}
-        className="absolute bottom-7 left-1/2 flex h-11 w-11 -translate-x-1/2 items-center justify-center rounded-full text-[#F6E9D2]/80 transition-colors hover:text-[#F6E9D2]"
-      >
-        <svg
-          className="h-7 w-7 motion-safe:animate-float"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={1.8}
-          aria-hidden="true"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-        </svg>
-      </a>
+      <div className="relative px-5 motion-safe:animate-fade-up md:px-[2.08vw]">
+        <span className="type-label block text-brand-warm2">{t("heroKicker")}</span>
+
+        <h1 className="type-h1 mt-4 text-brand-cream md:mt-6">
+          {headingWords.map((word, index) => (
+            <span key={`${word}-${index}`} className="block">
+              {word}
+            </span>
+          ))}
+        </h1>
+
+        <p className="mt-6 max-w-[42ch] text-[17px] leading-[1.4] text-brand-warm md:mt-8 md:text-[18px]">
+          {heroSubtitle}
+        </p>
+
+        <div className="mt-8 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:gap-5 md:mt-10">
+          <a
+            data-cta="primary"
+            href={`tel:${primaryPhone.tel}`}
+            className="inline-flex min-h-[52px] items-center justify-center rounded-full bg-brand-orange-hover px-9 py-3 text-[17px] font-bold uppercase tracking-[0.05em] text-white transition-colors duration-200 hover:bg-brand-orange-deep"
+          >
+            {t("orderNow")}
+          </a>
+          <Link
+            data-cta="ghost"
+            href="/catering"
+            className="inline-flex min-h-[52px] items-center justify-center rounded-none border border-brand-cream px-9 py-3 text-[17px] font-semibold uppercase tracking-[0.05em] text-brand-cream transition-colors duration-200 hover:bg-brand-cream hover:text-brand-brown"
+          >
+            {t("heroCateringCta")}
+          </Link>
+        </div>
+      </div>
     </section>
   );
 }
-
 
 /* ------------------------------------------------------------------ */
 /* Story — the dark ember heart of the page                            */

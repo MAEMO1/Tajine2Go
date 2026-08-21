@@ -1,6 +1,6 @@
 # 0003 — Displayletter: Cormorant Garamond naast Geist
 
-Status: accepted, 2026-08-17. Vervangt ADR 0002 ("één moderne grotesk: Geist").
+Status: **superseded** door ADR 0005 (2026-08-21). Vervong destijds ADR 0002 ("één moderne grotesk: Geist").
 
 ## Context
 

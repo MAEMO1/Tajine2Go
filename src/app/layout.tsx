@@ -1,8 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Geist, Geist_Mono } from "next/font/google";
+import { getLocale } from "next-intl/server";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-// Eén type-familie voor de hele publieke site: Geist (+ Geist Mono). Zie docs/adr/0002.
+// Eén type-familie voor de hele publieke site: Geist als variabel font (100-900),
+// plus Geist Mono voor legacy-restgebruik. Zie docs/adr/0005 (vervangt 0003).
 const geist = Geist({
   variable: "--font-geist",
   subsets: ["latin"],
@@ -12,16 +14,6 @@ const geist = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
-  display: "swap",
-});
-
-// Redesign 2026 "familiekeuken": klassieke serif voor display (zoals het
-// gedrukte brandmateriaal); de traditie-zin in de hero gebruikt de italic.
-const cormorant = Cormorant_Garamond({
-  variable: "--font-cormorant",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  style: ["normal", "italic"],
   display: "swap",
 });
 
@@ -50,14 +42,19 @@ export const viewport: Viewport = {
   themeColor: "#3B1606",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // <html> leeft in de root-layout (admin staat buiten [locale]), dus de locale
+  // wordt hier uit de next-intl request-config gelezen in plaats van uit params.
+  const locale = await getLocale();
+
   return (
     <html
-      className={`${geist.variable} ${geistMono.variable} ${cormorant.variable} h-full antialiased`}
+      lang={locale}
+      className={`${geist.variable} ${geistMono.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">{children}</body>
