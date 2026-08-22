@@ -1,16 +1,20 @@
 @import "tailwindcss";
 
 @theme inline {
-  /* Brand colors */
-  --color-brand-orange: #D2691E;
-  --color-brand-orange-hover: #B5540F;
-  --color-brand-orange-deep: #93430B;
-  --color-brand-gold: #F5A400;
-  --color-brand-bronze: #78320C;
-  --color-brand-cream: #FDF3E2;
+  /* Brand colors — palet vastgelegd 21/08/2026, gemeten uit het logobestand.
+     Zie CLAUDE.md §5.1; die sectie is de enige bron. Rol staat achter elk token. */
+  --color-brand-cream: #FDF3E2;        /* papier — achtergrond */
+  --color-brand-brown: #440C00;        /* inkt — tekst, koppen, prijzen */
+  --color-brand-bronze: #834620;       /* espresso — zachte tekst, ornamenten */
+  --color-brand-orange-hover: #B84A10; /* actie — knoppen en links */
+  --color-brand-orange-deep: #93430B;  /* hover op de actiekleur */
+  --color-brand-orange: #DE5C1B;       /* merkoranje — alleen vlakken, nooit tekst */
+  --color-brand-gold: #FDAD47;         /* saffraangoud — lijn op donker, nooit op licht */
+
+  /* Restanten van het oude palet. Geen nieuw gebruik; brown-s blijft tot er
+     een randkleur beslist is. Zie CLAUDE.md §5.1. */
   --color-brand-warm: #F6E8C9;
   --color-brand-warm2: #F6E3B1;
-  --color-brand-brown: #3B1606;
   --color-brand-brown-m: #6B3E1E;
   --color-brand-brown-s: #A18059;
 

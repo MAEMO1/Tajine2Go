@@ -238,24 +238,57 @@ Het merk is bindend. Implementers MUST de visuele richting volgen en mogen deze 
 
 ### 5.1 Kleurensysteem
 
-Gebruik deze custom colors in `tailwind.config.ts`:
+Het palet is op 21/08/2026 opnieuw vastgelegd. Het is gemeten uit het
+logobestand, dat de eigenaar heeft aangewezen als de primaire bron voor het
+merk. Oudere documenten met afwijkende waarden (`docs/redesign/design-language.md`,
+`marketing/design-references/tajine2go-design-brief.md`, de brand kit) zijn
+daarmee vervallen; deze sectie is de enige bron.
 
-```ts
-colors: {
-  brand: {
-    orange: '#D2691E',        // Terracotta (zellige-patroon; gedempt t.o.v. kit-Spice-Orange, beslissing eigenaar 16/08/2026)
-    'orange-hover': '#B5540F',
-    gold: '#F5A400',          // Saffron Gold (brand kit)
-    bronze: '#78320C',        // Warm Brown (brand kit)
-    cream: '#FDF3E2',         // Warm papier (drukwerk; warmer dan kit-web-achtergrond, beslissing eigenaar)
-    warm: '#F6E8C9',
-    warm2: '#F6E3B1',         // Cream (brand kit, wordmark fill)
-    brown: '#3B1606',         // Tajine Dark Brown (brand kit)
-    'brown-m': '#6B3E1E',
-    'brown-s': '#A18059',
-  }
-}
+Zes kleuren, elk met één rol. Er MUST NOT een zevende bijkomen zonder
+specwijziging.
+
+| Rol | Waarde | Op papier | Gebruik |
+|---|---|---|---|
+| papier | `#FDF3E2` | — | achtergrond van de publieke site |
+| inkt | `#440C00` | 14,71 (AAA) | lopende tekst, koppen, prijzen |
+| espresso | `#834620` | 6,67 (AA) | zachte tekst, bijschriften, ornamenten |
+| actie | `#B84A10` | 4,74 (AA) | knoppen en links; wit erop is 5,22 (AA) |
+| merkoranje | `#DE5C1B` | 3,38 | alleen vlakken en vormen, MUST NOT als tekstkleur |
+| saffraangoud | `#FDAD47` | 1,70 | lijnkleur op donker; 8,66 op inkt (AAA) |
+
+Regels:
+
+- `saffraangoud` MUST NOT op een lichte achtergrond als tekst of als betekenisdragend
+  element gebruikt worden. 1,70 ligt ruim onder elke leesbaarheidsdrempel.
+- `merkoranje` MUST NOT als tekstkleur gebruikt worden. Voor tekst die eruit moet
+  springen geldt `actie`, voor gewone tekst `inkt`.
+- De actiekleur MUST voorbehouden blijven aan knoppen en links, zodat "oranje"
+  op de site consequent "hier kan je klikken" betekent.
+
+De tokens leven in `src/app/globals.css` onder `@theme inline`. Dit project
+gebruikt Tailwind v4 en heeft geen `tailwind.config.ts`, ondanks de vermelding
+in de doelstructuur in §4.
+
+```css
+--color-brand-cream:        #FDF3E2;  /* papier */
+--color-brand-brown:        #440C00;  /* inkt */
+--color-brand-bronze:       #834620;  /* espresso */
+--color-brand-orange-hover: #B84A10;  /* actie */
+--color-brand-orange:       #DE5C1B;  /* merkoranje */
+--color-brand-gold:         #FDAD47;  /* saffraangoud */
+--color-brand-orange-deep:  #93430B;  /* hover op de actiekleur, wit erop 6,89 */
 ```
+
+De tokennamen zijn bewust ongewijzigd gebleven zodat bestaande componenten
+blijven werken; de waarden erachter zijn wél vervangen.
+
+De tokens `brand-warm`, `brand-warm2` en `brand-brown-m` horen niet bij dit
+palet en SHOULD uitgefaseerd worden; er MUST NOT nieuw gebruik van bijkomen.
+`brand-brown-s` blijft voorlopig staan als randkleur voor inputs (§5.3), omdat
+het palet nog geen randkleur kent. Zodra die er is, vervalt ook dit token.
+
+Losse hexcodes in componentcode MUST vervangen worden door tokens. Elke
+hardgecodeerde kleur is een plek die niet meewijzigt als het palet verandert.
 
 ### 5.2 Typografie
 
@@ -271,17 +304,55 @@ Cormorant Garamond als displayletter (zoals het gedrukte brandmateriaal), Geist 
 
 ### 5.3 Componentregels
 
-- Primaire knop MUST `bg-brand-orange-hover` (#B5540F, contrast met wit 4,95:1) als basiskleur, `text-white` en `rounded-md` gebruiken; hover is `brand-orange-deep`. (Beslissing eigenaar bij het paletwerk: het accent #D2691E haalt zelf geen AA op wit.)
+- Primaire knop MUST `bg-brand-orange-hover` (de actiekleur `#B84A10`, contrast met wit 5,22) als basiskleur, `text-white` en `rounded-md` gebruiken; hover is `brand-orange-deep` (`#93430B`, contrast met wit 6,89). Merkoranje `#DE5C1B` haalt met wit maar 3,72 en MUST NOT als knopkleur dienen.
 - Secundaire knop MUST een bruine outlinevariant gebruiken.
 - Kaarten MUST `bg-brand-cream`, `shadow-sm`, `rounded-xl` gebruiken.
 - Inputs MUST `border-brand-brown-s`, `rounded-lg`, `text-sm` gebruiken.
 - Dish cards MUST rij-layout gebruiken, geen uniforme card-grid.
-- Prijzen MUST prominent getoond worden in een zwaar Geist-gewicht en brand orange.
+- Prijzen MUST prominent getoond worden in een zwaar Geist-gewicht en het donkere merkbruin (`#440C00`, "inktkleur"), niet in brand orange. (Beslissing eigenaar 21/08/2026 bij het paletwerk; contrast 14,7 op `brand-cream`. De actiekleur blijft voorbehouden aan knoppen en links.)
 
 ### 5.4 Responsive
 
 - Desktop boven 900px MUST admin in 2-kolom layout tonen; de publieke hero is bewust gecentreerd (familiekeuken-redesign, augustus 2026).
 - Mobile onder 600px MUST cart als bottom sheet of drawer tonen (slapend zolang bestellen telefonisch gaat, zie §1.1).
+
+### 5.5 Merkelementen
+
+#### Logo
+
+Er zijn twee varianten, en de keuze hangt af van de achtergrond:
+
+- Op een lichte achtergrond MUST `Tajine2Go_logo_primary_light_bg_espresso_text_transparent_*` gebruikt worden.
+- Op een donkere achtergrond MUST `Tajine2Go_logo_primary_transparent_*` gebruikt worden.
+
+De volle-kleurvariant heeft een woordmerk in papierkleur en is voor donker
+getekend. Op `brand-cream` haalt hij 2,02 gemeten over alle dekkende pixels, en
+het woordmerk zelf verdwijnt volledig. Die combinatie MUST NOT voorkomen.
+
+De espressovariant staat op 21/08/2026 nog niet in `public/brand/logo/`; alleen
+de volle-kleurvariant is daar aanwezig. Zolang dat zo is, toont de header het
+verkeerde bestand.
+
+Het icoon MUST NOT hertekend of vereenvoudigd worden (beslissing eigenaar
+21/08/2026: bij hertekenen gaan te veel details verloren).
+
+#### Sierkader en ornament
+
+Beide staan als vector klaar, gevectoriseerd uit de originele PNG's.
+
+- Het sierkader is een lint van twee lijnen: inkt aan de buitenkant,
+  saffraangoud aan de binnenkant, doorzichtig ertussen. In het origineel liepen
+  daar nog een tweede inktlijn en een baan in papierkleur tussen; beide zijn op
+  beslissing van de eigenaar verwijderd (21/08/2026) en MUST NOT teruggezet
+  worden.
+- Het scheidingsornament MUST effen in espresso staan. De geschilderde textuur
+  van het origineel is bewust weggelaten: op tekstformaat wordt die ruis.
+
+#### Zellige-patroon
+
+Het patroon wordt door een externe designer opnieuw getekend (beslissing
+eigenaar 21/08/2026). Tot dat werk geleverd is MUST er geen patroonvariant in de
+codebase opgenomen worden.
 
 ---
 

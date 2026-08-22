@@ -71,7 +71,7 @@ export function AnalyticsContent({ dailySummary, dishRankings, vatSummary, cater
               <XAxis dataKey="date" tick={{ fontSize: 10 }} />
               <YAxis tick={{ fontSize: 11 }} tickFormatter={(v) => `â‚¬${v}`} />
               <Tooltip formatter={(value) => [`â‚¬${Number(value).toFixed(2)}`, "Omzet"]} />
-              <Bar dataKey="revenue" fill="#D2691E" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="revenue" fill="#DE5C1B" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -114,8 +114,8 @@ export function AnalyticsContent({ dailySummary, dishRankings, vatSummary, cater
                     <XAxis dataKey="month" tick={{ fontSize: 10 }} />
                     <YAxis tick={{ fontSize: 11 }} tickFormatter={(v) => `â‚¬${v}`} />
                     <Tooltip formatter={(value) => [`â‚¬${Number(value).toFixed(2)}`]} />
-                    <Line type="monotone" dataKey="total" stroke="#D2691E" strokeWidth={2} />
-                    <Line type="monotone" dataKey="vat" stroke="#F5A400" strokeWidth={2} />
+                    <Line type="monotone" dataKey="total" stroke="#DE5C1B" strokeWidth={2} />
+                    <Line type="monotone" dataKey="vat" stroke="#834620" strokeWidth={2} />
                   </LineChart>
                 </ResponsiveContainer>
               </div>

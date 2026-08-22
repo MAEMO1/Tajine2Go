@@ -83,7 +83,7 @@ function HeroSection({
   const t = useTranslations("home");
 
   return (
-    <section className="relative isolate overflow-hidden bg-[#4A1E08]">
+    <section className="relative isolate overflow-hidden bg-brand-brown">
       {/* Zellige-patroon (beker/gevelplaat), licht geblurd + warme donkere waas voor leesbaarheid */}
       <div
         className="absolute -inset-2 bg-[url('/brand/pattern-zellige.jpg')] bg-[length:300px_300px] blur-[4px]"
@@ -110,7 +110,7 @@ function HeroSection({
         </Reveal>
 
         <Reveal delay={0.15}>
-          <div className="mt-6 flex items-center justify-center gap-3 text-[#F6E9D2] md:mt-10 md:gap-4">
+          <div className="mt-6 flex items-center justify-center gap-3 text-brand-cream md:mt-10 md:gap-4">
             <span className="hidden h-px bg-brand-gold/60 sm:block sm:w-8 md:w-14" aria-hidden="true" />
             <p className="max-w-[26ch] text-balance font-display text-[12px] font-semibold uppercase leading-[1.9] tracking-[0.24em] sm:max-w-none md:text-[15px] md:tracking-[0.32em]">
               {t("heroKicker")}
@@ -121,13 +121,13 @@ function HeroSection({
 
         <SplitHeading
           as="h1"
-          className="mt-5 text-balance font-display text-[clamp(38px,11vw,96px)] font-medium leading-[1.1] text-[#F6E9D2] md:mt-8 md:leading-[1.08]"
+          className="mt-5 text-balance font-display text-[clamp(38px,11vw,96px)] font-medium leading-[1.1] text-brand-cream md:mt-8 md:leading-[1.08]"
         >
           {t("heroLine1")}
         </SplitHeading>
 
         <Reveal delay={0.35}>
-          <p className="mt-5 text-balance font-display text-[clamp(20px,5vw,30px)] font-medium italic leading-normal text-[#F6E9D2] md:mt-7">
+          <p className="mt-5 text-balance font-display text-[clamp(20px,5vw,30px)] font-medium italic leading-normal text-brand-cream md:mt-7">
             {heroSubtitle}
           </p>
         </Reveal>
@@ -140,7 +140,7 @@ function HeroSection({
             />
             <Link
               href="/catering"
-              className="inline-flex items-center justify-center rounded-md border border-[#F6E9D2]/70 px-8 py-3.5 font-display text-lg font-bold text-[#F6E9D2] transition-all duration-300 hover:bg-[#F6E9D2]/10 active:scale-[0.98]"
+              className="inline-flex items-center justify-center rounded-md border border-brand-cream/70 px-8 py-3.5 font-display text-lg font-bold text-brand-cream transition-all duration-300 hover:bg-brand-cream/10 active:scale-[0.98]"
             >
               {t("heroCateringCta")}
             </Link>
@@ -152,7 +152,7 @@ function HeroSection({
       <a
         href="#menu"
         aria-label={t("scrollToMenu")}
-        className="absolute bottom-7 left-1/2 flex h-11 w-11 -translate-x-1/2 items-center justify-center rounded-full text-[#F6E9D2]/80 transition-colors hover:text-[#F6E9D2]"
+        className="absolute bottom-7 left-1/2 flex h-11 w-11 -translate-x-1/2 items-center justify-center rounded-full text-brand-cream/80 transition-colors hover:text-brand-cream"
       >
         <svg
           className="h-7 w-7 motion-safe:animate-float"
