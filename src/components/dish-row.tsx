@@ -54,7 +54,9 @@ export function DishRow({ dish }: Props) {
               className="mb-1 min-w-6 flex-1 border-b-2 border-dotted border-brand-brown-s/40"
               aria-hidden="true"
             />
-            <span className="whitespace-nowrap text-end text-[17px] font-bold leading-none text-brand-orange transition-colors duration-300 group-hover:text-brand-orange-hover sm:text-[19px]">
+            {/* Prijzen in inktkleur, niet in merkoranje: de actiekleur blijft
+                voorbehouden aan knoppen en links. Zie CLAUDE.md §5.3. */}
+            <span className="whitespace-nowrap text-end text-[17px] font-bold leading-none text-brand-brown sm:text-[19px]">
               {formatMenuPrice(dish.price_cents, dish.price_l_cents)}
               {dish.price_l_cents !== null && (
                 <span className="mt-1 block font-display text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-brown-s">

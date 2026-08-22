@@ -22,7 +22,10 @@ export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [phoneOpen, setPhoneOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const logoSrc = logoUrl || "/brand/logo/Tajine2Go_logo_primary_transparent_640w.png";
+  // De header staat op brand-cream, dus de espressovariant. De volle-kleurversie
+  // heeft een woordmerk in papierkleur en verdwijnt op licht (contrast 2,02
+  // tegen 7,29 op donker). Zie CLAUDE.md §5.5.
+  const logoSrc = logoUrl || "/brand/logo/Tajine2Go_logo_primary_light_bg_espresso_text_transparent_640w.png";
   const logoText = logoAlt || brandName;
 
   const isHomepage = pathname === "/";

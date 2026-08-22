@@ -15,7 +15,7 @@ export function PageHeader({ title, subtitle }: { title: string; subtitle?: stri
         <path
           d="M22,54 Q22,36 48,31 C72,27 86,22 100,13 C114,22 128,27 152,31 Q178,36 178,54"
           fill="none"
-          stroke="#F5A400"
+          stroke="#DE5C1B"
           strokeWidth="1.4"
         />
       </svg>
