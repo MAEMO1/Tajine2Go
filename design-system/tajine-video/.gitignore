@@ -1,0 +1,8 @@
+# Alleen de mapstructuur hoort in git. De bestanden zelf niet: een bronvideo is
+# al snel tientallen megabytes en een frame-uittrek loopt in de duizenden PNG's.
+# Die horen lokaal te blijven, niet in de repo-geschiedenis.
+input/*
+frames/*
+transparent/*
+output/*
+!*/.gitkeep
