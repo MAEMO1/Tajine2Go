@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="QR-standaard deck" description="Presentatie van de A4 QR-standaard: blad, kaderopbouw, vier codes, drukspecs" -->
+<helmet>
+<script src="./ds-base.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Geist:wght@400;500;600&display=swap">
+<style>body{margin:0;background:#440C00}</style>
+</helmet>
+<x-import component-from-global-scope="deck-stage" from="./deck-stage.js" width="1920" height="1080" hint-size="100%,100%">
+
+<section data-label="Titel" data-screen-label="01" style="width:1920px;height:1080px;background:#FDF3E2;display:grid;grid-template-columns:1fr 720px;align-items:center;box-sizing:border-box;font-family:Geist,sans-serif;color:#440C00;overflow:hidden">
+<div style="padding:0 0 0 120px;display:grid;gap:32px;justify-items:start">
+<span style="font-family:'Cormorant Garamond',serif;font-weight:600;font-size:26px;letter-spacing:.28em;text-transform:uppercase;color:#834620">Merkstandaard — augustus 2026</span>
+<h1 style="font-family:'Cormorant Garamond',serif;font-weight:700;font-size:132px;line-height:1;margin:0;letter-spacing:-.01em">De QR-standaard</h1>
+<p style="font-size:32px;line-height:1.5;max-width:720px;margin:0;color:#834620">Één A4-blad dat op tafel, aan het raam en in de zaak hetzelfde werkt: vier QR-codes in het sierkader van Tajine2Go.</p>
+<img src="../../assets/elements/tajine2go-ornament.svg" alt="" style="width:280px;height:auto;opacity:.6;margin-top:16px">
+</div>
+<div style="height:1080px;background:#DE5C1B;display:grid;place-items:center">
+<img src="../../assets/logo/tajine2go-stacked-light.svg" alt="Tajine2Go" style="width:360px;height:auto">
+</div>
+</section>
+
+<section data-label="Het blad" data-screen-label="02" style="width:1920px;height:1080px;background:#FDF3E2;display:grid;grid-template-columns:1fr 1fr;box-sizing:border-box;font-family:Geist,sans-serif;color:#440C00;overflow:hidden">
+<div style="padding:120px;display:grid;align-content:center;gap:40px">
+<span style="font-family:'Cormorant Garamond',serif;font-weight:600;font-size:24px;letter-spacing:.28em;text-transform:uppercase;color:#834620">Het blad</span>
+<h2 style="font-family:'Cormorant Garamond',serif;font-weight:700;font-size:86px;line-height:1.05;margin:0">A4, twee kaders in elkaar</h2>
+<div style="display:grid;gap:24px;font-size:30px;line-height:1.45;color:#440C00">
+<div style="display:grid;grid-template-columns:200px 1fr;gap:24px;align-items:baseline;border-top:1px solid rgba(131,70,32,.3);padding-top:20px"><b style="font-family:'Cormorant Garamond',serif;font-size:34px">210 × 297</b><span style="color:#834620">Bladformaat in millimeter, staand.</span></div>
+<div style="display:grid;grid-template-columns:200px 1fr;gap:24px;align-items:baseline;border-top:1px solid rgba(131,70,32,.3);padding-top:20px"><b style="font-family:'Cormorant Garamond',serif;font-size:34px">190 mm</b><span style="color:#834620">Buitenkader, ingezet op 20 mm van de rand.</span></div>
+<div style="display:grid;grid-template-columns:200px 1fr;gap:24px;align-items:baseline;border-top:1px solid rgba(131,70,32,.3);padding-top:20px"><b style="font-family:'Cormorant Garamond',serif;font-size:34px">152 mm</b><span style="color:#834620">Binnenkader; de ring ertussen blijft leeg papier.</span></div>
+</div>
+</div>
+<div style="background:#440C00;display:grid;place-items:center;padding:80px;box-sizing:border-box">
+<div style="width:420px;height:594px;background:#FDF3E2;position:relative;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.4)">
+<div style="position:absolute;left:40px;top:112px;width:340px;display:flex;flex-direction:column"><img src="../../assets/elements/tajine2go-boogkader-top.svg" alt="" style="width:100%;display:block"><div style="width:100%;height:168px;background:url('../../assets/elements/tajine2go-boogkader-midden.svg') repeat-y;background-size:100% auto"></div><img src="../../assets/elements/tajine2go-boogkader-voet.svg" alt="" style="width:100%;display:block"></div>
+<div style="position:absolute;left:72px;top:148px;width:276px;display:flex;flex-direction:column"><img src="../../assets/elements/tajine2go-boogkader-top.svg" alt="" style="width:100%;display:block"><div style="width:100%;height:152px;background:url('../../assets/elements/tajine2go-boogkader-midden.svg') repeat-y;background-size:100% auto"></div><img src="../../assets/elements/tajine2go-boogkader-voet.svg" alt="" style="width:100%;display:block"></div>
+<img src="../../assets/logo/tajine2go-stacked-light.svg" alt="" style="position:absolute;left:50%;top:184px;transform:translateX(-50%);width:120px;height:auto">
+</div>
+</div>
+</section>
+
+<section data-label="Kaderopbouw" data-screen-label="03" style="width:1920px;height:1080px;background:#440C00;box-sizing:border-box;padding:110px 120px;font-family:Geist,sans-serif;color:#FDF3E2;display:grid;grid-template-rows:auto 1fr;gap:56px;overflow:hidden">
+<div style="display:grid;gap:24px">
+<span style="font-family:'Cormorant Garamond',serif;font-weight:600;font-size:24px;letter-spacing:.28em;text-transform:uppercase;color:#FDAD47">Opbouw</span>
+<h2 style="font-family:'Cormorant Garamond',serif;font-weight:700;font-size:86px;line-height:1.05;margin:0">Drie delen, nooit een hertekende boog</h2>
+</div>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:64px;align-items:start">
+<div style="display:grid;gap:28px;justify-items:center;text-align:center"><img src="../../assets/elements/tajine2go-boogkader-top.svg" alt="" style="width:100%;height:auto"><b style="font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:600">Bovendeel</b><span style="font-size:26px;line-height:1.45;color:#FDAD47">De boog. Vaste hoogte, schaalt alleen mee in breedte.</span></div>
+<div style="display:grid;gap:28px;justify-items:center;text-align:center"><div style="width:100%;height:220px;background:url('../../assets/elements/tajine2go-boogkader-midden.svg') repeat-y;background-size:100% auto"></div><b style="font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:600">Middenstuk</b><span style="font-size:26px;line-height:1.45;color:#FDAD47">Herhaalt verticaal. Zo wordt het kader hoger zonder vervorming.</span></div>
+<div style="display:grid;gap:28px;justify-items:center;text-align:center"><img src="../../assets/elements/tajine2go-boogkader-voet.svg" alt="" style="width:100%;height:auto"><b style="font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:600">Voet</b><span style="font-size:26px;line-height:1.45;color:#FDAD47">Rechte afsluiting, symmetrisch met de boog erboven.</span></div>
+</div>
+</section>
+
+<section data-label="Vier codes" data-screen-label="04" style="width:1920px;height:1080px;background:#FDF3E2;box-sizing:border-box;padding:110px 120px;font-family:Geist,sans-serif;color:#440C00;display:grid;grid-template-rows:auto 1fr;gap:60px;overflow:hidden">
+<div style="display:grid;gap:24px">
+<span style="font-family:'Cormorant Garamond',serif;font-weight:600;font-size:24px;letter-spacing:.28em;text-transform:uppercase;color:#834620">Inhoud</span>
+<h2 style="font-family:'Cormorant Garamond',serif;font-weight:700;font-size:86px;line-height:1.05;margin:0">Vier codes, elk in een eigen nis</h2>
+</div>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:48px;align-items:start;justify-items:center">
+<div style="display:grid;gap:20px;justify-items:center;text-align:center"><div style="position:relative;width:200px;aspect-ratio:1025/1534"><img src="../../assets/elements/tajine2go-frame.svg" alt="" style="position:absolute;inset:0;width:100%;height:100%"><img src="../../assets/qr/tajine2go-qr-ink-on-paper.svg" alt="QR naar tajine2go.be" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:104px;height:104px"></div><b style="font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:600;letter-spacing:.04em;text-transform:uppercase">Website</b><span style="font-size:24px;color:#834620">tajine2go.be</span></div>
+<div style="display:grid;gap:20px;justify-items:center;text-align:center"><div style="position:relative;width:200px;aspect-ratio:1025/1534"><img src="../../assets/elements/tajine2go-frame.svg" alt="" style="position:absolute;inset:0;width:100%;height:100%"><span style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:104px;height:104px;display:grid;place-items:center;border:1px dashed rgba(131,70,32,.5);font-size:16px;line-height:1.3;color:#834620;text-align:center">QR volgt</span></div><b style="font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:600;letter-spacing:.04em;text-transform:uppercase">Instagram</b><span style="font-size:24px;color:#834620">@tajine2go.gent</span></div>
+<div style="display:grid;gap:20px;justify-items:center;text-align:center"><div style="position:relative;width:200px;aspect-ratio:1025/1534"><img src="../../assets/elements/tajine2go-frame.svg" alt="" style="position:absolute;inset:0;width:100%;height:100%"><span style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:104px;height:104px;display:grid;place-items:center;border:1px dashed rgba(131,70,32,.5);font-size:16px;line-height:1.3;color:#834620;text-align:center">QR volgt</span></div><b style="font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:600;letter-spacing:.04em;text-transform:uppercase">Facebook</b><span style="font-size:24px;color:#834620">Like ons</span></div>
+<div style="display:grid;gap:20px;justify-items:center;text-align:center"><div style="position:relative;width:200px;aspect-ratio:1025/1534"><img src="../../assets/elements/tajine2go-frame.svg" alt="" style="position:absolute;inset:0;width:100%;height:100%"><span style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:104px;height:104px;display:grid;place-items:center;border:1px dashed rgba(131,70,32,.5);font-size:16px;line-height:1.3;color:#834620;text-align:center">QR volgt</span></div><b style="font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:600;letter-spacing:.04em;text-transform:uppercase">Google</b><span style="font-size:24px;color:#834620">Beoordeel ons</span></div>
+</div>
+</section>
+
+<section data-label="Drukspecs" data-screen-label="05" style="width:1920px;height:1080px;background:#FDF3E2;box-sizing:border-box;padding:110px 120px;font-family:Geist,sans-serif;color:#440C00;display:grid;grid-template-rows:auto 1fr;gap:60px;overflow:hidden">
+<div style="display:grid;gap:24px">
+<span style="font-family:'Cormorant Garamond',serif;font-weight:600;font-size:24px;letter-spacing:.28em;text-transform:uppercase;color:#834620">Drukwerk</span>
+<h2 style="font-family:'Cormorant Garamond',serif;font-weight:700;font-size:86px;line-height:1.05;margin:0">Vaste maten voor de drukker</h2>
+</div>
+<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:32px 64px;align-content:start">
+<div style="border-top:2px solid #440C00;padding-top:24px;display:grid;gap:12px"><b style="font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:700">14 mm</b><span style="font-size:28px;color:#834620">Breedte van elke QR-nis, met de code op 7,2 mm.</span></div>
+<div style="border-top:2px solid #440C00;padding-top:24px;display:grid;gap:12px"><b style="font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:700">30,4 mm</b><span style="font-size:28px;color:#834620">Logo bovenaan, gecentreerd in het binnenkader.</span></div>
+<div style="border-top:2px solid #440C00;padding-top:24px;display:grid;gap:12px"><b style="font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:700">5,6 / 5 pt</b><span style="font-size:28px;color:#834620">Labels en waarden onder de codes.</span></div>
+<div style="border-top:2px solid #440C00;padding-top:24px;display:grid;gap:12px"><b style="font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:700">4 kleuren</b><span style="font-size:28px;color:#834620">Papier, inkt, espresso en merkoranje. Geen vijfde.</span></div>
+</div>
+</section>
+
+<section data-label="Aan te leveren" data-screen-label="06" style="width:1920px;height:1080px;background:#440C00;box-sizing:border-box;padding:120px;font-family:Geist,sans-serif;color:#FDF3E2;display:grid;grid-template-columns:1fr 520px;gap:80px;align-items:center;overflow:hidden">
+<div style="display:grid;gap:40px">
+<span style="font-family:'Cormorant Garamond',serif;font-weight:600;font-size:24px;letter-spacing:.28em;text-transform:uppercase;color:#FDAD47">Nog te doen</span>
+<h2 style="font-family:'Cormorant Garamond',serif;font-weight:700;font-size:86px;line-height:1.05;margin:0">Wat er nog moet komen</h2>
+<div style="display:grid;gap:28px;font-size:30px;line-height:1.5">
+<div style="display:grid;grid-template-columns:44px 1fr;gap:20px;align-items:baseline"><b style="font-family:'Cormorant Garamond',serif;color:#FDAD47;font-size:36px">1</b><span>De QR-codes voor Instagram, Facebook en Google review, aangeleverd als SVG. Codes worden altijd exact overgenomen, nooit nagemaakt.</span></div>
+<div style="display:grid;grid-template-columns:44px 1fr;gap:20px;align-items:baseline"><b style="font-family:'Cormorant Garamond',serif;color:#FDAD47;font-size:36px">2</b><span>Het zellige-patroon als vector, zodat het raster-PNG kan verdwijnen.</span></div>
+<div style="display:grid;grid-template-columns:44px 1fr;gap:20px;align-items:baseline"><b style="font-family:'Cormorant Garamond',serif;color:#FDAD47;font-size:36px">3</b><span>Definitieve iconen voor Instagram, Facebook en de sterren; nu staan er tijdelijke.</span></div>
+</div>
+</div>
+<div style="display:grid;justify-items:center;gap:40px">
+<img src="../../assets/logo/tajine2go-stacked-light.svg" alt="Tajine2Go" style="width:300px;height:auto">
+<span style="font-family:'Cormorant Garamond',serif;font-weight:600;font-size:44px;letter-spacing:.22em;text-transform:uppercase;color:#FDAD47">Bsaha</span>
+</div>
+</section>
+
+</x-import>
+
+</x-dc>
+</body>
+</html>

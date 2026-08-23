@@ -1,11 +1,12 @@
-<!-- @dsCard group="Toepassingen" viewport="900x1240" name="QR-standaard wireframe" subtitle="A4 — twee sierkaders met het patroon ertussen, vier QR-codes in een sierkader" -->
-<!DOCTYPE html><html lang="nl"><head><meta charset="utf-8"><title>Tajine2Go — QR-standaard</title><link rel="stylesheet" href="../styles.css">
+<!DOCTYPE html><html lang="nl"><head><meta charset="utf-8"><title>Tajine2Go — QR-standaard</title>
+<meta name="omelette-print-source" content="v1787473268943148 guidelines/qr-standaard.html">
+<link rel="stylesheet" href="../styles.css">
 <style>
-body{margin:0;background:#E7DCC9;color:var(--text-body);font-family:var(--font-body)}
-.page{padding:40px 0 80px;display:grid;justify-items:center;gap:28px}
-.intro{max-width:600px;padding:0 24px;font-size:15px;line-height:1.6;color:var(--text-soft)}
-.intro b{color:var(--text-body);font-weight:600}
-.sheet{position:relative;width:210mm;height:297mm;background:var(--t2g-papier);box-shadow:0 18px 50px rgba(68,12,0,.28);overflow:hidden}
+*{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+*{animation-delay:-99s !important;animation-duration:.001s !important;animation-iteration-count:1 !important;animation-fill-mode:both !important;animation-play-state:running !important;transition-duration:0s !important}
+doc-page:not(:defined){visibility:hidden}
+body{color:var(--text-body);font-family:var(--font-body)}
+.page{position:relative;background:var(--t2g-papier);overflow:hidden}
 .buiten{position:absolute;left:20mm;top:56mm;width:170mm;display:flex;flex-direction:column;pointer-events:none}
 .buiten>img{width:100%;display:block}
 .buiten .mid{width:100%;height:84mm;background:url('../assets/elements/tajine2go-boogkader-midden.svg') repeat-y;background-size:100% auto}
@@ -26,34 +27,29 @@ body{margin:0;background:#E7DCC9;color:var(--text-body);font-family:var(--font-b
 .bsaha{display:flex;align-items:center;gap:5mm;width:100%;box-sizing:border-box}
 .bsaha i{flex:1;height:.3mm;background:rgba(131,70,32,.4)}
 .bsaha b{font-family:var(--font-display);font-weight:600;font-size:12pt;letter-spacing:.22em;text-transform:uppercase;color:var(--t2g-espresso);white-space:nowrap}
-.note{max-width:640px;padding:0 24px;font-size:14px;line-height:1.55;color:var(--text-soft)}
-.note b{color:var(--text-body);font-weight:600}
 </style>
 <script src="https://unpkg.com/lucide@0.454.0/dist/umd/lucide.min.js"></script>
 </head><body>
-<div class="page">
-<div class="sheet">
-<div class="buiten" data-om-label="buitekader">
+<doc-page size="a4">
+<section class="page">
+<div class="buiten">
 <img src="../assets/elements/tajine2go-boogkader-top.svg" alt="">
 <div class="mid"></div>
 <img src="../assets/elements/tajine2go-boogkader-voet.svg" alt="">
 </div>
-
-<div class="lijnen" data-om-label="Binnenkader">
+<div class="lijnen">
 <img src="../assets/elements/tajine2go-boogkader-top.svg" alt="">
 <div class="mid"></div>
 <img src="../assets/elements/tajine2go-boogkader-voet.svg" alt="">
 </div>
-
-<div class="content" data-om-label="Inhoud">
+<div class="content">
 <div style="display:grid;justify-items:center">
-<img src="../assets/logo/tajine2go-stacked-light.svg" alt="Tajine2Go" style="width:30.4mm;position:static" data-om-label="LOGO">
-<span class="eyebrow" style="margin-top:1.6mm;font-size:.8em" data-om-label="CTA">Laat van je horen</span>
-<img src="../assets/elements/tajine2go-ornament.svg" alt="" style="width:120px;height:auto;margin-top:2.4mm;opacity:.55" data-om-label="Ornament">
+<img src="../assets/logo/tajine2go-stacked-light.svg" alt="Tajine2Go" style="width:30.4mm;position:static">
+<span class="eyebrow" style="margin-top:1.6mm;font-size:.8em">Laat van je horen</span>
+<img src="../assets/elements/tajine2go-ornament.svg" alt="" style="width:120px;height:auto;margin-top:2.4mm;opacity:.55">
 </div>
-
-<div class="cols" data-om-label="QR">
-<div class="col" data-om-label="QR element">
+<div class="cols">
+<div class="col">
 <div class="niche">
 <img src="../assets/elements/tajine2go-frame.svg" alt="">
 <span class="binnen"><img class="qrimg" src="../assets/qr/tajine2go-qr-ink-on-paper.svg" alt="QR naar tajine2go.be"></span>
@@ -62,7 +58,6 @@ body{margin:0;background:#E7DCC9;color:var(--text-body);font-family:var(--font-b
 <span class="val">tajine2go.be</span>
 <span style="color:var(--t2g-espresso);display:grid;place-items:center"><i data-lucide="globe" style="width:9px;height:9px"></i></span>
 </div>
-
 <div class="col">
 <div class="niche">
 <img src="../assets/elements/tajine2go-frame.svg" alt="">
@@ -72,7 +67,6 @@ body{margin:0;background:#E7DCC9;color:var(--text-body);font-family:var(--font-b
 <span class="val">@tajine2go.gent</span>
 <span style="color:var(--t2g-espresso);display:grid;place-items:center"><i data-lucide="instagram" style="width:9px;height:9px"></i></span>
 </div>
-
 <div class="col">
 <div class="niche">
 <img src="../assets/elements/tajine2go-frame.svg" alt="">
@@ -82,7 +76,6 @@ body{margin:0;background:#E7DCC9;color:var(--text-body);font-family:var(--font-b
 <span class="val"></span>
 <span style="color:var(--t2g-espresso);display:grid;place-items:center"><i data-lucide="facebook" style="width:9px;height:9px"></i></span>
 </div>
-
 <div class="col">
 <div class="niche">
 <img src="../assets/elements/tajine2go-frame.svg" alt="">
@@ -98,14 +91,10 @@ body{margin:0;background:#E7DCC9;color:var(--text-body);font-family:var(--font-b
 </span>
 </div>
 </div>
-
-<div class="bsaha" data-om-label="BSAHA"><i></i><b>Bsaha</b><i></i></div>
+<div class="bsaha"><i></i><b>Bsaha</b><i></i></div>
 </div>
-</div>
-
-<p class="intro"><b>A4, 210 × 297 mm.</b> Twee sierkaders in elkaar, samengesteld uit bovendeel, herhaalbaar middenstuk en rechte voet — geen hertekende boog. De ring tussen beide kaders blijft leeg papier. Elke QR-code staat in het volledige sierkader op klein formaat.</p>
-
-<p class="note"><b>Nog aan te leveren.</b> De QR-codes voor Instagram, Facebook en Google review staan als leeg vak; die mag ik niet genereren — QR-codes worden altijd exact overgenomen. De Google review-code haal je uit je Google Bedrijfsprofiel onder "Vraag om reviews". Bezorg ze als SVG en ik plaats ze in de kaders. Het zellige-patroon tussen de kaders is het bestaande raster-PNG, tegels van 20 mm; zodra het hertekend is als vector, vervang ik het. De Instagram-, Facebook- en sterreniconen komen van Lucide via CDN, als voorlopige substitutie.</p>
-</div>
+</section>
+</doc-page>
+<script src="./doc-page.js"></script>
 <script>window.lucide&&lucide.createIcons();document.querySelectorAll('.ster svg,svg.ster').forEach(s=>{s.setAttribute('fill','currentColor');s.setAttribute('stroke','currentColor')})</script>
 </body></html>
