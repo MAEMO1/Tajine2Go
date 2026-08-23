@@ -1,0 +1,29 @@
+body{margin:0;background:#EFE6D6;color:var(--text-body);font-family:var(--font-body)}
+a{color:var(--action)}a:hover{color:var(--action-hover)}
+.wrap{max-width:1120px;margin:0 auto;padding:48px 32px 64px}
+h1{font-family:var(--font-display);font-weight:500;font-size:36px;margin:0;line-height:1.1}
+.eyebrow{font-family:var(--font-display);font-weight:600;font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--t2g-espresso);display:block;margin-bottom:10px}
+.spec{font-size:14px;line-height:1.55;color:var(--text-soft);margin:12px 0 0;max-width:620px}
+.spec b{color:var(--text-body);font-weight:600}
+.stage{background:#fff;border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:36px;margin-top:22px;display:flex;flex-wrap:wrap;gap:40px;align-items:flex-start;justify-content:center}
+.plain{padding:0;background:transparent;box-shadow:none}
+.piece{display:grid;gap:10px;justify-items:center}
+.tag{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-soft)}
+.note{font-size:13px;line-height:1.5;color:var(--text-soft);margin:14px 0 0;max-width:640px}
+h3{font-family:var(--font-display);font-weight:500;font-size:21px;margin:32px 0 0}
+.stand{box-sizing:border-box;width:74mm;height:83mm;background:var(--t2g-papier);border:1px solid rgba(68,12,0,.18);padding:8mm 6mm 7mm;display:grid;align-content:space-between;justify-items:center;gap:3mm;text-align:center}
+.stand .kop{font-family:var(--font-display);font-weight:600;font-size:9pt;letter-spacing:.2em;text-transform:uppercase;color:var(--text-soft)}
+.stand .head{font-family:var(--font-display);font-weight:500;font-size:17pt;line-height:1.15;color:var(--text-heading)}
+.stand .qr{width:34mm;height:34mm}
+.stand .foot{font-size:8.5pt;line-height:1.45;color:var(--text-soft)}
+.fold{box-sizing:border-box;width:74mm;height:22mm;background:var(--t2g-inkt);display:grid;place-items:center}
+.card{width:85mm;height:55mm;padding:6mm;box-sizing:border-box;display:grid;position:relative;overflow:hidden}
+.card.front{background:var(--t2g-inkt);align-content:space-between}
+.card.back{background:var(--t2g-papier);border:1px solid rgba(68,12,0,.15);align-content:space-between}
+.card .nm{font-family:var(--font-display);font-weight:500;font-size:14pt;color:var(--t2g-papier);line-height:1.2}
+.card .rol{font-size:7.5pt;letter-spacing:.14em;text-transform:uppercase;color:var(--t2g-saffraangoud);margin-top:1mm}
+.card .det{font-size:8pt;line-height:1.6;color:var(--text-body)}
+.card .det b{font-weight:600}
+.divline{display:flex;align-items:center;gap:3mm;width:100%}
+.divline i{flex:1;height:.4mm;background:rgba(253,243,226,.35)}
+.divline b{font-family:var(--font-display);font-weight:600;font-size:7.5pt;letter-spacing:.2em;text-transform:uppercase;color:var(--t2g-saffraangoud);white-space:nowrap}
