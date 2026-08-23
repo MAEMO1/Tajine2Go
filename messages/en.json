@@ -23,7 +23,9 @@
     "about": "About us",
     "faq": "FAQ",
     "contact": "Contact",
-    "orderByPhone": "Order by phone"
+    "orderByPhone": "Order by phone",
+    "access": "Getting here",
+    "practical": "Practical"
   },
   "home": {
     "orderNow": "Order now",
@@ -40,7 +42,28 @@
     "heroKicker": "Moroccan takeaway and catering",
     "heroLine1": "Authentic flavours",
     "heroCateringCta": "Request catering",
-    "storyImageAlt": "The Tajine2Go shop in Ghent"
+    "storyImageAlt": "The Tajine2Go shop in Ghent",
+    "welcome": "Welcome to",
+    "menuEyebrow": "From our kitchen",
+    "storyEyebrow": "Our story",
+    "storyHeading": "The warmth of Morocco, ready to take home.",
+    "cateringPrice": "On request",
+    "accessEyebrow": "Getting here",
+    "accessTitle": "How to find us in Gentbrugge",
+    "accessCarTitle": "By car",
+    "accessCarText": "Easy to reach. You can park on the street, or nearby at the Arsenaal — a short walk from there.",
+    "accessTransitTitle": "By public transport",
+    "accessTransitText": "Easy to reach by tram and bus. Tram 2 stops at Gentbrugge Schooldreef, bus 9 at Gentbrugge Arsenaal — both a short walk from the shop.",
+    "accessBikeTitle": "By bike",
+    "accessBikeText": "Park your bike right at the door, in the racks along the Brusselsesteenweg. Coming from further away: the Arsenaal site a few hundred metres on has over 250 bike spaces, partly covered.",
+    "practicalEyebrow": "Practical",
+    "practicalHours": "Opening hours",
+    "practicalLinks": "Quick links",
+    "photoPending": "photo coming",
+    "photoStory": "photo: family table",
+    "photoCatering": "photo: catering buffet",
+    "photoAccess": "map or photo: storefront Brusselsesteenweg 455",
+    "qrAlt": "QR code to the Tajine2Go Instagram page"
   },
   "menu": {
     "title": "Menu",
@@ -59,7 +82,8 @@
       "dessert": "Desserts",
       "sweet": "Sweets",
       "drink": "Drinks"
-    }
+    },
+    "photoPending": "photo coming"
   },
   "checkout": {
     "title": "Place order",
@@ -135,7 +159,12 @@
     "phoneLabel": "Phone",
     "locationLabel": "Location",
     "hoursLabel": "Opening hours",
-    "cateringNote": "Catering requests are handled continuously."
+    "cateringNote": "Catering requests are handled continuously.",
+    "heading": "Tell us what you need",
+    "intro": "A question about the menu, an order for several people or a catering request: call us or fill in the form. We answer as quickly as we can.",
+    "groupTitle": "Ordering for a group?",
+    "groupText": "Tell us the occasion, the number of people and the date. We will put together a menu to match.",
+    "groupCta": "More about catering"
   },
   "footer": {
     "rights": "All rights reserved.",

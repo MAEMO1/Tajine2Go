@@ -16,7 +16,6 @@ type Props = {
 
 export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
   const t = useTranslations("nav");
-  const tHome = useTranslations("home");
   const locale = useLocale();
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -25,7 +24,7 @@ export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
   // De header staat op brand-cream, dus de espressovariant. De volle-kleurversie
   // heeft een woordmerk in papierkleur en verdwijnt op licht (contrast 2,02
   // tegen 7,29 op donker). Zie CLAUDE.md §5.5.
-  const logoSrc = logoUrl || "/brand/logo/Tajine2Go_logo_primary_light_bg_espresso_text_transparent_640w.png";
+  const logoSrc = logoUrl || "/brand/logo/tajine2go-horizontal-light.svg";
   const logoText = logoAlt || brandName;
 
   const isHomepage = pathname === "/";
@@ -57,12 +56,15 @@ export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
     };
   }, [phoneOpen]);
 
+  // De site is een one-pager: alles behalve contact leeft als ankersectie op
+  // de homepagina. Zie het design system, ui_kits/website/SiteNav.jsx.
   const navLinks = [
-    { href: "/menu" as const, label: t("menu"), scrollTarget: "#menu" },
-    { href: "/catering" as const, label: t("catering"), scrollTarget: null },
-    { href: "/over-ons" as const, label: t("about"), scrollTarget: null },
-    { href: "/faq" as const, label: t("faq"), scrollTarget: null },
-    { href: "/contact" as const, label: t("contact"), scrollTarget: null },
+    { key: "menu", href: "/" as const, label: t("menu"), scrollTarget: "#menu" },
+    { key: "about", href: "/" as const, label: t("about"), scrollTarget: "#verhaal" },
+    { key: "catering", href: "/" as const, label: t("catering"), scrollTarget: "#catering" },
+    { key: "access", href: "/" as const, label: t("access"), scrollTarget: "#bereikbaarheid" },
+    { key: "practical", href: "/" as const, label: t("practical"), scrollTarget: "#praktisch" },
+    { key: "contact", href: "/contact" as const, label: t("contact"), scrollTarget: null },
   ];
 
   function handleScrollOrNavigate(scrollTarget: string | null) {
@@ -90,28 +92,23 @@ export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
             : ""
         }`}
       >
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2.5 md:px-6">
+        <div className="mx-auto flex h-[60px] max-w-7xl items-center justify-between px-4 md:h-[76px] md:px-6">
           <Link href="/" className="shrink-0 transition-transform duration-200 hover:scale-[1.02]">
-            {/* Mobiel: icon-only merkteken (brand usage guide); desktop: primary horizontal */}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={logoUrl || "/brand/logo/Tajine2Go_icon_128.png"}
-              alt={logoText}
-              className="h-11 w-auto object-contain md:hidden"
-            />
+            {/* Horizontale lichte-ondergrondvariant, 34px mobiel en 46px desktop —
+                zoals ui_kits/website/SiteNav.jsx. */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={logoSrc}
               alt={logoText}
-              className="hidden h-[72px] w-auto object-contain md:block"
+              className="h-[34px] w-auto object-contain md:h-[46px]"
             />
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden items-center gap-0.5 lg:flex">
+          <nav className="hidden items-center gap-0.5 min-[1200px]:flex">
             {navLinks.map((link) => (
               <SmartNavLink
-                key={link.href}
+                key={link.key}
                 href={link.href}
                 label={link.label}
                 scrollTarget={link.scrollTarget}
@@ -190,16 +187,6 @@ export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
                         <span className="text-base font-semibold text-brand-brown">{phone.display}</span>
                       </a>
                     ))}
-                    <Link
-                      href="/menu"
-                      className="flex min-h-11 items-center gap-2 border-t border-brand-warm2/60 bg-brand-warm/50 px-4 py-2 transition-colors hover:bg-brand-warm"
-                      onClick={() => setPhoneOpen(false)}
-                    >
-                      <span className="font-display text-base font-semibold text-brand-brown-m">{tHome("viewMenu")}</span>
-                      <svg className="h-3.5 w-3.5 text-brand-brown-m" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2} aria-hidden="true">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                      </svg>
-                    </Link>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -207,7 +194,7 @@ export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
 
             <button
               type="button"
-              className="flex min-h-11 min-w-11 items-center justify-center rounded-full p-2 text-brand-brown-m transition-colors hover:bg-brand-warm hover:text-brand-brown lg:hidden"
+              className="flex min-h-11 min-w-11 items-center justify-center rounded-full p-2 text-brand-brown-m transition-colors hover:bg-brand-warm hover:text-brand-brown min-[1200px]:hidden"
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-label="Menu"
             >
@@ -231,7 +218,7 @@ export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-40 bg-brand-brown/30 backdrop-blur-[2px] lg:hidden"
+            className="fixed inset-0 z-40 bg-brand-brown/30 backdrop-blur-[2px] min-[1200px]:hidden"
             onClick={() => setMobileOpen(false)}
           />
         )}
@@ -245,7 +232,7 @@ export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 28, stiffness: 280 }}
-            className="fixed inset-y-0 z-50 flex w-[280px] flex-col border-brand-warm2 bg-brand-cream shadow-[-8px_0_30px_rgba(45,27,10,0.08)] right-0 border-l lg:hidden"
+            className="fixed inset-y-0 z-50 flex w-[280px] flex-col border-brand-warm2 bg-brand-cream shadow-[-8px_0_30px_rgba(45,27,10,0.08)] right-0 border-l min-[1200px]:hidden"
           >
             <div className="flex items-center justify-between px-6 py-5">
               <span className="font-display text-xl font-semibold text-brand-brown">
@@ -276,7 +263,7 @@ export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
                 if (link.scrollTarget && isHomepage) {
                   return (
                     <motion.button
-                      key={link.href}
+                      key={link.key}
                       {...motionProps}
                       type="button"
                       onClick={() => handleScrollOrNavigate(link.scrollTarget)}
@@ -287,7 +274,7 @@ export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
                   );
                 }
                 return (
-                  <motion.div key={link.href} {...motionProps}>
+                  <motion.div key={link.key} {...motionProps}>
                     <Link
                       href={link.href}
                       className="block rounded-lg px-4 py-3 font-display text-lg font-semibold text-brand-brown-m transition-colors hover:bg-brand-warm hover:text-brand-brown"
@@ -303,9 +290,13 @@ export function Header({ logoUrl, logoAlt, brandName = "Tajine2Go" }: Props) {
             {/* Bottom decorative accent */}
             <div className="px-6 pb-8">
               <div className="h-px bg-gradient-to-r from-transparent via-brand-warm2 to-transparent" />
-              <p className="mt-4 text-center font-display text-xs uppercase tracking-[0.2em] text-brand-brown-s/50">
-                {brandName}
-              </p>
+              {/* Woordmerk in espresso — leesbaar op de papierkleurige lade. */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/brand/logo/tajine2go-wordmark-mono-espresso.svg"
+                alt={brandName}
+                className="mx-auto mt-5 block w-[150px] opacity-70"
+              />
             </div>
           </motion.nav>
         )}

@@ -53,6 +53,10 @@ Deze keuzes zijn vastgezet en mogen niet meer door de implementer worden ingevul
 - v1 MUST minstens 1 service-dag per week ondersteunen. Beschikbaarheid = basis weekpatroon + datum-uitzonderingen + globale pauze met voorrang `globale pauze > datum-uitzondering > basis weekpatroon`; er kunnen dus 0 of meer service-dagen per week zijn (zie `docs/adr/0001-beschikbaarheid-weekpatroon-en-datum-uitzonderingen.md` en `CONTEXT.md`).
 - De publieke site MUST live werken in `nl`, `fr` en `en`. Arabisch is geschrapt (beslissing eigenaar 17/08/2026); er is geen RTL-ondersteuning meer nodig.
 - De adminomgeving MUST altijd Nederlands blijven.
+- De publieke site MUST een one-pager zijn (beslissing eigenaar 23/08/2026, op basis van het design system "Tajine2Go Design System"). De homepagina bevat in deze volgorde: hero, sierornament, menukaart, ons verhaal, catering, bereikbaarheid, praktisch. `/contact` is de enige inhoudelijke subpagina en draagt het cateringformulier.
+- `/[locale]/menu`, `/[locale]/over-ons` en `/[locale]/catering` MUST redirects zijn naar respectievelijk `/#menu`, `/#verhaal` en `/#catering`. Ze MUST NOT opnieuw als eigen pagina bestaan zolang deze beslissing staat.
+- `/[locale]/faq`, `/[locale]/privacy` en `/[locale]/terms` blijven bestaan; ze staan niet in de hoofdnavigatie maar wel in de voettekst. FAQ blijft voorlopig staan (beslissing eigenaar 23/08/2026).
+- De hoofdnavigatie MUST deze zes items tonen: Menu, Over ons, Catering, Bereikbaarheid, Praktisch, Contact. De eerste vijf zijn ankers op de homepagina; Contact wijst naar de contactpagina.
 - Bestellen verloopt in de huidige release telefonisch (beslissing eigenaar, augustus 2026). De publieke bestel-UI (cart, checkout, orderstatuspagina) is verwijderd en MUST NOT herbouwd worden zolang deze beslissing staat. De checkout/order-API's, het datamodel en de bijhorende secties in dit document (o.a. §9.1, §9.2, §10) blijven het bindende contract voor een latere online-bestelrelease en zijn tot dan slapend.
 - Checkout MUST guest checkout ondersteunen; een klantaccount is geen v1-feature.
 - Het datamodel MUST wel auth-ready zijn voor een later klantenportaal.
@@ -170,12 +174,14 @@ tajine2go/
 │   ├── app/
 │   │   ├── [locale]/
 │   │   │   ├── layout.tsx
-│   │   │   ├── page.tsx
-│   │   │   ├── menu/page.tsx
-│   │   │   ├── catering/page.tsx
-│   │   │   ├── over-ons/page.tsx
+│   │   │   ├── page.tsx            # one-pager: hero, menu, verhaal, catering, bereikbaarheid, praktisch
+│   │   │   ├── contact/page.tsx    # enige inhoudelijke subpagina, draagt het cateringformulier
+│   │   │   ├── catering/           # redirect -> /#catering (+ catering-form.tsx)
+│   │   │   ├── menu/page.tsx       # redirect -> /#menu
+│   │   │   ├── over-ons/page.tsx   # redirect -> /#verhaal
 │   │   │   ├── faq/page.tsx
-│   │   │   ├── contact/page.tsx
+│   │   │   ├── privacy/page.tsx
+│   │   │   ├── terms/page.tsx
 │   │   │   └── not-found.tsx
 │   │   ├── admin/
 │   │   │   ├── layout.tsx
@@ -309,12 +315,17 @@ Cormorant Garamond als displayletter (zoals het gedrukte brandmateriaal), Geist 
 - Kaarten MUST `bg-brand-cream`, `shadow-sm`, `rounded-xl` gebruiken.
 - Inputs MUST `border-brand-brown-s`, `rounded-lg`, `text-sm` gebruiken.
 - Dish cards MUST rij-layout gebruiken, geen uniforme card-grid.
+- Een gerecht zonder foto MUST een merkoranje vlak met het bijschrift "foto volgt" tonen, niet een icoon of een grijze plaatshouder. Merkoranje is hier vlakkleur, geen tekstkleur.
+- De voettekst MUST één donkere plaat met het woordmerk zijn (`tajine2go-wordmark-dark.svg`, breedte `min(1100px, 92vw)`). Contactgegevens, copyright en BTW-nummer horen in de sectie "Praktisch" op de homepagina. De juridische links (privacybeleid, FAQ, voorwaarden) staan als smalle regel onder het woordmerk; dat is een bewuste toevoeging op het design, omdat ze vanaf elke pagina bereikbaar moeten blijven.
+- Categoriekoppen in de menukaart MUST gecentreerd staan met het scheidingsornament eronder; de portiemaat ("M · L") staat rechts uitgelijnd op dezelfde regel.
 - Prijzen MUST prominent getoond worden in een zwaar Geist-gewicht en het donkere merkbruin (`#440C00`, "inktkleur"), niet in brand orange. (Beslissing eigenaar 21/08/2026 bij het paletwerk; contrast 14,7 op `brand-cream`. De actiekleur blijft voorbehouden aan knoppen en links.)
 
 ### 5.4 Responsive
 
 - Desktop boven 900px MUST admin in 2-kolom layout tonen; de publieke hero is bewust gecentreerd (familiekeuken-redesign, augustus 2026).
 - Mobile onder 600px MUST cart als bottom sheet of drawer tonen (slapend zolang bestellen telefonisch gaat, zie §1.1).
+- Onder 768px MUST een vaste bestelbalk onderaan verschijnen zodra de hero voor 70% voorbij is; die bevat alleen de hoofdactie "Bestel nu".
+- De hoofdnavigatie MUST onder 1200px inklappen tot een burgermenu. Het design system noemt 1080px, maar de taalwissel die het design niet kent maakt de balk breder.
 
 ### 5.5 Merkelementen
 
@@ -329,16 +340,24 @@ De volle-kleurvariant heeft een woordmerk in papierkleur en is voor donker
 getekend. Op `brand-cream` haalt hij 2,02 gemeten over alle dekkende pixels, en
 het woordmerk zelf verdwijnt volledig. Die combinatie MUST NOT voorkomen.
 
-De espressovariant staat op 21/08/2026 nog niet in `public/brand/logo/`; alleen
-de volle-kleurvariant is daar aanwezig. Zolang dat zo is, toont de header het
-verkeerde bestand.
+De vectorvarianten uit het design system staan sinds 23/08/2026 in
+`public/brand/logo/`: `tajine2go-horizontal-light.svg` (header, op papier),
+`tajine2go-horizontal-dark.svg` (hero, op inkt), `tajine2go-wordmark-dark.svg`
+(voettekst) en `tajine2go-icon.svg`. SVG MUST voorgaan op de oudere PNG- en
+WebP-varianten; die blijven alleen staan voor favicons en socials.
+
+De SVG's zijn gevectoriseerd uit het drukwerk en dus zwaar (100–175 KB elk).
+Dat is aanvaard omdat compressie op de server ze terugbrengt tot ongeveer een
+vijfde; ze MUST NOT vereenvoudigd of hertekend worden om ze kleiner te maken.
 
 Het icoon MUST NOT hertekend of vereenvoudigd worden (beslissing eigenaar
 21/08/2026: bij hertekenen gaan te veel details verloren).
 
 #### Sierkader en ornament
 
-Beide staan als vector klaar, gevectoriseerd uit de originele PNG's.
+Beide staan als vector klaar, gevectoriseerd uit de originele PNG's, en leven
+sinds 23/08/2026 in de repo: `public/brand/elements/tajine2go-frame.svg` en
+`public/brand/ornament.svg`.
 
 - Het sierkader is een lint van twee lijnen: inkt aan de buitenkant,
   saffraangoud aan de binnenkant, doorzichtig ertussen. In het origineel liepen
@@ -347,6 +366,22 @@ Beide staan als vector klaar, gevectoriseerd uit de originele PNG's.
   worden.
 - Het scheidingsornament MUST effen in espresso staan. De geschilderde textuur
   van het origineel is bewust weggelaten: op tekstformaat wordt die ruis.
+
+#### QR-code
+
+In de sectie "Praktisch" staat de Instagram-QR
+(`public/brand/qr/tajine2go-qr-instagram.png`, beslissing eigenaar 23/08/2026).
+Dat is de officiele code van Instagram zelf, byte-identiek uit de merkmap
+overgenomen; `next/image` schaalt en comprimeert hem bij het uitleveren
+(1,9 MB bron wordt ongeveer 39 KB), zodat het bronbestand ongewijzigd blijft.
+
+De code draagt de kleurverloop-huisstijl van Instagram. Dat is een bewuste
+uitzondering op het zeskleurenpalet van §5.1: het is een merkteken van een
+derde partij, geen ontwerpelement, vergelijkbaar met een betaallogo.
+
+`public/brand/qr/tajine2go-qr-ink-on-paper.svg` verwijst naar tajine2go.be en
+blijft als merkasset beschikbaar. Beide codes MUST NOT opnieuw gegenereerd of
+bijgesneden worden; de witruimte van vier vakjes hoort erbij.
 
 #### Zellige-patroon
 
@@ -1064,6 +1099,7 @@ Regels:
 ### 13.2 SEO
 
 - Elke publieke pagina MUST metadata hebben.
+- De ankersecties op de homepagina MUST stabiele id's houden: `#menu`, `#verhaal`, `#catering`, `#bereikbaarheid`, `#praktisch`. De redirects van `/menu`, `/over-ons` en `/catering` hangen eraan vast.
 - Homepage MUST JSON-LD voor `FoodEstablishment` bevatten.
 - Sitemap SHOULD aanwezig zijn.
 
@@ -1171,6 +1207,8 @@ Werk in deze volgorde. Elke stap MUST functioneel zijn voor je doorgaat.
 - Publieke site werkt in `nl`, `fr`, `en`.
 - Admin blijft Nederlands.
 - Dish list gebruikt row layout, geen generieke card-grid.
+- `/menu`, `/over-ons` en `/catering` geven in elke taal een redirect naar de juiste ankersectie.
+- De hoofdnavigatie loopt op geen enkele breedte over de schermrand.
 
 ### 15.5 Operaties
 

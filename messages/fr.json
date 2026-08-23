@@ -23,7 +23,9 @@
     "about": "À propos",
     "faq": "FAQ",
     "contact": "Contact",
-    "orderByPhone": "Commandez par téléphone"
+    "orderByPhone": "Commandez par téléphone",
+    "access": "Accès",
+    "practical": "Infos pratiques"
   },
   "home": {
     "orderNow": "Commander",
@@ -40,7 +42,28 @@
     "heroKicker": "Plats marocains à emporter et traiteur",
     "heroLine1": "Saveurs authentiques",
     "heroCateringCta": "Demander un devis traiteur",
-    "storyImageAlt": "Le magasin Tajine2Go à Gand"
+    "storyImageAlt": "Le magasin Tajine2Go à Gand",
+    "welcome": "Bienvenue chez",
+    "menuEyebrow": "De notre cuisine",
+    "storyEyebrow": "Notre histoire",
+    "storyHeading": "La chaleur du Maroc, prête à emporter.",
+    "cateringPrice": "Sur demande",
+    "accessEyebrow": "Accès",
+    "accessTitle": "Nous trouver à Gentbrugge",
+    "accessCarTitle": "En voiture",
+    "accessCarText": "Facilement accessible. Vous pouvez vous garer dans la rue ou tout près, à l'Arsenaal — de là, c'est une courte marche.",
+    "accessTransitTitle": "En transports en commun",
+    "accessTransitText": "Facilement accessible en tram et en bus. Le tram 2 s'arrête à Gentbrugge Schooldreef, le bus 9 à Gentbrugge Arsenaal — tous deux à quelques minutes à pied.",
+    "accessBikeTitle": "À vélo",
+    "accessBikeText": "Vous garez votre vélo devant la porte, dans les supports le long de la Brusselsesteenweg. Si vous venez de plus loin : sur le site du Arsenaal, à quelques centaines de mètres, il y a plus de 250 places vélo, en partie couvertes.",
+    "practicalEyebrow": "Infos pratiques",
+    "practicalHours": "Heures d'ouverture",
+    "practicalLinks": "Liens rapides",
+    "photoPending": "photo à venir",
+    "photoStory": "photo : table de famille",
+    "photoCatering": "photo : buffet traiteur",
+    "photoAccess": "plan ou photo : façade Brusselsesteenweg 455",
+    "qrAlt": "QR-code vers la page Instagram de Tajine2Go"
   },
   "menu": {
     "title": "Menu",
@@ -59,7 +82,8 @@
       "dessert": "Desserts",
       "sweet": "Douceurs",
       "drink": "Boissons"
-    }
+    },
+    "photoPending": "photo à venir"
   },
   "checkout": {
     "title": "Passer commande",
@@ -135,7 +159,12 @@
     "phoneLabel": "Téléphone",
     "locationLabel": "Lieu",
     "hoursLabel": "Heures d'ouverture",
-    "cateringNote": "Les demandes traiteur sont traitées en continu."
+    "cateringNote": "Les demandes traiteur sont traitées en continu.",
+    "heading": "Dites-nous ce dont vous avez besoin",
+    "intro": "Une question sur le menu, une commande pour plusieurs personnes ou une demande de traiteur : appelez-nous ou remplissez le formulaire. Nous répondons au plus vite.",
+    "groupTitle": "Commander pour un groupe ?",
+    "groupText": "Dites-nous l'occasion, le nombre de personnes et la date. Nous vous proposons un menu sur mesure.",
+    "groupCta": "En savoir plus sur le traiteur"
   },
   "footer": {
     "rights": "Tous droits réservés.",

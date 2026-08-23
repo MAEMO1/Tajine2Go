@@ -11,6 +11,10 @@
   --color-brand-orange: #DE5C1B;       /* merkoranje — alleen vlakken, nooit tekst */
   --color-brand-gold: #FDAD47;         /* saffraangoud — lijn op donker, nooit op licht */
 
+  /* Zachte lijnkleur uit het design system (border-soft): espresso op 28%.
+     Enige randkleur voor kaders, scheidingslijnen en inputs. */
+  --color-brand-line: rgba(131, 70, 32, 0.28);
+
   /* Restanten van het oude palet. Geen nieuw gebruik; brown-s blijft tot er
      een randkleur beslist is. Zie CLAUDE.md §5.1. */
   --color-brand-warm: #F6E8C9;
