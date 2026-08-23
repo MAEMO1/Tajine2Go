@@ -23,7 +23,9 @@
     "about": "Over ons",
     "faq": "FAQ",
     "contact": "Contact",
-    "orderByPhone": "Bestel telefonisch"
+    "orderByPhone": "Bestel telefonisch",
+    "access": "Bereikbaarheid",
+    "practical": "Praktisch"
   },
   "home": {
     "heroKicker": "Marokkaanse afhaalgerechten en catering",
@@ -40,7 +42,28 @@
     "storyTitle": "Ons verhaal",
     "storyLink": "Lees meer over ons",
     "closed": "Bestellen doe je telefonisch: bel {phone1} of {phone2}.",
-    "storyImageAlt": "Tajine2Go winkel in Gent"
+    "storyImageAlt": "Tajine2Go winkel in Gent",
+    "welcome": "Welkom bij",
+    "menuEyebrow": "Uit onze keuken",
+    "storyEyebrow": "Ons verhaal",
+    "storyHeading": "De warmte van Marokko, klaar om mee te nemen.",
+    "cateringPrice": "Op aanvraag",
+    "accessEyebrow": "Bereikbaarheid",
+    "accessTitle": "Zo vind je ons in Gentbrugge",
+    "accessCarTitle": "Met de auto",
+    "accessCarText": "Vlot bereikbaar. Parkeren kan in de straat, of vlakbij aan het Arsenaal — vandaar is het een korte wandeling.",
+    "accessTransitTitle": "Met het openbaar vervoer",
+    "accessTransitText": "Vlot bereikbaar met tram en bus. Tramlijn 2 stopt aan Gentbrugge Schooldreef, buslijn 9 aan Gentbrugge Arsenaal — beide op een korte wandeling van de zaak.",
+    "accessBikeTitle": "Met de fiets",
+    "accessBikeText": "Je zet je fiets voor de deur in de stallingen langs de Brusselsesteenweg. Wie van verder komt: op de site van Het Arsenaal, enkele honderden meters verderop, staan ruim 250 (deels overdekte) fietsenstallingen.",
+    "practicalEyebrow": "Praktisch",
+    "practicalHours": "Openingsuren",
+    "practicalLinks": "Snelle links",
+    "photoPending": "foto volgt",
+    "photoStory": "foto: familietafel",
+    "photoCatering": "foto: cateringbuffet",
+    "photoAccess": "kaart of foto: gevel Brusselsesteenweg 455",
+    "qrAlt": "QR-code naar de Instagram-pagina van Tajine2Go"
   },
   "menu": {
     "title": "Menu",
@@ -59,7 +82,8 @@
       "dessert": "Desserts",
       "sweet": "Zoet",
       "drink": "Dranken"
-    }
+    },
+    "photoPending": "foto volgt"
   },
   "checkout": {
     "title": "Bestelling plaatsen",
@@ -135,7 +159,12 @@
     "phoneLabel": "Telefoon",
     "locationLabel": "Locatie",
     "hoursLabel": "Openingsuren",
-    "cateringNote": "Catering aanvragen worden doorlopend verwerkt."
+    "cateringNote": "Catering aanvragen worden doorlopend verwerkt.",
+    "heading": "Laat ons weten wat je nodig hebt",
+    "intro": "Een vraag over het menu, een bestelling voor meerdere personen of een cateringaanvraag: bel ons of vul het formulier in. We antwoorden zo snel we kunnen.",
+    "groupTitle": "Bestellen voor een groep?",
+    "groupText": "Vertel ons de gelegenheid, het aantal personen en de datum. Wij stellen een menu op maat voor.",
+    "groupCta": "Meer over catering"
   },
   "footer": {
     "rights": "Alle rechten voorbehouden.",
