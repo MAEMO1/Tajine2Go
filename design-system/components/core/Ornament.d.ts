@@ -1,0 +1,3 @@
+/** Het espresso scheidingsornament — spaarzaam, als sectiescheiding. */
+export interface OrnamentProps{ width?: number|string; /** verticaal gespiegeld — gebruik wanneer het ornament BOVEN content staat (het is een aflijning en wijst standaard omlaag) */ flip?: boolean; /** relatieve basis naar assets/ vanaf de pagina */ assetsBase?: string; }
+export declare function Ornament(props: OrnamentProps): JSX.Element;

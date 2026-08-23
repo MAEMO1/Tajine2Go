@@ -1,0 +1,8 @@
+import React from 'react';
+const glyphs={phone:'M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z',pin:'M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z',mail:'M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z',clock:'M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 11h-6v-2h4V6h2v7z',instagram:'M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6zm5.5-3.6a1.1 1.1 0 1 0 0 2.2 1.1 1.1 0 0 0 0-2.2z',facebook:'M13.5 22v-8h2.7l.4-3h-3.1V9.2c0-.9.3-1.5 1.6-1.5h1.6V5c-.3 0-1.3-.1-2.4-.1-2.4 0-4 1.5-4 4.1V11H7.5v3h2.8v8h3.2z'};
+export function ContactRow({icon='phone',onDark=false,children}){
+  return React.createElement('div',{style:{display:'flex',alignItems:'center',gap:14,fontFamily:'var(--font-body)',fontSize:17,color:onDark?'var(--text-on-dark)':'var(--text-body)'}},
+    React.createElement('span',{style:{width:36,height:36,borderRadius:'50%',background:'var(--t2g-merkoranje)',display:'grid',placeItems:'center',flexShrink:0}},
+      React.createElement('svg',{width:18,height:18,viewBox:'0 0 24 24',fill:'#fff'},React.createElement('path',{d:glyphs[icon]||glyphs.phone}))),
+    React.createElement('span',null,children));
+}

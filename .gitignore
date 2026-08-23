@@ -51,3 +51,6 @@ next-env.d.ts
 
 # Impeccable-hook lokale state
 .impeccable/
+
+# losse downloads in de repo-root (bv. de design-system export)
+*.zip

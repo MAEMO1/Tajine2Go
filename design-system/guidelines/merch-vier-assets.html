@@ -1,0 +1,179 @@
+<!-- @dsCard group="Toepassingen" viewport="1280x1400" name="Zes fysieke assets" subtitle="Sleutelhanger, lepel, pen, hartje, QR-standaard en visitekaartje" -->
+<!DOCTYPE html><html lang="nl"><head><meta charset="utf-8"><title>Tajine2Go — vier fysieke assets</title><link rel="stylesheet" href="../styles.css">
+<style>
+body{margin:0;background:#EFE6D6;color:var(--text-body);font-family:var(--font-body)}
+a{color:var(--action)}a:hover{color:var(--action-hover)}
+.wrap{max-width:1120px;margin:0 auto;padding:48px 32px 96px}
+h1{font-family:var(--font-display);font-weight:500;font-size:40px;margin:0;line-height:1.1}
+.lead{max-width:640px;font-size:17px;line-height:1.6;color:var(--text-soft);margin:14px 0 0}
+h2{font-family:var(--font-display);font-weight:500;font-size:27px;margin:64px 0 2px}
+.spec{font-size:14px;line-height:1.55;color:var(--text-soft);margin:0;max-width:620px}
+.spec b{color:var(--text-body);font-weight:600}
+.stage{background:#fff;border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:36px;margin-top:22px;display:flex;flex-wrap:wrap;gap:40px;align-items:flex-start;justify-content:center}
+.piece{display:grid;gap:10px;justify-items:center}
+.tag{font-family:var(--font-body);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-soft)}
+/* — sleutelhanger — */
+.keyfob{width:34mm;height:46mm;border-radius:5mm;background:var(--t2g-inkt);position:relative;display:grid;place-items:center;box-shadow:inset 0 0 0 .8mm var(--t2g-saffraangoud)}
+.keyfob.paper{background:var(--t2g-papier);box-shadow:inset 0 0 0 .8mm var(--t2g-espresso)}
+.keyfob .hole{position:absolute;top:3mm;left:50%;transform:translateX(-50%);width:3.4mm;height:3.4mm;border-radius:50%;background:#EFE6D6;box-shadow:inset 0 0 0 .5px rgba(68,12,0,.25)}
+/* — lepel: platte gravure op de steel — */
+.spoon{width:150mm;height:26mm;position:relative;display:flex;align-items:center}
+.spoonbody{position:absolute;inset:0}
+.engrave{position:absolute;left:38mm;top:50%;transform:translateY(-50%);display:flex;align-items:center;gap:3mm}
+/* — QR-standaard — */
+.stand{box-sizing:border-box;width:74mm;height:83mm;background:var(--t2g-papier);border:1px solid rgba(68,12,0,.18);padding:8mm 6mm 7mm;display:grid;align-content:space-between;justify-items:center;gap:3mm;text-align:center}
+.stand .eyebrow{font-family:var(--font-display);font-weight:600;font-size:9pt;letter-spacing:.2em;text-transform:uppercase;color:var(--text-soft)}
+.stand .head{font-family:var(--font-display);font-weight:500;font-size:17pt;line-height:1.15;color:var(--text-heading)}
+.stand .qr{width:34mm;height:34mm}
+.stand .foot{font-size:8.5pt;line-height:1.45;color:var(--text-soft)}
+.fold{box-sizing:border-box;width:74mm;height:22mm;background:var(--t2g-inkt);display:grid;place-items:center}
+/* — visitekaartje — */
+.card{width:85mm;height:55mm;padding:6mm;box-sizing:border-box;display:grid;position:relative;overflow:hidden}
+.card.front{background:var(--t2g-inkt);align-content:space-between}
+.card.back{background:var(--t2g-papier);border:1px solid rgba(68,12,0,.15);align-content:space-between}
+.card .nm{font-family:var(--font-display);font-weight:500;font-size:14pt;color:var(--t2g-papier);line-height:1.2}
+.card .rol{font-size:7.5pt;letter-spacing:.14em;text-transform:uppercase;color:var(--t2g-saffraangoud);margin-top:1mm}
+.card .det{font-size:8pt;line-height:1.6;color:var(--text-body)}
+.card .det b{font-weight:600}
+.divline{display:flex;align-items:center;gap:3mm;width:100%}
+.divline i{flex:1;height:.4mm;background:rgba(253,243,226,.35)}
+.divline b{font-family:var(--font-display);font-weight:600;font-size:7.5pt;letter-spacing:.2em;text-transform:uppercase;color:var(--t2g-saffraangoud);white-space:nowrap}
+.note{font-size:13px;line-height:1.5;color:var(--text-soft);margin:14px 0 0;max-width:640px}
+</style></head><body>
+<div class="wrap">
+<h1>Zes fysieke assets</h1>
+<p class="lead">Sleutelhanger, lepelsleutelhanger, pen, hartsleutelhanger, QR-standaard en visitekaartje. Enkel bestaande merkelementen: de logo's, de QR-codes en het woord tussen lijnen. De QR-codes zijn exact overgenomen.</p>
+
+<h2>1 · Sleutelhanger</h2>
+<p class="spec"><b>45 mm breed, contoursnede</b> · gelaserd en bedrukt hout, ca. 3 mm dik · splitring van 25 mm. De vorm volgt de omtrek van het logo — tajine plus woordmerk — met een donkere rand rondom. Voorzijde het volledige logo, achterzijde de QR-code met de regel "Authentieke Marokkaanse smaken".</p>
+<div class="stage" style="padding:0;background:transparent;box-shadow:none">
+<img src="../assets/reference/keychain-mockup.png" alt="Sleutelhanger voor- en achterzijde" style="width:100%;max-width:520px;border-radius:var(--radius-card);box-shadow:var(--shadow-card);display:block">
+</div>
+<p class="note"><b>Drie punten.</b> De QR op de achterzijde is een gegenereerde code in de mockup — vervang die door <code>tajine2go-qr-ink-on-paper.svg</code>, met de witruimte van vier vakjes rond de code. De contoursnede loopt vlak langs de letters van het woordmerk; vraag minstens 2 mm marge, anders snijdt de rand de <b>o</b> en de <b>G</b> aan. En de handgeschreven "Scan mij!" met het pijltje staat in een ander lettertype dan het merk: zet dat in Cormorant cursief, of laat het weg — de QR-code spreekt voor zich.</p>
+
+<h2>2 · Sleutelhanger in lepelvorm</h2>
+<p class="spec"><b>115 × 25 mm, roestvrij staal</b> · ring aan het uiteinde voor de sleutelhanger · gravure op de steel, voor- en achterzijde · geleverd op een kraftkaartje van 100 × 70 mm met elastiek. Openingscadeau bij een bestelling.</p>
+
+<div class="stage" style="padding:0;background:transparent;box-shadow:none">
+<img src="../assets/reference/lepel-mockup.png" alt="Productmockup van de Tajine2Go-lepelsleutelhanger" style="width:100%;max-width:520px;border-radius:var(--radius-card);box-shadow:var(--shadow-card);display:block">
+</div>
+<p class="note">De mockup hierboven is de aangeleverde referentie. De gravure erop is niet de juiste: hieronder staat de artwork zoals ze aan de graveur moet gaan.</p>
+
+<h3 style="font-family:var(--font-display);font-weight:500;font-size:21px;margin:32px 0 0">Gravure-artwork</h3>
+<div class="stage">
+<div class="piece">
+<div style="position:relative;width:22mm;height:74mm;border:.4mm solid rgba(68,12,0,.18);border-radius:11mm 11mm 3mm 3mm;box-sizing:border-box;overflow:hidden">
+<img src="../assets/logo/tajine2go-horizontal-mono-espresso.svg" alt="" style="position:absolute;left:50%;top:50%;width:56mm;transform:translate(-50%,-50%) rotate(90deg)">
+</div>
+<span class="tag">voorzijde steel — horizontaal, espresso</span>
+</div>
+
+<div class="piece">
+<div style="width:22mm;height:74mm;border:.4mm solid rgba(68,12,0,.18);border-radius:11mm 11mm 3mm 3mm;display:grid;place-items:center;align-content:center;gap:2mm;padding:5mm 2mm;box-sizing:border-box">
+<svg width="14" height="18" viewBox="0 0 60 76" fill="none"><path d="M2 74 V31.1 C2 20.3 7.6 12.8 16.4 10.2 C21.2 8.1 24.3 5.1 30 2 C35.7 5.1 38.8 8.1 43.6 10.2 C52.4 12.8 58 20.3 58 31.1 V74" stroke="var(--t2g-espresso)" stroke-width="4"></path></svg><svg width="14" height="18" viewBox="0 0 60 76" fill="none"><path d="M2 74 V31.1 C2 20.3 7.6 12.8 16.4 10.2 C21.2 8.1 24.3 5.1 30 2 C35.7 5.1 38.8 8.1 43.6 10.2 C52.4 12.8 58 20.3 58 31.1 V74" stroke="var(--t2g-espresso)" stroke-width="4"></path></svg><svg width="14" height="18" viewBox="0 0 60 76" fill="none"><path d="M2 74 V31.1 C2 20.3 7.6 12.8 16.4 10.2 C21.2 8.1 24.3 5.1 30 2 C35.7 5.1 38.8 8.1 43.6 10.2 C52.4 12.8 58 20.3 58 31.1 V74" stroke="var(--t2g-espresso)" stroke-width="4"></path></svg><svg width="14" height="18" viewBox="0 0 60 76" fill="none"><path d="M2 74 V31.1 C2 20.3 7.6 12.8 16.4 10.2 C21.2 8.1 24.3 5.1 30 2 C35.7 5.1 38.8 8.1 43.6 10.2 C52.4 12.8 58 20.3 58 31.1 V74" stroke="var(--t2g-espresso)" stroke-width="4"></path></svg>
+</div>
+<span class="tag">achterzijde steel — boogmotief</span>
+</div>
+
+<div class="piece">
+<div style="width:100mm;height:70mm;background:#C9A87C;border-radius:3mm;display:grid;justify-items:center;align-content:space-between;padding:6mm;box-sizing:border-box;text-align:center">
+<img src="../assets/logo/tajine2go-stacked-light.svg" alt="Tajine2Go" style="width:32mm">
+<div style="display:flex;align-items:center;gap:3mm;width:100%">
+<i style="flex:1;height:.3mm;background:rgba(68,12,0,.3)"></i>
+<b style="font-family:var(--font-display);font-weight:600;font-size:8pt;letter-spacing:.2em;text-transform:uppercase;color:var(--t2g-espresso);white-space:nowrap">Bedankt voor je bezoek</b>
+<i style="flex:1;height:.3mm;background:rgba(68,12,0,.3)"></i>
+</div>
+<span style="font-size:8pt;color:var(--t2g-espresso)">tajine2go.be · Gentbrugge</span>
+</div>
+<span class="tag">kraftkaartje 100 × 70 mm — gestapeld logo</span>
+</div>
+
+<div class="piece">
+<img src="../assets/reference/lepel-voorzijde.png" alt="Lepel, voorzijde" style="height:74mm">
+<span class="tag">positie op de steel</span>
+</div>
+</div>
+<p class="note">De gravure op de foto is de volle-kleurversie uit de mockup. Die moet vervangen worden door het horizontale logo in mono-espresso hierboven, op dezelfde positie en breedte: onderaan de steel, net boven de ring, ongeveer 22 mm hoog en gedraaid met de steel mee. Ik kan de bestaande gravure niet uit de foto weghalen — de leverancier krijgt de vector plus deze positieaanduiding.</p>
+<p class="note"><b>Wat er verandert.</b> De voorzijde krijgt het horizontale logo in mono-espresso in plaats van de volle-kleurversie: op geslepen staal valt kleur weg en één lijndikte graveert scherper. De achterzijde krijgt het boogmotief — vier kleine boogjes onder elkaar — in plaats van het bloemenpatroon, want dat laatste komt niet uit het merk. Op het kaartje staat het gestapelde logo. De copy is volledig Nederlands en de hartjes zijn weg.</p>
+
+<h2>3 · Pen</h2>
+<p class="spec"><b>Balpen met kraftpapieren huls</b> · bruine clip, punt en drukknop · blauwe inkt · logo bedrukt op de huls, ca. 30 mm breed. Als openingscadeau en bij cateringleveringen.</p>
+<div class="stage" style="padding:0;background:transparent;box-shadow:none">
+<img src="../assets/reference/pen-mockup.png" alt="Pen met kraftpapieren huls" style="width:100%;max-width:328px;border-radius:var(--radius-card);box-shadow:var(--shadow-card);display:block">
+</div>
+<p class="note"><b>Aanpassen.</b> Het volledige kleurenlogo op kraftpapier verliest contrast — het crèmewitte woordmerk valt weg tegen de bruine huls. Gebruik hier <code>tajine2go-horizontal-mono-espresso.svg</code>, één kleur, of het woordmerk in papierkleur als de huls donker wordt gekozen. De opsomming in de mockup staat in het Frans met gekleurde iconen; op de pen zelf komt alleen het logo, de opsomming hoort op de begeleidende kaart en dan in één taal.</p>
+
+<h2>4 · Hartsleutelhanger</h2>
+<p class="spec"><b>30 mm, hartvorm</b> · gelaserd hout met splitring · voorzijde het logo, achterzijde "Bedankt voor je bezoek". Klein souvenir dat bij de rekening meegaat.</p>
+<div class="stage" style="padding:0;background:transparent;box-shadow:none">
+<img src="../assets/reference/hart-mockup.png" alt="Hartvormige sleutelhanger" style="width:100%;max-width:415px;border-radius:var(--radius-card);box-shadow:var(--shadow-card);display:block">
+</div>
+<p class="note"><b>Let op de vorm.</b> Het hart zit niet in de merkidentiteit en is het enige element in het hele systeem dat er niet uit voortkomt. Als je het wil houden, laat dan het losse hartje-symbool in de tekst weg — vorm en symbool samen wordt te veel. Een alternatief dat wel uit het merk komt: dezelfde maat in de boognisvorm, met het logo erin. Bij 30 mm is het volledige logo te klein om leesbaar te blijven; gebruik alleen het tajine-icoon op de voorzijde en het woordmerk in mono op de achterzijde.</p>
+
+<h2>5 · QR-standaard</h2>
+<p class="spec"><b>74 × 105 mm (A6), staand — paneel 83 mm plus omgeslagen voet van 22 mm</b> · 350 g karton met matte laminering, of dibond voor de toonbank. QR-code exact overgenomen uit <code>tajine2go-qr-ink-on-paper.svg</code>, met de verplichte witruimte van vier vakjes rond de code. De bestaande QR verwijst naar tajine2go.be; voor de socialvariant is een aparte QR nodig, die mag ik niet genereren.</p>
+<div class="stage">
+<div class="piece">
+<div>
+<div class="stand">
+<span class="eyebrow">Bestel online</span>
+<span class="head">Langzaam bereid.<br>Snel opgehaald.</span>
+<img class="qr" src="../assets/qr/tajine2go-qr-ink-on-paper.svg" alt="QR naar tajine2go.be">
+<span class="foot">tajine2go.be<br>09 377 32 51</span>
+</div>
+<div class="fold"><img src="../assets/logo/tajine2go-wordmark-dark.svg" alt="" style="width:40mm"></div>
+</div>
+<span class="tag">voorzijde + voet</span>
+</div>
+<div class="piece">
+<div>
+<div class="stand" style="background:var(--t2g-inkt);border-color:transparent">
+<span class="eyebrow" style="color:var(--t2g-saffraangoud)">Volg ons</span>
+<span class="head" style="color:var(--t2g-papier)">De warmte van Marokko</span>
+<span class="qr" style="display:grid;place-items:center;border:.5mm dashed rgba(253,243,226,.5);font-size:8pt;line-height:1.35;color:rgba(253,243,226,.8);text-align:center;padding:3mm;box-sizing:border-box">QR Instagram<br>aan te leveren</span>
+<span class="foot" style="color:rgba(253,243,226,.75)">instagram · facebook<br>@tajine2go.gent</span>
+</div>
+<div class="fold" style="background:var(--t2g-merkoranje)"><img src="../assets/logo/tajine2go-wordmark-mono-black.svg" alt="" style="width:40mm"></div>
+</div>
+<span class="tag">variant op inkt</span>
+</div>
+</div>
+
+<h2>6 · Visitekaartje</h2>
+<p class="spec"><b>85 × 55 mm, staand formaat liggend gebruikt</b> · 400 g karton, mat, met blinddruk van het icoon op de achterzijde. Voorzijde in inkt met saffraangoud voor de lijnen — de enige plek waar die kleur mag. Achterzijde op papier, alle cijfers in Geist.</p>
+<div class="stage">
+<div class="piece">
+<div class="card front">
+<img src="../assets/logo/tajine2go-horizontal-dark.svg" alt="Tajine2Go" style="width:44mm">
+<div>
+<div class="divline"><b>Marokkaanse thuisgerechten</b><i></i></div>
+<div class="nm" style="margin-top:3mm">Langzaam bereid.<br>Snel opgehaald.</div>
+</div>
+</div>
+<span class="tag">voorzijde</span>
+</div>
+<div class="piece">
+<div class="card back">
+<div>
+<div class="nm" style="color:var(--t2g-inkt);font-size:12pt">Tajine2Go</div>
+<div class="rol" style="color:var(--t2g-espresso)">Afhalen &amp; catering</div>
+</div>
+<div class="det">
+<b>Brusselsesteenweg 455</b><br>9050 Gentbrugge<br>
+09 377 32 51 · 0451 01 61 44<br>
+info@tajine2go.be · tajine2go.be
+</div>
+</div>
+<span class="tag">achterzijde</span>
+</div>
+<div class="piece">
+<div class="card back" style="place-content:center;justify-items:center">
+<img src="../assets/qr/tajine2go-qr-ink-on-paper.svg" alt="QR naar tajine2go.be" style="width:26mm">
+<div style="font-size:7.5pt;letter-spacing:.16em;text-transform:uppercase;color:var(--text-soft);margin-top:2mm">Bestel online</div>
+</div>
+<span class="tag">achterzijde met QR</span>
+</div>
+</div>
+<p class="note">Openingsuren staan bewust niet op het kaartje: die veranderen, het kaartje niet. De QR leidt naar de site waar ze wel staan.</p>
+</div>
+</body></html>

@@ -1,0 +1,24 @@
+<!-- @dsCard group="Components" viewport="700x760" name="Core components" subtitle="Button, Eyebrow, DishCard, ContactRow, Ornament, ArchFrame, SectionDark, OrderBar" -->
+<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../../styles.css"><style>body{margin:0;background:var(--surface-page);font-family:var(--font-body);color:var(--text-body)}h6{font-family:var(--font-body);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-soft);margin:0 0 8px}</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script></head><body><div id="root"></div>
+<script type="text/babel">
+let Button,Eyebrow,Ornament,ArchFrame,DishCard,ContactRow,SectionDark,OrderBar;
+function Demo(){return <div style={{padding:20,display:'grid',gap:22}}>
+<div><h6>Button</h6><div style={{display:'flex',gap:12,alignItems:'center',flexWrap:'wrap'}}><Button size="lg">Bestel nu</Button><Button>Bestel nu</Button><Button variant="secondary">Bekijk het menu</Button><Button variant="ghost">Meer info</Button><Button disabled>Uitverkocht</Button><span style={{background:'var(--surface-dark)',padding:'10px 14px',borderRadius:12}}><Button variant="onDark" size="sm">Bestel nu</Button></span></div></div>
+<div><h6>Eyebrow</h6><Eyebrow>Tajines en couscous</Eyebrow></div>
+<div><h6>DishCard</h6><div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:16,maxWidth:560}}>
+<DishCard name="Tajine kefta" description="Gehaktballetjes in tomatensaus met ei" price="€ 16,50" badge="Populair"/>
+<DishCard name="Couscous royal" description="Met lamsvlees, kip en merguez" price="€ 19,00"/></div></div>
+<div><h6>ContactRow</h6><div style={{display:'grid',gap:10}}><ContactRow icon="phone">Tel. 09 377 32 51</ContactRow><ContactRow icon="pin">Brusselsesteenweg 455, 9050 Gentbrugge</ContactRow><ContactRow icon="clock">Open di–zo, 11u30–21u</ContactRow></div></div>
+<div><h6>Ornament · SectionDark</h6><Ornament width={260} assetsBase="../../assets"/><div style={{marginTop:12}}><SectionDark style={{padding:'22px 24px',borderRadius:16}}><Eyebrow onDark>Ons verhaal</Eyebrow><div style={{fontFamily:'var(--font-display)',fontSize:26,marginTop:6}}>De warmte van Marokko, klaar om mee te nemen.</div></SectionDark></div></div>
+</div>;}
+(function mount(tries){
+  const ns=window.Tajine2GoDesignSystem_2aba92;
+  if(!ns){ if(tries<100) setTimeout(()=>mount(tries+1),100); return; }
+  ({Button,Eyebrow,Ornament,ArchFrame,DishCard,ContactRow,SectionDark,OrderBar}=ns);
+  ReactDOM.createRoot(document.getElementById('root')).render(<Demo/>);
+})(0);
+</script></body></html>

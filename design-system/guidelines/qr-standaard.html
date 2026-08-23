@@ -1,0 +1,84 @@
+<!-- @dsCard group="Toepassingen" viewport="900x1240" name="QR-standaard" subtitle="A4 — boognis over de volle hoogte met drie QR-codes" -->
+<!DOCTYPE html><html lang="nl"><head><meta charset="utf-8"><title>Tajine2Go — QR-standaard</title><link rel="stylesheet" href="../styles.css">
+<style>
+body{margin:0;background:#E7DCC9;color:var(--text-body);font-family:var(--font-body)}
+.page{padding:40px 0 80px;display:grid;justify-items:center;gap:28px}
+.intro{max-width:600px;padding:0 24px;font-size:15px;line-height:1.6;color:var(--text-soft)}
+.intro b{color:var(--text-body);font-weight:600}
+.sheet{position:relative;width:210mm;height:297mm;background:var(--t2g-inkt);box-shadow:0 18px 50px rgba(68,12,0,.28);overflow:hidden}
+.frame{position:absolute;top:0;left:0;width:100%;height:100%}
+.content{position:absolute;left:34mm;top:34mm;width:142mm;height:263mm;display:grid;align-content:space-between;justify-items:center;padding:34mm 8mm 22mm;box-sizing:border-box;text-align:center}
+.eyebrow{font-family:var(--font-display);font-weight:600;font-size:10pt;letter-spacing:.22em;text-transform:uppercase;color:var(--t2g-espresso);margin-top:4mm}
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:3mm;width:100%}
+.col{display:grid;justify-items:center;gap:1.5mm;align-content:start}
+.niche{position:relative;width:100%;aspect-ratio:132/150}
+.niche .nis{position:absolute;inset:0;width:100%;height:100%}
+.niche .qrimg,.niche .ph{position:absolute;left:50%;top:60%;transform:translate(-50%,-50%);width:48%;aspect-ratio:1}
+.niche .ph{display:grid;place-items:center;border:.5mm dashed rgba(131,70,32,.45);font-size:6.5pt;line-height:1.3;color:var(--text-soft);padding:1.5mm;box-sizing:border-box}
+.lab{font-family:var(--font-display);font-weight:600;font-size:8.5pt;letter-spacing:.16em;text-transform:uppercase;color:var(--t2g-espresso);line-height:1.35}
+.val{font-size:8pt;font-weight:600;color:var(--t2g-inkt)}
+.ico{display:grid;place-items:center;color:var(--t2g-espresso)}
+.bsaha{display:flex;align-items:center;gap:6mm;width:100%}
+.bsaha i{flex:1;height:.3mm;background:rgba(131,70,32,.4)}
+.bsaha b{font-family:var(--font-display);font-weight:600;font-size:13pt;letter-spacing:.22em;text-transform:uppercase;color:var(--t2g-espresso);white-space:nowrap}
+.note{max-width:640px;padding:0 24px;font-size:14px;line-height:1.55;color:var(--text-soft)}
+.note b{color:var(--text-body);font-weight:600}
+</style>
+<script src="https://unpkg.com/lucide@0.454.0/dist/umd/lucide.min.js"></script>
+</head><body>
+<div class="page">
+<p class="intro"><b>A4, 210 × 297 mm.</b> De boognis loopt over de volle hoogte: buitenste boog in saffraangoud, binnenboog overal 26 mm naar binnen, met het khatam-patroon in saffraanlijn in de band ertussen en een papieren vlak erin dat tot de onderrand doorloopt. Alle drie de QR-codes staan binnen die nis, elk in een eigen kleine boognis.</p>
+
+<div class="sheet">
+<svg class="frame" viewBox="0 0 210 297" fill="none" preserveAspectRatio="none" aria-hidden="true">
+<defs><pattern id="zel" width="34" height="34" patternUnits="userSpaceOnUse"><g transform="translate(17,17)" stroke="var(--t2g-saffraangoud)" stroke-width=".9" fill="none" opacity=".7"><rect x="-10" y="-10" width="20" height="20"></rect><rect x="-10" y="-10" width="20" height="20" transform="rotate(45)"></rect></g></pattern></defs>
+<path fill="url(#zel)" fill-rule="evenodd" d="M8 297 V109 C8 71.6 27.4 45.4 57.9 36.6 C74.5 29.2 85.5 18.1 105 8 C124.5 18.1 135.5 29.2 152.1 36.6 C182.6 45.4 202 71.6 202 109 V297 Z M34 297 V116.3 C34 85.8 48.2 64.5 70.5 57.3 C82.7 51.3 90.7 42.2 105 34 C119.3 42.2 127.3 51.3 139.5 57.3 C161.8 64.5 176 85.8 176 116.3 V297 Z"></path>
+<path fill="var(--t2g-papier)" d="M34 297 V116.3 C34 85.8 48.2 64.5 70.5 57.3 C82.7 51.3 90.7 42.2 105 34 C119.3 42.2 127.3 51.3 139.5 57.3 C161.8 64.5 176 85.8 176 116.3 V297 Z"></path>
+<path stroke="var(--t2g-saffraangoud)" stroke-width="1.6" d="M8 297 V109 C8 71.6 27.4 45.4 57.9 36.6 C74.5 29.2 85.5 18.1 105 8 C124.5 18.1 135.5 29.2 152.1 36.6 C182.6 45.4 202 71.6 202 109 V297"></path>
+<path stroke="var(--t2g-saffraangoud)" stroke-width="1.2" d="M34 297 V116.3 C34 85.8 48.2 64.5 70.5 57.3 C82.7 51.3 90.7 42.2 105 34 C119.3 42.2 127.3 51.3 139.5 57.3 C161.8 64.5 176 85.8 176 116.3 V297"></path>
+</svg>
+
+<div class="content">
+<div style="display:grid;justify-items:center">
+<img src="../assets/logo/tajine2go-stacked-light.svg" alt="Tajine2Go" style="width:52mm">
+<span class="eyebrow">Bestel en volg ons</span>
+</div>
+
+<div class="cols">
+<div class="col">
+<div class="niche">
+<img class="nis" src="../assets/elements/tajine2go-boognis.svg" alt="">
+<img class="qrimg" src="../assets/qr/tajine2go-qr-ink-on-paper.svg" alt="QR naar tajine2go.be">
+</div>
+<span class="lab">Bezoek ons<br>website</span>
+<span class="val">tajine2go.be</span>
+</div>
+
+<div class="col">
+<div class="niche">
+<img class="nis" src="../assets/elements/tajine2go-boognis.svg" alt="">
+<span class="ph">QR Instagram<br>aan te leveren</span>
+</div>
+<span class="lab">Volg ons</span>
+<span class="val">@tajine2go.gent</span>
+<span class="ico"><i data-lucide="instagram" style="width:16px;height:16px"></i></span>
+</div>
+
+<div class="col">
+<div class="niche">
+<img class="nis" src="../assets/elements/tajine2go-boognis.svg" alt="">
+<span class="ph">QR Facebook<br>aan te leveren</span>
+</div>
+<span class="lab">Bezoek ons<br>Facebook</span>
+<span class="ico"><i data-lucide="facebook" style="width:16px;height:16px"></i></span>
+</div>
+</div>
+
+<div class="bsaha"><i></i><b>Bsaha</b><i></i></div>
+</div>
+</div>
+
+<p class="note"><b>Nog aan te leveren.</b> De QR-codes voor Instagram en Facebook staan als leeg vak; die mag ik niet genereren — QR-codes worden altijd exact overgenomen. Bezorg ze als SVG en ik plaats ze in de nissen. De Instagram- en Facebook-iconen komen van Lucide via CDN, als voorlopige substitutie.</p>
+</div>
+<script>window.lucide&&lucide.createIcons()</script>
+</body></html>

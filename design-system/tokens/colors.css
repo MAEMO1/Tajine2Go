@@ -1,0 +1,30 @@
+:root{
+/* De zes vaste merkkleuren — er komt geen zevende bij */
+--t2g-papier:#FDF3E2; /* achtergrond site en drukwerk */
+--t2g-inkt:#440C00; /* lopende tekst, koppen, prijzen */
+--t2g-espresso:#834620; /* zachte tekst, bijschriften, ornamenten */
+--t2g-actie:#B84A10; /* knoppen en links */
+--t2g-merkoranje:#DE5C1B; /* vlakken en vormen, NOOIT tekst */
+--t2g-saffraangoud:#FDAD47; /* lijnkleur op donker, NOOIT op licht */
+--t2g-actie-hover:#93430B; /* hover op de actiekleur */
+/* Restanten van het oude palet — geen nieuw gebruik, alleen voor bestaande schermen.
+   Bron: src/app/globals.css in MAEMO1/Tajine2Go. */
+--t2g-warm:#F6E8C9;
+--t2g-warm2:#F6E3B1;
+--t2g-bruin-m:#6B3E1E;
+--t2g-bruin-s:#A18059;
+/* Semantische aliassen */
+--surface-page:var(--t2g-papier);
+--surface-dark:var(--t2g-inkt);
+--surface-shape:var(--t2g-merkoranje);
+--text-body:var(--t2g-inkt);
+--text-heading:var(--t2g-inkt);
+--text-soft:var(--t2g-espresso);
+--text-on-dark:var(--t2g-papier);
+--text-price:var(--t2g-inkt);
+--action:var(--t2g-actie);
+--action-hover:var(--t2g-actie-hover);
+--line-on-dark:var(--t2g-saffraangoud);
+--line-on-light:var(--t2g-espresso);
+--border-soft:rgba(131,70,32,.28);
+}
