@@ -16,6 +16,15 @@
     "or": "of",
     "skipToContent": "Naar de inhoud"
   },
+  "comingSoon": {
+    "message": "We bereiden alles voor om je binnenkort te verwelkomen bij Tajine2Go in Gent.",
+    "titleLineOne": "BINNENKORT",
+    "titleLineTwo": "OPEN",
+    "instagramLabel": "Volg ons op Instagram",
+    "instagramQrAlt": "Instagram QR-code voor @tajine2go.gent",
+    "facebookLabel": "Tajine2Go op Facebook",
+    "languageNavigation": "Kies je taal"
+  },
   "nav": {
     "menu": "Menu",
     "order": "Bestellen",

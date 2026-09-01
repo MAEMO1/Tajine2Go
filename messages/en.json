@@ -16,6 +16,15 @@
     "or": "or",
     "skipToContent": "Skip to content"
   },
+  "comingSoon": {
+    "message": "We are getting everything ready to welcome you soon at Tajine2Go in Ghent.",
+    "titleLineOne": "COMING",
+    "titleLineTwo": "SOON",
+    "instagramLabel": "Follow us on Instagram",
+    "instagramQrAlt": "Instagram QR code for @tajine2go.gent",
+    "facebookLabel": "Tajine2Go on Facebook",
+    "languageNavigation": "Choose your language"
+  },
   "nav": {
     "menu": "Menu",
     "order": "Order",

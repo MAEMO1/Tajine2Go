@@ -16,6 +16,15 @@
     "or": "ou",
     "skipToContent": "Aller au contenu"
   },
+  "comingSoon": {
+    "message": "Nous préparons tout pour vous accueillir bientôt chez Tajine2Go à Gand.",
+    "titleLineOne": "BIENTÔT",
+    "titleLineTwo": "OUVERT",
+    "instagramLabel": "Suivez-nous sur Instagram",
+    "instagramQrAlt": "Code QR Instagram pour @tajine2go.gent",
+    "facebookLabel": "Tajine2Go sur Facebook",
+    "languageNavigation": "Choisissez votre langue"
+  },
   "nav": {
     "menu": "Menu",
     "order": "Commander",
